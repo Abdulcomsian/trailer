@@ -98,7 +98,7 @@ nav a:hover{
     /* identical to box height */
     color: #FFFFFF;
 }
-.hero_div input{
+.hero_div .form_control{
     background-color: transparent;
     border: none;
     outline: none;
@@ -106,9 +106,55 @@ nav a:hover{
     padding-bottom: 8px;
     font-family: 'Montserrat', sans-serif;
     color: #fff;
+    height: 40px;
 }
-.hero_div input::placeholder{
+.hero_div .form_control::placeholder{
     color: #CBCBCB;
+}
+
+.hero_div .form_control{
+    color: #CBCBCB;
+}
+
+.hero_div .swiper-vertical{
+    max-height: 500px;
+}
+
+.hero_div .swiper-pagination-vertical.swiper-pagination-bullets, .swiper-vertical>.swiper-pagination-bullets{
+    right: auto;
+    left: 10px;
+}
+
+.hero_div .swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet{
+    width: 10.62px;
+    height: 10.62px;
+    background: #FFFFFF;
+    border-radius: 90px;
+    transition: .2s;
+}
+
+.hero_div .swiper-pagination-bullet-active{
+    width: 10.62px !important;
+    height: 28.15px !important;
+    background: #FAC033 !important;
+}
+
+.hero_div .form_control option{
+    background-color: #333;
+}
+
+.datePicker{
+    width: 21px;
+    background: transparent;
+    color: #fff;
+    transform: scale(1.2);
+    border: none;
+    color-scheme: dark;
+    outline: none;
+}
+
+.datePicker[type="time"]{
+    width: 31px;
 }
 
 .hero_div .icon{

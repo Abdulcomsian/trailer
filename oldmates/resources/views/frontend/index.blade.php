@@ -14,6 +14,12 @@
     <!-- font awesome 5 CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css">
 
+      <!-- Link Swiper's CSS -->
+      <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+
     <!-- custom css -->
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
@@ -64,7 +70,19 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car">
+                    <!-- <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car"> -->
+                      <!-- Swiper -->
+                    <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    </div>
                 </div>
                 <div class="col-lg-6 mt-5">
                     <div class="text">
@@ -72,58 +90,59 @@
                             HIRE TRAILER FOR <span class="text_yellow">RENT!</span>
                         </h1>
                         <p class="hero_text text-white">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </p>
                         <form class="header_form mt-5">
                             <div class="input mb-5 position-relative">
-                                <input type="text" class="d-block w-100" placeholder="Type of trailer">
-                                <span class="icon">
-                                    <!-- <img src="img/drop_arrow.png" alt="drop_arrow"> -->
+                                <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
+                                <select name="trailer" id="select" class="form_control w-100">
+                                    <option value="1">Type of trailer</option>
+                                    <option value="1">Trailer 1</option>
+                                    <option value="1">Trailer 2</option>
+                                </select>
+                                <!-- <span class="icon">
                                     <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
-                                </span>
+                                </span> -->
                             </div>
                             <div class="input mb-5 position-relative">
-                                <input type="text" class="d-block w-100" placeholder="Hire Period">
+                                <input type="text" class="d-block form_control w-100" id="datePut" placeholder="Hire Period">
                                 <span class="icon">
                                     <!-- <img src="img/calendar-outline.png" alt="calendar-outline"> -->
-                                    <img src="{{asset('assets/img/calendar-outline.png') }}" alt="calendar-outline">
+                                    <!-- <img src="{{asset('assets/img/calendar-outline.png') }}" alt="calendar-outline"> -->
+                                    <input type="date" name="datepicker" id="datePicker" class="datePicker" placeholder="test">
                                 </span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block w-100" placeholder="Pickup time">
+                                        <input type="text" class="d-block form_control w-100" id="picktimeinput" placeholder="Pickup time">
                                         <span class="icon">
-                                            <!-- <img src="img/timer-outline.png" alt="calendar-outline"> -->
-                                            <img src="{{asset('assets/img/timer-outline.png') }}" alt="calendar-outline">
-                                        </span>
+                                            <input type="time" name="datepicker" id="picktime" class="datePicker" placeholder="test">
+                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
-                                    <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block w-100" placeholder="AM">
-                                        <span class="icon">
-                                            <!-- <img src="img/drop_arrow.png" alt="calendar-outline"> -->
-                                            <img src="{{asset('assets/img/drop_arrow.png') }}" alt="calendar-outline">
-                                        </span>
+                                <div class="input mb-5 position-relative">
+                                        <select name="trailer" id="select" class="form_control w-100">
+                                        <option value="1">AM</option>
+                                        <option value="1">PM</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block w-100" placeholder="Dropoff time">
+                                        <input type="text" class="d-block form_control w-100" id="droptimeInput" placeholder="Dropoff time">
                                         <span class="icon">
-                                            <!-- <img src="img/timer-outline.png" alt="calendar-outline"> -->
-                                            <img src="{{asset('assets/img/timer-outline.png') }}" alt="calendar-outline">
-                                        </span>
+                                            <input type="time" name="datepicker" id="droptime" class="datePicker" placeholder="test">
+                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block w-100" placeholder="AM">
-                                        <span class="icon">
-                                            <!-- <img src="img/drop_arrow.png" alt="calendar-outline"> -->
-                                            <img src="{{asset('assets/img/drop_arrow.png') }}" alt="calendar-outline">
-                                        </span>
+                                        <select name="trailer" id="select" class="form_control w-100">
+                                        <option value="1">AM</option>
+                                        <option value="1">PM</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -444,11 +463,35 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        direction: "vertical",
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
+
     <!-- load jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        console.log($('img').attr('src'));
+        $('#datePicker').on('change', function () {
+            $('#datePut').val(this.value);
+        });
+
+        $('#droptime').on('change', function () {
+            $('#droptimeInput').val(this.value);
+        });
+
+        $('#picktime').on('change', function () {
+            $('#picktimeinput').val(this.value);
+        });
     </script>
 </body>
 
