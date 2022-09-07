@@ -2,6 +2,9 @@
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 1350px;
     }
+    .hero_div .container {
+        max-width: 1425px;
+    }
 }
 
 @media (max-width: 840px){
