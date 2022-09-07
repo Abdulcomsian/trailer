@@ -125,6 +125,17 @@ nav a:hover{
     left: 10px;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url(../img/calendar-outline.png) no-repeat;
+    background-size: cover;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    /* background: url(../img/timer-outline.png) no-repeat; */
+    background: url(../img/timer-outline.png) no-repeat;
+    background-size: 100% auto;
+}
+
 .hero_div .swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet{
     width: 10.62px;
     height: 10.62px;
@@ -147,7 +158,6 @@ nav a:hover{
     width: 21px;
     background: transparent;
     color: #fff;
-    transform: scale(1.2);
     border: none;
     color-scheme: dark;
     outline: none;
@@ -192,9 +202,23 @@ nav a:hover{
 
 .section_2 .box{
     padding: 40px;
-    background: #FFFFFF;
-    box-shadow: 14px 24px 72px rgba(102, 102, 102, 0.1);
+    background-color: #FFFFFF;
+    background-image: url(../img/box-left-bg.png);
+    background-size: 100% 100%;
     border-radius: 8px;
+    transition: .2s;
+    border: 2px solid rgba(102, 102, 102, 0.08);
+}
+
+.section_2 .box_2{
+    background-image: url(../img/box-right-bg.png);
+}
+
+.section_2 .box:hover{
+    cursor: pointer;
+    border-color: transparent;
+    box-shadow: 14px 24px 72px rgba(102, 102, 102, 0.1);
+
 }
 
 .section_2 .box_head{

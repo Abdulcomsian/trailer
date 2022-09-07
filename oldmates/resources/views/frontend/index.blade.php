@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="mx-2 me-3 btn btn_yellow">Search</a>
+                            <a href="#" class="me-3 btn btn_yellow">Search</a>
                         </form>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="box">
+                    <div class="box box_2">
                         <!-- <img src="img/boximg2.png" alt="box"> -->
                         <img src="{{asset('assets/img/boximg2.png') }}" alt="box">
                         <h4 class="box_head">Make Payment</h4>
@@ -233,30 +233,34 @@
         </div>
     </div>
 
-    <div class="section_5">
+    <div class="section_5 counters">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <div class="box text-center">
-                        <h3>22+</h3>
+                        <h3><span class="counter purecounter" data-purecounter-start="0" data-purecounter-end="22" data-purecounter-duration="2"
+                data-purecounter-once="true">22</span>+</h3>
                         <p>Equipments</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6 borderLeft">
                     <div class="box text-center">
-                        <h3>4000+</h3>
+                        <h3><span class="counter purecounter" data-purecounter-start="0" data-purecounter-end="4000" data-purecounter-duration="2"
+                data-purecounter-once="true">4000</span>+</h3>
                         <p>happy Clients</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6 borderLeft">
                     <div class="box text-center">
-                        <h3>5 Years</h3>
+                        <h3><span class="counter purecounter" data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="2"
+                data-purecounter-once="true">5</span> Years</h3>
                         <p>Service</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6 borderLeft">
                     <div class="box text-center">
-                        <h3>8000+</h3>
+                        <h3><span  class="counter purecounter" data-purecounter-start="0" data-purecounter-end="8000" data-purecounter-duration="2"
+                data-purecounter-once="true">8000</span>+</h3>
                         <p> Total users</p>
                     </div>
                 </div>
@@ -466,15 +470,18 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
+    <script src="{{asset('assets/js/purecounter.js') }}"></script>
+
     <!-- Initialize Swiper -->
     <script>
-      var swiper = new Swiper(".mySwiper", {
-        direction: "vertical",
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-      });
+        var swiper = new Swiper(".mySwiper", {
+            direction: "vertical",
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+        $('.counter').counterUp()
     </script>
 
     <!-- load jquery CDN -->
