@@ -72,7 +72,7 @@
                 <div class="col-lg-6">
                     <!-- <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car"> -->
                       <!-- Swiper -->
-                    <div class="swiper mySwiper">
+                    <div class="swiper mySwiper swiper1">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car">
@@ -227,7 +227,21 @@
                 </div>
                 <div class="col-lg-6">
                     <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
-                    <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img">
+                    <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
+                    <div class="card_imgs d-flex align-items-center">
+                        <div class="card_img img1 d-flex flex-column align-items-center">
+                            <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="#" class="btn btn_book">Book Now</a>
+                            </div>
+                        </div>
+                        <div class="card_img img2 d-flex flex-column align-items-center absolute">
+                            <img src="{{asset('assets/img/feature_img_2.png') }}" class="img-fluid" alt="img">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="#" class="btn btn_book">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -377,12 +391,139 @@
                             quis a
                             interdum
                             lacus.</p>
+                        <div class="custom_pagination_in">
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="img">
                         <!-- <img src="img/client_feedback.png" class="w-100" alt="client_feedback"> -->
-                        <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback">
+                        <!-- <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback"> -->
+                            <!-- Swiper -->
+                        <div class="swiper mySwiper swiper2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="feedback shadow-sm">
+                                            <div class="avatar">
+                                                <img src="{{asset('assets/img/avatar.png') }}" alt="avatar png">
+                                            </div>
+                                            <div class="text">
+                                                <p>1Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">1John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                    <div class="feedback ghost_dev">
+                                            <div class="text">
+                                                <p>1Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">1John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="feedback shadow-sm">
+                                            <div class="avatar">
+                                                <img src="{{asset('assets/img/avatar.png') }}" alt="avatar png">
+                                            </div>
+                                            <div class="text">
+                                                <p>2Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">2John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                    <div class="feedback ghost_dev">
+                                            <div class="text">
+                                                <p>2Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">2John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="feedback shadow-sm">
+                                            <div class="avatar">
+                                                <img src="{{asset('assets/img/avatar.png') }}" alt="avatar png">
+                                            </div>
+                                            <div class="text">
+                                                <p>3Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">3John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                    <div class="feedback ghost_dev">
+                                            <div class="text">
+                                                <p>3Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">3John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="feedback shadow-sm">
+                                            <div class="avatar">
+                                                <img src="{{asset('assets/img/avatar.png') }}" alt="avatar png">
+                                            </div>
+                                            <div class="text">
+                                                <p>4Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">4John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                    <div class="feedback ghost_dev">
+                                            <div class="text">
+                                                <p>4Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    Mauris
+                                                    quis a
+                                                    interdum
+                                                    lacus.</p>
+                                                <h6 class="m-0">4John Doe</h6>
+                                                <span class="place">Sydney, Australia</span>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pagination_custom">
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,15 +547,15 @@
                             </a>
                             <a href="#" class="mx-1">
                                 <!-- <img src="img/instagram.png" alt="instagram"> -->
-                                <img src="{{asset('assets/img/instagram.png') }}" alt="instagram">
+                                <img src="{{asset('assets/img/Social2.png') }}" alt="instagram">
                             </a>
                             <a href="#" class="mx-1">
                                 <!-- <img src="img/instagram.png" alt="instagram"> -->
-                                <img src="{{asset('assets/img/instagram.png') }}" alt="instagram">
+                                <img src="{{asset('assets/img/Social3.png') }}" alt="instagram">
                             </a>
                             <a href="#" class="mx-1">
                                 <!-- <img src="img/instagram.png" alt="instagram"> -->
-                                <img src="{{asset('assets/img/instagram.png') }}" alt="instagram">
+                                <img src="{{asset('assets/img/Social4.png') }}" alt="instagram">
                             </a>
                         </div>
                     </div>
@@ -474,13 +615,38 @@
 
     <!-- Initialize Swiper -->
     <script>
-        var swiper = new Swiper(".mySwiper", {
+        var swiper1 = new Swiper(".swiper1", {
             direction: "vertical",
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
             },
         });
+
+        var swiper2 = new Swiper(".swiper2", {
+            slidesPerView: 1,
+            effect: "fade",
+            spaceBetween: 30,
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            },
+      });
+      swiper2.on('slideChange', function () {
+        $('.custom_pagination_in').html($('.pagination_custom').html())
+       
+      });
+    //   swiper event triiger on only next slide
+        swiper2.on('slideChangeTransitionEnd', function () {
+            $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-next .feedback').html());
+            // $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-next .feedback').html());
+        });
+    //  swiper event triiger on only prev slide
+        swiper2.on('slideChangeTransitionStart', function () {
+            $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-prev .feedback').html());
+            // $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-next .feedback').html());
+        });
+
         $('.counter').counterUp()
     </script>
 
@@ -498,6 +664,9 @@
 
         $('#picktime').on('change', function () {
             $('#picktimeinput').val(this.value);
+        });
+        $('.card_img').click(function () {
+            $('.card_img').toggleClass('absolute');
         });
     </script>
 </body>

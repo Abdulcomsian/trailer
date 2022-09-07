@@ -81,4 +81,26 @@
     .upload_photo {
         margin: 20px 0 148px;
       }
+      .card_img.absolute{
+        position:  relative !important;
+        right: 0;
+        transform: scale(1);
+      }
+      .card_imgs{
+        flex-direction: column;
+        height: auto;
+      }
+      .swiper-slide .feedback.ghost_dev{
+        display: none;
+      }
+      .swiper-slide .feedback {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+    .feedback .avatar img {
+        transform: translate(-52%, -67%);
+        width: 59px;
+        margin-bottom: 20px;
+    }    
 }
