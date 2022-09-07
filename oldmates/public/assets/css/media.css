@@ -1,10 +1,13 @@
 @media (min-width: 1400px){
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 1420px;
+        max-width: 1350px;
+    }
+    .hero_div .container {
+        max-width: 1425px;
     }
 }
 
-@media (max-width: 540px){
+@media (max-width: 840px){
     .header_form{
         padding-right: 0px;
     }
@@ -55,4 +58,49 @@
     .centerMobile{
         justify-content: center;
     }
+    .inquiry_main .side_content {
+        padding: 92px 6px 60px;
+    }
+    .btn_yellow {
+        padding: 8px 18px;
+        font-size: 12px;
+        line-height: 19px;
+    }
+    .buttons .link{
+        font-size: 12px;
+    }
+    .congrats_box {
+        margin: 5px 0 56px;
+      }
+    .photo_upload{
+        flex-wrap: wrap;
+    }
+    .photo_upload img{
+        margin-top: 8px;
+    }
+    .upload_photo {
+        margin: 20px 0 148px;
+      }
+      .card_img.absolute{
+        position:  relative !important;
+        right: 0;
+        transform: scale(1);
+      }
+      .card_imgs{
+        flex-direction: column;
+        height: auto;
+      }
+      .swiper-slide .feedback.ghost_dev{
+        display: none;
+      }
+      .swiper-slide .feedback {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+    .feedback .avatar img {
+        transform: translate(-52%, -67%);
+        width: 59px;
+        margin-bottom: 20px;
+    }    
 }

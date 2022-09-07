@@ -31,7 +31,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                menu
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex align-items-center ms-auto">
@@ -53,11 +53,6 @@
                         <h2 class="mb-0">Upload Photos </h2>
                         <p>Upload at least 4 photos of trailer from different angles</p>
                         <div class="photo_upload d-flex">
-                            <!-- <img src="img/car.png" alt="car">
-                            <img src="img/car2.png" alt="car">
-                            <img src="img/car3.png" alt="car">
-                            <img src="img/car.png" alt="car">
-                            <img src="img/car.png" alt="car"> -->
                             <img src="{{asset('assets/img/car.png') }}" alt="car">
                             <img src="{{asset('assets/img/car2.png') }}" alt="car">
                             <img src="{{asset('assets/img/car3.png') }}" alt="car">
