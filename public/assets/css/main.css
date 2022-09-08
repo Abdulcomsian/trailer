@@ -8,6 +8,9 @@ font-family: 'Volkhov', serif; */
 *{
     transition: .2s;
 }
+html,body{
+    scroll-behavior: smooth;
+}
 body{
     font-family: 'Poppins', sans-serif;
 }
@@ -579,7 +582,23 @@ footer .social a{
 }
 .swiper2 {
     padding-bottom: 100px;
+    height: 400px;
 }
+.swiper-slide-next .avatar{
+    opacity: 0;
+}
+.swiper-flip .swiper-slide-shadow-bottom{
+    display: none;
+}
+.swiper-slide-shadow-top{
+    display: none;
+}
+#featureText{
+    transition: .2s;
+}
+/* .opacityZero{
+    opacity: 0;
+} */
 /* .swiper-slide-next .feedback{
     transform: scale(0.9);
     opacity: 0.5;
@@ -604,7 +623,7 @@ footer .social a{
     width: 500px; */
 }
 .feedback .avatar img{
-    transform: translate(-105%, -105%);
+    transform: translate(-66%, -76%);
 }
 .feedback .text{
     margin-top: -50px;
@@ -635,23 +654,23 @@ footer .social a{
     line-height: 21px;
     color: #666666;
 }
-.swiper2{
+/* .swiper2{
     overflow: visible;
 }
 .swiper2 .swiper-pagination {
     transform: translate(-149%, -673%);
-}
+} */
 .swiper2 .swiper-pagination-clickable .swiper-pagination-bullet {
     width: 10.62px;
     height: 10.62px;
     background: #E6E6E6;
     border-radius: 90px;
-    transition: .2s;
+    transition: .4s;
     opacity: 1;
 }
 
 .swiper2 .swiper-pagination-bullet-active{
-    width: 28.15px !important;
+    height: 28.15px !important;
     background: #FAC033 !important;
 }
 
@@ -696,4 +715,139 @@ footer .social a{
 }
 .card_img.absolute .btn_book{
     background-color: #888888;
+}
+
+/* about us page start form here */
+.about_hero{
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero_div.about_us{
+    background-image: url(../img/about_us_bg.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.about_section_2{
+    padding: 100px 0;
+    background-color: #efefef;
+}
+.our_blog{
+    padding: 100px 0;
+   background-color: #efefef;
+}
+.our_blog .blog_heading{
+    margin-top: 8px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: capitalize;
+    color: #000000;
+}
+.bg_yellow{
+    background-color: #11100d !important;
+}
+.term_service_text .section_para{
+    max-width: 100%;
+}
+.auth_model .modal-body{
+    padding: 30px !important;
+}
+.auth_model .text h3{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 38px;
+
+    color: #000000;
+}
+.auth_model .text p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #999EA1;
+    margin-bottom: 50px;
+}
+
+.auth_model .input_group label{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #352D66;
+    margin-bottom: 5px;
+}
+.auth_model .input_group input{
+    background: #FFFFFF;
+    border: 1px solid #C6C6C6;
+    border-radius: 10px;
+    height: 40px;
+    padding: 0 10px;
+    outline: none;
+}
+.auth_model .input_group{
+    margin-bottom: 12px;
+}
+.auth_model .modal-dialog{
+    max-width: 422px;
+}
+.auth_model .forgot_password{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #FB344F;
+    text-decoration: none;
+}
+.auth_model .signlink{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #352D66;
+    text-decoration: none;
+}
+.auth_model .dontaccount{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #999EA1;
+}
+.auth_model .eye{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}
+.auth_model .btn_blue{
+    background: #352D66;
+    border-radius: 4px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 7px;
+    width: 100%;
+    color: #FFFFFF;
+}
+.btn-text{
+    box-shadow: none !important;
 }

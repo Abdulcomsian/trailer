@@ -42,6 +42,20 @@ Route::get('/upload_photo', function () {
     return view('frontend.upload_photo');
 });
 
+Route::get('/about_us', function () {
+    return view('frontend.about_us');
+});
+
+Route::get('/contact_us', function () {
+    return view('frontend.contact_us');
+});
+
+Route::get('/terms', function () {
+    return view('frontend.terms');
+});
+
+// about_us.blade
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
