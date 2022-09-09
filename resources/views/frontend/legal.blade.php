@@ -67,7 +67,7 @@
         <div class="container">
             <div class="about_hero">
                 <h1 class="hero_heading">
-                    Legal <span class="text_yellow">Services</span> 
+                    Legal <span class="text_yellow">Service</span> 
                 </h1>
             </div>
         </div>
@@ -76,7 +76,7 @@
     <div class="term_service_text py-5">
         <div class="container">
             <h2 class="section_title">
-                Terms and Services
+                Legal Service
             </h2>
             <p class="section_para w-100 text-start">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, eligendi dicta esse dolorem magnam modi. Eos nobis illo placeat, doloremque est perferendis fugit libero provident alias magnam, officiis facilis.</p>
             <p class="section_para w-100 text-start">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, eligendi dicta esse dolorem magnam modi. Eos nobis illo placeat, doloremque est perferendis fugit libero provident alias magnam, officiis facilis.</p>

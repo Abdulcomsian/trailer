@@ -54,6 +54,10 @@ Route::get('/terms', function () {
     return view('frontend.terms');
 });
 
+Route::get('/legal', function () {
+    return view('frontend.legal');
+});
+
 // about_us.blade
 
 Auth::routes();
