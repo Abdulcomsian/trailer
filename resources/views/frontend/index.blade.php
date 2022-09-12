@@ -321,6 +321,10 @@
 
     <div class="section_3">
         <div class="container">
+              <!-- Swiper -->
+    <div class="swiper swiper3 mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="text mb-5 featureText">
@@ -402,6 +406,63 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="text mb-5">
+                        <h2 class="section_title">Features of <span class="text_yellow">2T</span></h2>
+                        <p class="section_para text-start mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Mauris
+                            quis a
+                            interdum
+                            lacus.</p>
+
+                        <p class="list mb-3">
+                            <!-- <img src="img/dot.png" alt="dot"> -->
+                            <img src="{{asset('assets/img/dot.png') }}" alt="dot">
+                        <span class="ms-3">Lorem ipsum dolor sit
+                                amet</span></p>
+                        <p class="list mb-3">
+                            <!-- <img src="img/dot.png" alt="dot"> -->
+                            <img src="{{asset('assets/img/dot.png') }}" alt="dot">
+                            <span class="ms-3">Lorem ipsum dolor sit
+                                amet</span></p>
+                        <p class="list mb-3">
+                            <!-- <img src="img/dot.png" alt="dot"> -->
+                            <img src="{{asset('assets/img/dot.png') }}" alt="dot">
+                            <span class="ms-3">Lorem ipsum dolor sit
+                                amet</span></p>
+                        <p class="list mb-3">
+                            <!-- <img src="img/dot.png" alt="dot"> -->
+                            <img src="{{asset('assets/img/dot.png') }}" alt="dot">
+                            <span class="ms-3">Lorem ipsum dolor sit
+                                amet</span></p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
+                    <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
+                    <div class="card_imgs d-flex align-items-center">
+                        <div class="card_img img1 absolute d-flex flex-column align-items-center">
+                            <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="#" class="btn btn_book">Book Now</a>
+                            </div>
+                        </div>
+                        <div class="card_img img2 d-flex flex-column align-items-center">
+                            <img src="{{asset('assets/img/feature_img_2.png') }}" class="img-fluid" alt="img">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="#" class="btn btn_book">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="swiper-pagination"></div>
+          
         </div>
     </div>
 
@@ -677,6 +738,12 @@
 
                                     </div>
                                 </div>
+                                <!-- <div class="swiper-slide">
+                                    <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback">
+                                </div> -->
                             </div>
                             <div class="pagination_custom">
                                 <div class="swiper-pagination"></div>
@@ -783,17 +850,27 @@
             direction: "vertical",
             effect: "flip",
             loop: true,
+            // effect: "fade",
             spaceBetween: 30,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
             },
         });
-        // swiper2.on('slideChange', function () {
-        //     $('.custom_pagination_in').html($('.pagination_custom').html())
 
-        // });
-        //   swiper event triiger on only next slide
+      var swiper3 = new Swiper(".swiper3", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            },
+      });
+    //   swiper2.on('slideChange', function () {
+    //     $('.custom_pagination_in').html($('.pagination_custom').html())
+       
+    //   });
+    //   swiper event triiger on only next slide
         swiper2.on('slideChangeTransitionEnd', function () {
             $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-next .feedback').html());
             // $('.swiper-slide-active .ghost_dev').html($('.swiper-slide-next .feedback').html());
@@ -838,6 +915,9 @@
                 $('#togglePassInput').attr('type', 'password');
             }
         });
+        // $('.card_img').click(function () {
+        //     $('.card_img').toggleClass('absolute');
+        // });
     </script>
 </body>
 

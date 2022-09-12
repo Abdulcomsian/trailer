@@ -106,4 +106,7 @@
         width: 59px;
         margin-bottom: 20px;
     }    
+    .hero_div .swiper-vertical {
+        max-height: 266px;
+    }
 }
