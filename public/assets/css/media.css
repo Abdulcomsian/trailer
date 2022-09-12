@@ -5,6 +5,9 @@
     .hero_div .container {
         max-width: 1425px;
     }
+    .about_hero .hero_heading{
+        font-size: 75px;
+    }
 }
 
 @media (max-width: 840px){
