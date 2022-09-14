@@ -6,7 +6,8 @@
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                menu
+                <!-- img -->
+                <img src="{{asset('assets/img/menu.png') }}" alt="menu">
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Home           About           Trailer          Pricing           Contact -->

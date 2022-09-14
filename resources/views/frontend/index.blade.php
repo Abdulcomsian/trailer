@@ -355,13 +355,13 @@
                     <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
                     <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
                     <div class="card_imgs d-flex align-items-center">
-                        <div class="card_img img1 d-flex flex-column align-items-center">
+                        <div class="card_img img1 flex-column align-items-center">
                             <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>
                             </div>
                         </div>
-                        <div class="card_img img2 d-flex flex-column align-items-center absolute">
+                        <div class="card_img img2 d-none d-lg-flex flex-column align-items-center absolute">
                             <img src="{{asset('assets/img/feature_img_2.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>
@@ -408,7 +408,7 @@
                     <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
                     <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
                     <div class="card_imgs d-flex align-items-center">
-                        <div class="card_img img1 absolute d-flex flex-column align-items-center">
+                        <div class="card_img img1 absolute d-none d-lg-flex flex-column align-items-center">
                             <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>

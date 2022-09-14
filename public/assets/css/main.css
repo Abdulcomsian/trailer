@@ -430,7 +430,7 @@ footer .copyright {
 }
 .inquiry_main .side_content {
     color: #fff;
-    padding: 167px 60px 60px;
+    padding: 151px 60px 46px;
 }
 .side_content .head {
     font-family: "Poppins";
@@ -440,6 +440,19 @@ footer .copyright {
     line-height: 36px;
     /* identical to box height */
     color: #ffffff;
+}
+
+.section_3 .swiper-pagination-bullet{
+    width: 10.62px;
+    height: 10.62px;
+    background: #E6E6E6;
+    border-radius: 90px;
+    transition: .4s;
+    opacity: 1;
+}
+.section_3 .swiper-pagination-bullet-active{
+    background: #FAC033;
+    width: 28.15px;
 }
 
 .specifi p {
@@ -726,6 +739,11 @@ footer .social a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.inquiry_main .img{
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 .hero_div.about_us {
