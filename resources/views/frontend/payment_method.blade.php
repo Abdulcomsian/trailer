@@ -24,16 +24,12 @@
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg inquiry_nav">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <!-- <img src="img/logo.png" alt="logo"> -->
                 <img src="{{asset('assets/img/logo.png') }}" alt="logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                menu
-            </button>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <!-- img --> <img src="{{asset('assets/img/menu.png') }}" alt="menu"> </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex align-items-center ms-auto">
                     <a href="#" class="mx-2 me-3 btn btn_yellow">Contact</a>

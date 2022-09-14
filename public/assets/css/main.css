@@ -427,6 +427,7 @@ footer .copyright {
     z-index: 99999999;
     width: 100%;
     background-color: transparent;
+    padding: 0 60px;
 }
 .inquiry_main .side_content {
     color: #fff;
@@ -744,6 +745,16 @@ footer .social a {
 .inquiry_main .img{
     max-height: 100vh;
     overflow: hidden;
+}
+
+.inquiry_main .img img{
+    position: fixed;
+    max-width: 60%;
+}
+
+.inquiry_nav .navbar-brand{
+    width: 37%;
+    background-color: #352d66;
 }
 
 .hero_div.about_us {
