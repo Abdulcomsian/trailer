@@ -65,11 +65,25 @@
         margin-bottom: 12px;
         display: inline-block;
     }
+    .bank_cards .card_img img{
+        max-width: 80px;
+    }
+    .bank_cards .card_img{
+        padding: 15px;
+        margin-top: 8px;
+    }
     .navbar-nav .nav-item{
         text-align: end;
     }
     .navbar .centerMobile{
         justify-content: end !important;
+    }
+    .inquiry_nav {
+        padding: 0 10px;
+    }
+    .inquiry_nav .navbar-collapse {
+        background-color: #352d66;
+        padding: 25px 10px;
     }
     .centerMobile{
         justify-content: center;

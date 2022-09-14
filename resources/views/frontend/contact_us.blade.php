@@ -27,7 +27,11 @@
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
 </head>
-
+<style>
+    nav .btn{
+        margin-bottom: 0;
+    }
+</style>
 <body>
 
     <!-- navbar -->
