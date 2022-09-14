@@ -10,6 +10,12 @@
     }
 }
 
+@media (min-width: 1200px){
+    .section_7 .swiper-pagination {
+        right: -30px;
+    }
+}
+
 @media (max-width: 840px){
     .header_form{
         padding-right: 0px;
@@ -55,8 +61,15 @@
         flex-direction: column;
     }
     .navbar-nav .nav-link{
-        text-align: center;
+        text-align: end;
         margin-bottom: 12px;
+        display: inline-block;
+    }
+    .navbar-nav .nav-item{
+        text-align: end;
+    }
+    .navbar .centerMobile{
+        justify-content: end !important;
     }
     .centerMobile{
         justify-content: center;
@@ -108,5 +121,14 @@
     }    
     .hero_div .swiper-vertical {
         max-height: 266px;
+    }
+    .card_img{
+        max-width: 100%;
+    }
+    .section_2 .box{
+        margin-bottom: 20px;
+    }
+    .swiper2 {
+        height: 278px;
     }
 }

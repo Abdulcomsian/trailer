@@ -25,43 +25,7 @@
 <body>
 
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{{asset('assets/img/logo.png') }}" alt="logo">
-            </a>
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                menu
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Home           About           Trailer          Pricing           Contact -->
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link mx-3 active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3" href="#">Trailer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mx-3" href="#">Contact</a>
-                    </li>
-                </ul>
-                <form class="d-flex align-items-center centerMobile">
-                    <a href="#" class="btn btn-text"  data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                    <a href="#" class="me-3 btn btn_yellow"   data-bs-toggle="modal" data-bs-target="#ragisterModel">Register</a> 
-                    <a href="#"><img src="{{asset('assets/img/setting.png') }}" alt="setting"></a>
-                </form>
-            </div>
-        </div>
-    </nav>
+    @include('frontend.nav')
 
     <!-- login/register model -->
       <!-- Modal -->
@@ -319,7 +283,7 @@
         </div>
     </div>
 
-    <div class="section_3">
+    <div class="section_3" id="trailer">
         <div class="container">
               <!-- Swiper -->
     <div class="swiper swiper3 mySwiper">
@@ -391,13 +355,13 @@
                     <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
                     <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
                     <div class="card_imgs d-flex align-items-center">
-                        <div class="card_img img1 d-flex flex-column align-items-center">
+                        <div class="card_img img1 flex-column align-items-center">
                             <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>
                             </div>
                         </div>
-                        <div class="card_img img2 d-flex flex-column align-items-center absolute">
+                        <div class="card_img img2 d-none d-lg-flex flex-column align-items-center absolute">
                             <img src="{{asset('assets/img/feature_img_2.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>
@@ -444,7 +408,7 @@
                     <!-- <img src="img/section3Img.png" class="img-fluid" alt="img"> -->
                     <!-- <img src="{{asset('assets/img/section3Img.png') }}" class="img-fluid" alt="img"> -->
                     <div class="card_imgs d-flex align-items-center">
-                        <div class="card_img img1 absolute d-flex flex-column align-items-center">
+                        <div class="card_img img1 absolute d-none d-lg-flex flex-column align-items-center">
                             <img src="{{asset('assets/img/feature_img_1.png') }}" class="img-fluid" alt="img">
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="#" class="btn btn_book">Book Now</a>
@@ -755,75 +719,8 @@
         </div>
     </div>
 
-    <!-- footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="box d-flex align-items-center flex-column">
-                        <div class="logo">
-                            <!-- <img src="img/logo.png" alt="logo"> -->
-                            <img src="{{asset('assets/img/logo.png') }}" alt="logo">
-                        </div>
-                        <div class="social mt-4">
-                            <a href="#" class="mx-1">
-                                <img src="{{asset('assets/img/instagram.png') }}" alt="instagram">
-                            </a>
-                            <a href="#" class="mx-1">
-                                <img src="{{asset('assets/img/Social2.png') }}" alt="instagram">
-                            </a>
-                            <a href="#" class="mx-1">
-                                <img src="{{asset('assets/img/Social3.png') }}" alt="instagram">
-                            </a>
-                            <a href="#" class="mx-1">
-                                <img src="{{asset('assets/img/Social4.png') }}" alt="instagram">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div
-                        class="box d-flex align-items-lg-end align-items-center justify-content-lg-center flex-column pe-lg-5">
-                        <h3 class="footer_title">Company</h3>
-                        <div class="links">
-                            <a href="{{url('/about_us')}}" class="link d-block">About us</a>
-                            <!-- <a href="#" class="link d-block">Blog</a> -->
-                            <a href="{{url('/contact_us')}}" class="link d-block">Contact us</a>
-                            <a href="#pricing" class="link d-block">Pricing</a>
-                            <a href="#feedback" class="link d-block">Testimonials</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="box d-flex align-items-center flex-column">
-                        <div>
-                            <h3 class="footer_title me-lg-5">Support</h3>
-                        </div>
-                        <div class="links">
-                            <a href="{{url('/contact_us')}}" class="link d-block">Help center</a>
-                            <a href="{{url('/terms')}}" class="link d-block">Terms of service</a>
-                            <a href="#" class="link d-block">Legal</a>
-                            <a href="{{url('/terms')}}" class="link d-block">Privacy policy</a>
-                            <!-- <a href="#" class="link d-block">Status</a> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="box flexmobile pe-lg-5 me-lg-5">
-                        <h3 class="footer_title">Stay up to date</h3>
-                        <div class="input position-relative">
-                            <input type="email" placeholder="Your email address">
-                            <span class="icon">
-                                <!-- <img src="img/send.png" alt="send"> -->
-                                <img src="{{asset('assets/img/send.png') }}" alt="send">
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p class="copyright mb-0">Copyright © 2022 oldmatestrailer. All rights reserved</p>
-    </footer>
+    <!-- include footer -->
+    @include('frontend.footer')
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
