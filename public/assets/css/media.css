@@ -16,6 +16,12 @@
     }
 }
 
+@media (min-width: 1200px) and (max-width: 1400px){
+    .section_7 .swiper-pagination {
+        right: -70px;
+    }
+}
+
 @media (max-width: 840px){
     .header_form{
         padding-right: 0px;

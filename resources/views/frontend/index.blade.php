@@ -758,6 +758,11 @@
       var swiper3 = new Swiper(".swiper3", {
             slidesPerView: 1,
             spaceBetween: 30,
+            // autoplay
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
             pagination: {
             el: ".swiper-pagination",
             clickable: true,
@@ -798,8 +803,6 @@
         });
         $('.card_img').click(function () {
             $('.card_img').toggleClass('absolute');
-            $('.featureText').fadeOut()
-            $('.featureText').fadeIn()
             $('.featureText').toggleClass('d-none');
         });
 
