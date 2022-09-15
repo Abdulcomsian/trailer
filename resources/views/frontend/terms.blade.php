@@ -45,19 +45,23 @@
             <p class="section_para w-100 text-start">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, eligendi dicta esse dolorem magnam modi. Eos nobis illo placeat, doloremque est perferendis fugit libero provident alias magnam, officiis facilis.</p>
             <p class="section_para w-100 text-start">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, eligendi dicta esse dolorem magnam modi. Eos nobis illo placeat, doloremque est perferendis fugit libero provident alias magnam, officiis facilis.</p>
             <p class="list mb-3 mt-4">
-                <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot">
+                <!-- <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot"> -->
+                <img src="{{asset('assets/img/dot.png') }}" alt="img">
                 <span class="ms-3">Lorem ipsum dolor sit amet</span>
             </p>
             <p class="list mb-3 mt-4">
-                <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot">
+                <!-- <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot"> -->
+                <img src="{{asset('assets/img/dot.png') }}" alt="img">
                 <span class="ms-3">Lorem ipsum dolor sit amet</span>
             </p>
             <p class="list mb-3 mt-4">
-                <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot">
+                <!-- <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot"> -->
+                <img src="{{asset('assets/img/dot.png') }}" alt="img">
                 <span class="ms-3">Lorem ipsum dolor sit amet</span>
             </p>
             <p class="list mb-3 mt-4">
-                <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot">
+                <!-- <img src="http://127.0.0.1:8000/assets/img/dot.png" alt="dot"> -->
+                <img src="{{asset('assets/img/dot.png') }}" alt="img">
                 <span class="ms-3">Lorem ipsum dolor sit amet</span>
             </p>
             <p class="section_para w-100 text-start">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, eligendi dicta esse dolorem magnam modi. Eos nobis illo placeat, doloremque est perferendis fugit libero provident alias magnam, officiis facilis.</p>
