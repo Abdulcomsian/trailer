@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
 </head>
 
-<body>
+<body class="form_page">
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg inquiry_nav">
