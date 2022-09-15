@@ -151,4 +151,19 @@
     .swiper2 {
         height: 278px;
     }
+    .inquiry_nav form{
+        justify-content: end;
+    }
+    .inquiry_nav{
+        background-color: #352d66;
+    }
+    .inquiry_main .img{
+        display: none !important;
+    }
+    .about_us {
+        padding: 20px 0 11px;
+    }
+    .hero_div.about_us{
+        background-size: 202%;
+    }
 }
