@@ -798,8 +798,6 @@
         });
         $('.card_img').click(function () {
             $('.card_img').toggleClass('absolute');
-            $('.featureText').fadeOut()
-            $('.featureText').fadeIn()
             $('.featureText').toggleClass('d-none');
         });
 
