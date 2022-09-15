@@ -761,6 +761,12 @@ footer .social a {
     background-color: #352d66;
 }
 
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
 .hero_div.about_us {
     background-image: url(../img/about_us_bg.jpg);
     background-size: cover;
