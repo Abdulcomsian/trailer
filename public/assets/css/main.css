@@ -761,7 +761,7 @@ footer .social a {
     background-color: #352d66;
 }
 
-.navbar{
+.navbar:not(.inquiry_nav){
     position: sticky;
     top: 0;
     z-index: 999;
