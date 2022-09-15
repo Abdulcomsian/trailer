@@ -758,6 +758,11 @@
       var swiper3 = new Swiper(".swiper3", {
             slidesPerView: 1,
             spaceBetween: 30,
+            // autoplay
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
             pagination: {
             el: ".swiper-pagination",
             clickable: true,
