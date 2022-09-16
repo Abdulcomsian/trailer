@@ -75,7 +75,7 @@
         max-width: 80px;
     }
     .bank_cards .card_img{
-        padding: 11px;
+        padding: 0px;
         margin-top: 8px;
     }
     .navbar-nav .nav-item{
@@ -104,6 +104,11 @@
     }
     .form_page{
         background-color: #352d66;
+    }
+    .navbar{
+        position: sticky;
+        top: 0;
+        z-index: 999;
     }
     .buttons .link{
         font-size: 12px;
