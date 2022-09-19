@@ -65,7 +65,7 @@
                             <span for="#">1/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white">GO BACK</a>
+                            <a href="{{url('/my_booking')}}" class="btn link text-white">GO BACK</a>
                             <a href="#" class="btn btn_yellow ms-2" onclick="navigate('content2')">Get Code</a>
                         </div>
                     </div>
