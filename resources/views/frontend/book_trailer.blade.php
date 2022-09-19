@@ -58,7 +58,7 @@
     <main class="inquiry_main">
         <div class="row mx-0">
             <div class="col-lg-5">
-                <div class="side_content">
+                <div class="side_content content1">
                     <h2 class="head">Book your trailer</h2>
                     <div class="specifi">
                         <div class="row">
@@ -112,7 +112,111 @@
                         </div>
                         <div class="btns d-flex align-items-center">
                             <a href="#" class="btn link text-white">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2">CONTINUE</a>
+                            <a href="#" class="btn btn_yellow ms-2" onclick="navigate('content2')">CONTINUE</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2 -->
+                <div class="side_content content2 d-none">
+                    <h2 class="head">Payment Method</h2>
+                    <div class="payment_form">
+                        <div class="d-flex justify-content-between">
+                            <p>Trailer payment:</p>
+                            <p>$60</p>
+                        </div>
+                        <div class="d-flex justify-content-between borderBottom">
+                            <p>Bond charges (Refundable):</p>
+                            <p>$150</p>
+                        </div>
+                        <div class="d-flex mt-2 justify-content-between">
+                            <p class="mb-0"><b>Total:</b></p>
+                            <p class="mb-0"><b>$210</b></p>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="mb-3 mt-3">
+                            <label for="exampleFormControlInput1" class="form-label">Choose payment method:</label>
+                            <div class="d-flex">
+                                <div class="bank_cards me-2">
+                                    <a href="#" class="card_img">
+                                        <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
+                                    </a>
+                                </div>
+                                <div class="bank_cards me-2">
+                                    <a href="#" class="card_img">
+                                        <img src="{{asset('assets/img/gpay.png') }}" width="80" alt="gpay">
+                                    </a>
+                                </div>
+                                <div class="bank_cards me-2">
+                                    <a href="#" class="card_img">
+                                        <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Card Name:</label>
+                            <input type="email" class="form_control" id="exampleFormControlInput1"
+                                placeholder="Enter card holder name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Card Number:</label>
+                            <input type="email" class="form_control" id="exampleFormControlInput1"
+                                placeholder="####-####-####-####">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Expiration Date:</label>
+                                    <input type="email" class="form_control" id="exampleFormControlInput1"
+                                        placeholder="MM/YY">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">CCV:</label>
+                                    <input type="email" class="form_control" id="exampleFormControlInput1"
+                                        placeholder="###">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                        <div class="progress_bar text-center mt-2">
+                            <div class="progress" style="width: 90px;height: 7px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"
+                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span for="#">2/3</span>
+                        </div>
+                        <div class="btns d-flex align-items-center">
+                            <a href="#" class="btn link text-white" onclick="navigate('content1')">GO BACK</a>
+                            <a href="#" class="btn btn_yellow ms-2"  onclick="navigate('content3')">Pay $210</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div class="side_content content3 d-none">
+                    <div class="congrats_box d-flex align-items-center justify-content-center flex-column">
+                        <!-- <img src="img/congrats.png" alt="congrats"> -->
+                        <img src="{{asset('assets/img/congrats.png') }}" alt="congrats">
+                        <h1>Congratulations!</h1>
+                        <p>You have successfully made payment
+                            of <b class="text-white">2T Trailer</b> for <b class="text-white">24hrs</b> . We have sent
+                            further details to your email <b class="text-white">johndoe@gmail.com</b>.
+                            Please check your email</p>
+                    </div>
+                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                        <div class="progress_bar text-center mt-2">
+                            <div class="progress" style="width: 90px;height: 7px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span for="#">3/3</span>
+                        </div>
+                        <div class="btns d-flex align-items-center">
+                            <a href="#" class="btn link text-white" onclick="navigate('content2')">GO BACK</a>
+                            <a href="#" class="btn btn_yellow ms-2" >Pay $210</a>
                         </div>
                     </div>
                 </div>
@@ -131,6 +235,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+
+   <!-- load jquery 3 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function navigate(content) {
+            $('.side_content').addClass('d-none');
+            $(`.${content}`).removeClass('d-none');
+        }
+    </script>
 </body>
 
 </html>
