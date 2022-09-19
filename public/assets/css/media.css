@@ -14,6 +14,13 @@
     .section_7 .swiper-pagination {
         right: -30px;
     }
+    .filter{
+        width: 40%;
+        margin-bottom: -50px;
+    }
+    select{
+        box-shadow: none !important;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1400px){
@@ -173,6 +180,19 @@
     }
     .inquiry_main{
         min-height: 100vh;
+    }
+    .dashboad_main {
+        padding-top: 54px;
+    }
+    .menu_items{
+        display: flex;
+        justify-content: space-between;
+    }
+    .menu_items a{
+        border-bottom: 0 !important;
+    }
+    .bookingTable th{
+        min-width: 100px;
     }
     
 }

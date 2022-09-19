@@ -44,7 +44,7 @@
     <main class="inquiry_main">
         <div class="row mx-0">
             <div class="col-lg-5">
-                <div class="side_content">
+                <div class="side_content content1">
                     <div class="upload_photo">
                         <h2 class="mb-0">Upload Photos </h2>
                         <p>Upload at least 4 photos of trailer from different angles</p>
@@ -65,8 +65,27 @@
                             <span for="#">1/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2">Get Code</a>
+                            <a href="{{url('/my_booking')}}" class="btn link text-white">GO BACK</a>
+                            <a href="#" class="btn btn_yellow ms-2" onclick="navigate('content2')">Get Code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="side_content d-none content2">
+                    <div class="congrats_box done_box d-flex align-items-center justify-content-center flex-column">
+                        <h1>123456</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi, eget nulla sagittis curabitur
+                            proin id mi odio.</p>
+                    </div>
+                    <div class="buttons pt-lg-5 mt-5 d-flex align-items-start justify-content-between">
+                        <div class="progress_bar invisible text-center mt-2">
+                            <div class="progress" style="width: 90px;height: 7px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span for="#">3/3</span>
+                        </div>
+                        <div class="btns d-flex align-items-center">
+                            <a href="#" class="btn btn_yellow ms-2">DONE</a>
                         </div>
                     </div>
                 </div>
@@ -85,6 +104,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <!-- load jquery 3 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function navigate(content) {
+            $('.side_content').addClass('d-none');
+            $(`.${content}`).removeClass('d-none');
+        }
+    </script>
 </body>
 
 </html>

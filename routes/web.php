@@ -58,6 +58,18 @@ Route::get('/legal', function () {
     return view('frontend.legal');
 });
 
+Route::get('/my_booking', function () {
+    return view('frontend.my_booking');
+});
+
+Route::get('/user_profile', function () {
+    return view('frontend.user_profile');
+});
+
+Route::get('/dashboard', function () {
+    return view('frontend.dashboard');
+});
+
 // about_us.blade
 
 Auth::routes();
