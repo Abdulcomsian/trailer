@@ -29,9 +29,14 @@
                     </li>
                 </ul>
                 <form class="d-flex align-items-center centerMobile">
+                    @guest
                     <a href="#" class="btn btn-text"  data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                     <a href="#" class="me-3 btn btn_yellow"   data-bs-toggle="modal" data-bs-target="#ragisterModel">Register</a> 
+                    @else
+                        @php $arr = explode(' ',trim(Auth::user()->name)); @endphp
+                        <p style="color: #fff; margin: 3px 7px 0px 0px;">Welcome {{$arr[0]}} </p>
                     <a href="#"><img src="{{asset('assets/img/setting.png') }}" alt="setting"></a>
+                    @endif
                 </form>
             </div>
         </div>

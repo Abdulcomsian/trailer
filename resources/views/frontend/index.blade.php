@@ -38,10 +38,11 @@
                                         <h3>Create an account</h3>
                                         <p>Connect with us today!</p>
                                     </div>
-                                    <form class="model_form">
+                                    <form class="model_form" method="POST" action="{{ route('register') }}">
+                                        @csrf
                                     <div class="input_group d-flex flex-column">
                                             <label for="email">Full Name</label>
-                                            <input type="email" name="email" id="email"
+                                            <input type="text" name="name" id="name"
                                                 placeholder="Enter your fullname">
                                         </div>
                                         <div class="input_group d-flex flex-column">
@@ -51,13 +52,13 @@
                                         </div>
                                         <div class="input_group d-flex flex-column">
                                             <label for="email">Phone Number</label>
-                                            <input type="email" name="email" id="email"
+                                            <input type="number" name="phone" id="phone"
                                                 placeholder="Enter your phone number">
                                         </div>
                                         <div class="input_group  d-flex flex-column">
                                             <label for="email">Password</label>
                                             <div class="input position-relative">
-                                                <input type="password" id="togglePassInput" class="w-100" class="" name="email" id="email"
+                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password"
                                                     placeholder="Please Enter Your Password">
                                                     <a href="#" class="eye" id="togglePass">
                                                         <!-- img -->
@@ -65,7 +66,7 @@
                                                     </a>
                                             </div>
                                         </div>
-                                        <a href="#" class="btn btn_blue mt-4">Sign Up</a>
+                                        <button type="submit" class="btn btn_blue mt-4">Sign Up</button>
                                         <!-- img -->
                                         <div class="img">
                                             <img src="{{asset('assets/img/with.png') }}" class="my-4" alt="img">
@@ -103,7 +104,8 @@
                                         <h3>Hi, Welcome Back! </h3>
                                         <p>Hello again, you’ve been missed!</p>
                                     </div>
-                                    <form class="model_form">
+                                    <form class="model_form" method="POST" action="{{ route('login') }}">
+                                    @csrf
                                         <div class="input_group d-flex flex-column">
                                             <label for="email">Email</label>
                                             <input type="email" name="email" id="email"
@@ -112,7 +114,7 @@
                                         <div class="input_group  d-flex flex-column">
                                             <label for="email">Password</label>
                                             <div class="input position-relative">
-                                                <input type="password" id="togglePassInput" class="w-100" class="" name="email" id="email"
+                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password"
                                                     placeholder="Please Enter Your Password">
                                                     <a href="#" class="eye" id="togglePass">
                                                         <!-- img -->
@@ -130,7 +132,7 @@
                                             </div>
                                             <a href="#" class="forgot_password">Forgot Password?</a>
                                         </div>
-                                        <a href="#" class="btn btn_blue mt-4">Login</a>
+                                        <button type="submit" class="btn btn_blue mt-4">Login</button>
                                         <!-- img -->
                                         <div class="img">
                                             <img src="{{asset('assets/img/with.png') }}" class="my-4" alt="img">

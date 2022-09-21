@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('frontend.index');
 });
 
+/*****************ADMIN ROUTES*******************/
+Route::prefix('admin')->middleware('can:admin')->group(function(){
+    Route::get('/dashboard', function () {
+    return view('frontend.setting');
+})->name('dashboard');
+});
+
 Route::get('/book_trailer', function () {
     return view('frontend.book_trailer');
 });
