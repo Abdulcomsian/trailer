@@ -23,7 +23,14 @@ Route::prefix('admin')->middleware('can:admin')->group(function(){
     Route::get('/dashboard', function () {
     return view('frontend.setting');
 })->name('dashboard');
+    //trailer
+    Route::resource('city', App\Http\Controllers\admin\TrailerController::class);
 });
+/*****************END ADMIN ROUTES*******************/
+
+//order trailer
+Route::post('order-trailer', [App\Http\Controllers\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
+
 
 Route::get('/book_trailer', function () {
     return view('frontend.book_trailer');
