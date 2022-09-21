@@ -181,6 +181,7 @@
                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </p>
                         <form class="header_form mt-5" method="POST" action="{{ route('order-trailer') }}">
+                            @csrf
                             <div class="input mb-5 position-relative">
                                 <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
                                 <select name="trailer_id" id="trailer_id" class="form_control w-100">
@@ -240,7 +241,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="me-3 btn btn_yellow">Search</a>
+                            <button type="submit" class="me-3 btn btn_yellow">Search</button>
                         </form>
                     </div>
                 </div>
