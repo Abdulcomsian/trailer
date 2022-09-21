@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('frontend.index');
-});
+})->name('landing-page');
 
 /*****************ADMIN ROUTES*******************/
 Route::prefix('admin')->middleware('can:admin')->group(function(){
@@ -51,11 +51,11 @@ Route::get('/upload_photo', function () {
 
 Route::get('/about_us', function () {
     return view('frontend.about_us');
-});
+})->name('about-us');    
 
 Route::get('/contact_us', function () {
     return view('frontend.contact_us');
-});
+})->name('contact-us');
 
 Route::get('/terms', function () {
     return view('frontend.terms');

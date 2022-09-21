@@ -45,7 +45,7 @@
                         <div class="links">
                             <a href="{{url('/contact_us')}}" class="link d-block">Help center</a>
                             <a href="{{url('/terms')}}" class="link d-block">Terms of service</a>
-                            <a href="#" class="link d-block">Legal</a>
+                            <a href="{{url('/legal')}}"  class="link d-block">Legal</a>
                             <a href="{{url('/terms')}}" class="link d-block">Privacy policy</a>
                             <!-- <a href="#" class="link d-block">Status</a> -->
                         </div>
