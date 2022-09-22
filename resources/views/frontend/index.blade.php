@@ -33,6 +33,10 @@
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                                 <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
                                 <div class="modal-body">
                                     <div class="text text-center">
                                         <h3>Create an account</h3>
@@ -79,7 +83,7 @@
                                                 </a>
                                             </div>
                                             <div class="mt-5 text-center">
-                                                <p class="mb-0 dontaccount">Continue as a  <a href="#" class="signlink">Guest</a></p>
+                                                <!-- <p class="mb-0 dontaccount">Continue as a  <a href="#" class="signlink">Guest</a></p> -->
                                             </div>
                                     </form>
                                 </div>
@@ -99,6 +103,10 @@
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                            <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
                                 <div class="modal-body">
                                 <div class="text text-center">
                                         <h3>Hi, Welcome Back! </h3>
@@ -130,7 +138,7 @@
                                                     Remember me
                                                 </label>
                                             </div>
-                                            <a href="#" class="forgot_password">Forgot Password?</a>
+                                            <a href="#" class="forgot_password" data-bs-toggle="modal" onclick="forgotPass()" >Forgot Password?</a>
                                         </div>
                                         <button type="submit" class="btn btn_blue mt-4">Login</button>
                                         <!-- img -->
@@ -145,8 +153,40 @@
                                                 </a>
                                             </div>
                                             <div class="mt-5 text-center">
-                                                <p class="mb-0 dontaccount">Don’t have an account? <a href="#" class="signlink">Sign Up</a></p>
+                                                <p class="mb-0 dontaccount">Don’t have an account? <a href="#" onclick="toggleModel()" class="signlink">Sign Up</a></p>
                                             </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+             <!-- forgot password -->
+             <div class="modal fade auth_model" id="ForgotPassword" tabindex="-1" aria-labelledby="loginModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                 <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <div class="modal-body">
+                                <div class="text text-center">
+                                        <h3>Reset Password </h3>
+                                        <p class="mb-4">Code will be send into your email</p>
+                                    </div>
+                                    <form class="model_form" method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                        <div class="input_group d-flex flex-column">
+                                            <label for="email">Enter Your Email</label>
+                                            <input type="email" name="email" id="email"
+                                                placeholder="Please Enter Your Email">
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <button type="submit" class="btn mt-4 btn-secondary" onclick="forgotPass()">Cancel</button>
+                                            <button type="submit" class="btn mt-4 btn-primary ms-2">Submit</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -830,6 +870,29 @@
         // $('.card_img').click(function () {
         //     $('.card_img').toggleClass('absolute');
         // });
+    </script>
+
+    <script>
+        function toggleModel() {
+            $('#loginModal').modal('toggle');
+            $('#ragisterModel').modal('toggle');
+        }
+
+        function forgotPass() {
+            $('#loginModal').modal('toggle');
+            $('#ForgotPassword').modal('toggle');
+        }
+
+        $('#loginModal #togglePass').on('click', function () {
+            // $('#loginModal #togglePassInput').attr('type', 'text');
+            // toggle type
+            if ($('#loginModal #togglePassInput').attr('type') == 'password') {
+                $('#loginModal #togglePassInput').attr('type', 'text');
+            } else {
+                $('#loginModal #togglePassInput').attr('type', 'password');
+            }
+            
+        });
     </script>
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
