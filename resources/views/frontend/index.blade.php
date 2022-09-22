@@ -180,42 +180,43 @@
                         <p class="hero_text text-white">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         </p>
-                        <form class="header_form mt-5">
+                        <form class="header_form mt-5" method="POST" action="{{ route('order-trailer') }}">
+                            @csrf
                             <div class="input mb-5 position-relative">
                                 <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
-                                <select name="trailer" id="select" class="form_control w-100">
-                                    <option value="1">Type of trailer</option>
+                                <select name="trailer_id" id="trailer_id" class="form_control w-100">
+                                    <option value="">Type of trailer</option>
                                     <option value="1">Trailer 1</option>
-                                    <option value="1">Trailer 2</option>
+                                    <option value="2">Trailer 2</option>
                                 </select>
                                 <!-- <span class="icon">
                                     <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
                                 </span> -->
                             </div>
                             <div class="input mb-5 position-relative">
-                                <input type="text" class="d-block form_control w-100" id="datePut"
+                                <input type="text" name="hire_time" class="d-block form_control w-100" id="datePut"
                                     placeholder="Hire Period">
                                 <span class="icon">
                                     <!-- <img src="img/calendar-outline.png" alt="calendar-outline"> -->
                                     <!-- <img src="{{asset('assets/img/calendar-outline.png') }}" alt="calendar-outline"> -->
-                                    <input type="date" name="datepicker" id="datePicker" class="datePicker"
+                                    <input type="date" name="hire_time" id="datePicker" class="datePicker"
                                         placeholder="test">
                                 </span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-5">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block form_control w-100" id="picktimeinput"
+                                        <input type="text" name="start_time" class="d-block form_control w-100" id="picktimeinput"
                                             placeholder="Pickup time">
                                         <span class="icon">
-                                            <input type="time" name="datepicker" id="picktime" class="datePicker"
+                                            <input type="time" name="start_time" id="picktime" class="datePicker"
                                                 placeholder="test">
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="input mb-5 position-relative">
-                                        <select name="trailer" id="select" class="form_control w-100">
+                                        <select name="start_am_pm" id="select" class="form_control w-100">
                                             <option value="1">AM</option>
                                             <option value="1">PM</option>
                                         </select>
@@ -223,24 +224,24 @@
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" class="d-block form_control w-100" id="droptimeInput"
+                                        <input type="text" name="end_time" class="d-block form_control w-100" id="droptimeInput"
                                             placeholder="Dropoff time">
                                         <span class="icon">
-                                            <input type="time" name="datepicker" id="droptime" class="datePicker"
+                                            <input type="time" name="end_time" id="droptime" class="datePicker"
                                                 placeholder="test">
                                         </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="input mb-5 position-relative">
-                                        <select name="trailer" id="select" class="form_control w-100">
+                                        <select name="end_am_pm" id="select" class="form_control w-100">
                                             <option value="1">AM</option>
                                             <option value="1">PM</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="me-3 btn btn_yellow">Search</a>
+                            <button type="submit" class="me-3 btn btn_yellow">Search</button>
                         </form>
                     </div>
                 </div>
