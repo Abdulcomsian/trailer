@@ -6,7 +6,7 @@
 font-family: 'Poppins', sans-serif;
 font-family: 'Volkhov', serif; */
 * {
-    transition: 0.2s;
+    /* transition: 0.2s; */
 }
 
 .btn, a{
