@@ -91,8 +91,11 @@
                 
 
                 <div class="menu-item">
-                    <!-- <a class="menu-link {{Route::is('trailers.index')}} ? 'active' : '' " href="{{url('admin/trailers')}}"> -->
-                    <!-- <a class="menu-link" href="{{url('admin/trailers')}}"> -->
+                    @if(Route::is('trailers.index'))
+                    <a class="menu-link active" href="{{url('admin/trailers')}}">
+                    @else
+                    <a class="menu-link" href="{{url('admin/trailers')}}">
+                    @endif
                         <span class="menu-icon">
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="https://www.flaticon.com/free-icon/doctor_3952988" width="24px" height="24px"
@@ -104,7 +107,7 @@
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-title">Tralers</span>
-                    <!-- </a> -->
+                    </a> 
                 </div>
                
                

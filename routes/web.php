@@ -24,7 +24,7 @@ Route::prefix('admin')->middleware('can:admin')->group(function(){
     return view('frontend.setting');
 })->name('dashboard');
     //trailer
-    Route::resource('city', App\Http\Controllers\admin\TrailerController::class);
+    Route::resource('trailers', App\Http\Controllers\admin\TrailerController::class);
 });
 /*****************END ADMIN ROUTES*******************/
 
