@@ -98,11 +98,26 @@
 
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-bold fs-6 mb-2">Pricing</label>
+                                                    <label class="required fw-bold fs-6 mb-2">Pricing and Time</label>
                                                     <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <textarea class="form-control"  name="price" rows="3" required></textarea>
-                                                    <!--end::Input-->
+                                                    <table class="table table-bordered" id="dynamic_field">  
+                                                        <tr>  
+                                                            <td>
+                                                                <input type="number" name="addmore[0][price]" placeholder="Enter Price" class="form-control price_list" />
+                                                                <select name="addmore[0][time]" class="form-control time_list" >
+                                                                    <option value="">Select Time</option>
+                                                                    <option value="3 - 6 hrs">3 - 6 hrs</option>
+                                                                    <option value="6 - 12 hrs">6 - 12 hrs</option>
+                                                                    <option value="24 hrs (1 Day)">24 hrs (1 Day)</option>
+                                                                    <option value="24 - 48 hrs (2 Days)">24 - 48 hrs (2 Days)</option>
+                                                                    <option value="48 - 72 hrs (3 Days)">48 - 72 hrs (3 Days)</option>
+                                                                    <option value="72 - 96 hrs (4 Days) ">72 - 96 hrs (4 Days) </option>
+                                                                    <option value="96 - 120 hrs (5 Days)">96 - 120 hrs (5 Days)</option>
+                                                                </select>
+                                                            </td>  
+                                                            <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>  
+                                                        </tr>  
+                                                    </table>
                                                 </div>
 
                                                 <!--end::Input group-->
@@ -175,10 +190,26 @@
 
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-bold fs-6 mb-2">Pricing</label>
+                                                    <label class="required fw-bold fs-6 mb-2">Pricing and Time</label>
                                                     <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                     <textarea class="form-control" name="description" id="editdesc" rows="3" required></textarea>
+                                                    <table class="table table-bordered" id="dynamic_field">  
+                                                        <tr>  
+                                                            <td>
+                                                                <input type="number" name="addmore[0][price]" placeholder="Enter Price" class="form-control price_list" />
+                                                                <select name="addmore[0][time]" class="form-control time_list" >
+                                                                    <option value="">Select Time</option>
+                                                                    <option value="3 - 6 hrs">3 - 6 hrs</option>
+                                                                    <option value="6 - 12 hrs">6 - 12 hrs</option>
+                                                                    <option value="24 hrs (1 Day)">24 hrs (1 Day)</option>
+                                                                    <option value="24 - 48 hrs (2 Days)">24 - 48 hrs (2 Days)</option>
+                                                                    <option value="48 - 72 hrs (3 Days)">48 - 72 hrs (3 Days)</option>
+                                                                    <option value="72 - 96 hrs (4 Days) ">72 - 96 hrs (4 Days) </option>
+                                                                    <option value="96 - 120 hrs (5 Days)">96 - 120 hrs (5 Days)</option>
+                                                                </select>
+                                                            </td>  
+                                                            <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>  
+                                                        </tr>  
+                                                    </table> 
                                                 </div>
 
                                                 <!--end::Input group-->
@@ -229,9 +260,9 @@
                             <tr>
 
                                 <td>{{$loop->iteration}}</td>
-                                {{-- <td>{{$trailer->user->name}}</td> --}}
+                                <td>{{$trailer->trailer_name}}</td>
                                 <td class="">
-                                    <a href="#" onclick="editstrailer('{{json_encode($bl)}}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                    <a href="#" onclick="editstrailer('{{json_encode($trailer)}}')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
                                         <span class="svg-icon svg-icon-3">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -268,6 +299,17 @@
 @section('script')
 @include('layouts.sweetalert.sweetalert_js')
 <script>
+    var i=1;  
+
+    $('#add').click(function(){  
+        i++;  
+        $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="number" name="addmore['+i+'][price]" placeholder="Enter Price" class="form-control price_list" /><select name="addmore['+i+'][time]" class="form-control time_list" ><option value="">Select Time</option><option value="3 - 6 hrs">3 - 6 hrs</option><option value="6 - 12 hrs">6 - 12 hrs</option><option value="24 hrs (1 Day)">24 hrs (1 Day)</option><option value="24 - 48 hrs (2 Days)">24 - 48 hrs (2 Days)</option><option value="48 - 72 hrs (3 Days)">48 - 72 hrs (3 Days)</option><option value="72 - 96 hrs (4 Days) ">72 - 96 hrs (4 Days) </option><option value="96 - 120 hrs (5 Days)">96 - 120 hrs (5 Days)</option></select></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td></tr>');  
+    });  
+
+    $(document).on('click', '.btn_remove', function(){  
+        var button_id = $(this).attr("id");   
+        $('#row'+button_id+'').remove();  
+    });
     function editstrailer($data) {
         var data = JSON.parse($data);
         $("#kt_modal_edit_trailer_form").attr('action', 'trailers/' + data.id);
