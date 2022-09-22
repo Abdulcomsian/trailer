@@ -194,13 +194,12 @@
                                 </span> -->
                             </div>
                             <div class="input mb-5 position-relative">
-                                <input type="text" name="hire_time" class="d-block form_control w-100" id="datePut"
+                                <input type="text" name="date" class="d-block form_control w-100" id="datePut"
                                     placeholder="Hire Period">
                                 <span class="icon">
-                                    <!-- <img src="img/calendar-outline.png" alt="calendar-outline"> -->
-                                    <!-- <img src="{{asset('assets/img/calendar-outline.png') }}" alt="calendar-outline"> -->
-                                    <input type="date" name="hire_time" id="datePicker" class="datePicker"
-                                        placeholder="test">
+                                    <!-- <input type="text" name="date" id="datePicker" class="datePicker"
+                                        placeholder="test"> -->
+                                        ad
                                 </span>
                             </div>
                             <div class="row">
@@ -734,6 +733,15 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
     <script src="{{asset('assets/js/purecounter.js') }}"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script>
+        $('input[name="date"]').daterangepicker();
+    </script>
 
     <!-- Initialize Swiper -->
     <script>
