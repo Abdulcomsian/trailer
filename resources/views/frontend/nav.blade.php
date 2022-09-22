@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{url('/')}}">
                 <img src="{{asset('assets/img/logo.png') }}" alt="logo">
             </a>
             <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
@@ -13,19 +13,40 @@
                 <!-- Home           About           Trailer          Pricing           Contact -->
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link mx-3 active" href="#">Home</a>
+                        @if(Route::is('landing-page'))
+                        <a class="nav-link mx-3 active" href="{{url('/')}}">Home
+                        @else
+                        <a class="nav-link mx-3" href="{{url('/')}}">Home
+                        @endif
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3" href="{{url('/about_us')}}">About</a>
+                        @if(Route::is('about-us'))
+                        <a class="nav-link mx-3 active" href="{{url('/about_us')}}">About
+                        @else
+                        <a class="nav-link mx-3" href="{{url('/about_us')}}">About
+                        @endif
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3" href="{{url('/#pricing')}}">Trailer</a>
+                        <!-- @if(Route::is('pricing')) -->
+                        <!-- <a class="nav-link mx-3 active" href="{{url('/#pricing')}}">Trailer
+                        @else -->
+                        <a class="nav-link mx-3" href="{{url('/#trailer')}}">Trailer
+                        <!-- @endif -->
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link mx-3" href="{{url('/#pricing')}}">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3" href="{{url('/contact_us')}}">Contact</a>
+                        @if(Route::is('contact-us'))
+                        <a class="nav-link mx-3 active" href="{{url('/contact_us')}}">Contact
+                        @else
+                        <a class="nav-link mx-3" href="{{url('/contact_us')}}">Contact
+                        @endif
+                        </a>
+
                     </li>
                 </ul>
                 <form class="d-flex align-items-center centerMobile">

@@ -750,6 +750,10 @@
             direction: "vertical",
             effect: "flip",
             loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
             // effect: "fade",
             spaceBetween: 30,
             pagination: {
