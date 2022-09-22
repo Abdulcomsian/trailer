@@ -46,28 +46,27 @@
                                         @csrf
                                     <div class="input_group d-flex flex-column">
                                             <label for="email">Full Name</label>
-                                            <input type="text" name="name" id="name"
-                                                placeholder="Enter your fullname">
+                                            <input type="text" name="name" id="name" placeholder="Enter your fullname">
+                                            <span class="text-danger name_valid">{{$errors->first('name')}}</span>
                                         </div>
                                         <div class="input_group d-flex flex-column">
                                             <label for="email">Email​ Address</label>
-                                            <input type="email" name="email" id="email"
-                                                placeholder="Enter your email">
+                                            <input type="email" name="email" id="email"  placeholder="Enter your email">
+                                            <span class="text-danger name_valid">{{$errors->first('email')}}</span>
                                         </div>
                                         <div class="input_group d-flex flex-column">
                                             <label for="email">Phone Number</label>
-                                            <input type="number" name="phone" id="phone"
-                                                placeholder="Enter your phone number">
+                                            <input type="number" name="phone" id="phone" placeholder="Enter your phone number">
                                         </div>
                                         <div class="input_group  d-flex flex-column">
                                             <label for="email">Password</label>
                                             <div class="input position-relative">
-                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password"
-                                                    placeholder="Please Enter Your Password">
-                                                    <a href="#" class="eye" id="togglePass">
-                                                        <!-- img -->
-                                                        <img src="{{asset('assets/img/EyeFill.png') }}" alt="eye">
-                                                    </a>
+                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password" placeholder="Please Enter Your Password">
+                                                <a href="#" class="eye" id="togglePass">
+                                                    <!-- img -->
+                                                    <img src="{{asset('assets/img/EyeFill.png') }}" alt="eye">
+                                                </a>
+                                                <span class="text-danger name_valid">{{$errors->first('password')}}</span>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn_blue mt-4">Sign Up</button>
@@ -116,18 +115,18 @@
                                     @csrf
                                         <div class="input_group d-flex flex-column">
                                             <label for="email">Email</label>
-                                            <input type="email" name="email" id="email"
-                                                placeholder="Please Enter Your Email">
+                                            <input type="email" name="email" id="email" placeholder="Please Enter Your Email">
+                                            <span class="text-danger name_valid">{{$errors->first('email')}}</span>
                                         </div>
                                         <div class="input_group  d-flex flex-column">
                                             <label for="email">Password</label>
                                             <div class="input position-relative">
-                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password"
-                                                    placeholder="Please Enter Your Password">
-                                                    <a href="#" class="eye" id="togglePass">
-                                                        <!-- img -->
-                                                        <img src="{{asset('assets/img/EyeFill.png') }}" alt="eye">
-                                                    </a>
+                                                <input type="password" id="togglePassInput" class="w-100" class="" name="password" id="password" placeholder="Please Enter Your Password">
+                                                <a href="#" class="eye" id="togglePass">
+                                                    <!-- img -->
+                                                    <img src="{{asset('assets/img/EyeFill.png') }}" alt="eye">
+                                                </a>
+                                                <span class="text-danger name_valid">{{$errors->first('password')}}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -239,7 +238,9 @@
                                 <span class="icon">
                                     <!-- <input type="text" name="date" id="datePicker" class="datePicker"
                                         placeholder="test"> -->
+
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+
                                 </span>
                             </div>
                             <div class="row">
@@ -834,6 +835,18 @@
 
     <!-- load jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    @if (count($errors) > 0)
+        @if($errors->first('email')=='These credentials do not match our records.')
+        <script>
+            $('#loginModal').modal('show');
+        </script>
+        @else
+        <script>
+            $('#ragisterModel').modal('show');
+        </script>
+        @endif
+    @endif
 
     <script>
         $('#datePicker').on('change', function () {
@@ -870,6 +883,7 @@
         // $('.card_img').click(function () {
         //     $('.card_img').toggleClass('absolute');
         // });
+        
     </script>
 
     <script>
@@ -911,5 +925,4 @@
 });
 </script>
 </body>
-
 </html>

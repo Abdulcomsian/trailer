@@ -67,7 +67,7 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-                        <span class="menu-title">Dashboard</span>
+                        <span class="menu-title">@yield('title')</span>
                     </a>
                 </div>
                 <!-- <div class="menu-item">

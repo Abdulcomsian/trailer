@@ -62,12 +62,15 @@ class TrailerController extends Controller
 
     public function edit($id)
     {
-        //
+        $trailer = Trailer::with('user','trailer_timming')->where('id',$id)->first();
+
+        return view('admin.trailer.edit', compact('trailer'));
     }
 
     public function update(Request $request,$trailer)
     {
-        try {
+        // dd($request->all());
+        // try {
             $user_id = Auth::id();
             $trailer= Trailer::find($trailer);
 
@@ -75,20 +78,32 @@ class TrailerController extends Controller
             $trailer->user_id = $user_id;
             $trailer->save();
 
+            TrailerTimming::where('trailer_id',$trailer->id)->delete();
+
+            foreach($request->addmore as $address)
+            {
+                //  dd($address);
+                $trailer_timming= new TrailerTimming;
+                $trailer_timming->trailer_id = $trailer->id;
+                $trailer_timming->time = $address['time'];
+                $trailer_timming->price = $address['price'];
+                $trailer_timming->save();
+            }
        
-            toastSuccess('Trailer successfully added!');
-            return Redirect::back();
-        } catch (\Exception $exception) {
-            toastError('Something went wrong, try again!');
-            return Redirect::back();
-        }
+            toastr()->success('Trailer successfully updated!');
+            return redirect('admin/trailers');
+        // } catch (\Exception $exception) {
+        //     toastError('Something went wrong, try again!');
+        //     return Redirect::back();
+        // }
     }
 
     public function destroy(Request $request , $id)
     {
         try {
             Trailer::FindorFail($id)->delete();
-            
+            TrailerTimming::where('trailer_id',$id)->delete();
+            toastr()->error('Trailer successfully deleted!');
             return Redirect::back();        
         } catch (\Exception $exception) {
             return Redirect::back();
