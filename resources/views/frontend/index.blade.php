@@ -33,6 +33,10 @@
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                                 <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
                                 <div class="modal-body">
                                     <div class="text text-center">
                                         <h3>Create an account</h3>
@@ -78,7 +82,7 @@
                                                 </a>
                                             </div>
                                             <div class="mt-5 text-center">
-                                                <p class="mb-0 dontaccount">Continue as a  <a href="#" class="signlink">Guest</a></p>
+                                                <!-- <p class="mb-0 dontaccount">Continue as a  <a href="#" class="signlink">Guest</a></p> -->
                                             </div>
                                     </form>
                                 </div>
@@ -98,6 +102,10 @@
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
+                            <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
                                 <div class="modal-body">
                                 <div class="text text-center">
                                         <h3>Hi, Welcome Back! </h3>
@@ -129,7 +137,7 @@
                                                     Remember me
                                                 </label>
                                             </div>
-                                            <a href="#" class="forgot_password">Forgot Password?</a>
+                                            <a href="#" class="forgot_password" data-bs-toggle="modal" onclick="forgotPass()" >Forgot Password?</a>
                                         </div>
                                         <button type="submit" class="btn btn_blue mt-4">Login</button>
                                         <!-- img -->
@@ -144,8 +152,40 @@
                                                 </a>
                                             </div>
                                             <div class="mt-5 text-center">
-                                                <p class="mb-0 dontaccount">Don’t have an account? <a href="#" class="signlink">Sign Up</a></p>
+                                                <p class="mb-0 dontaccount">Don’t have an account? <a href="#" onclick="toggleModel()" class="signlink">Sign Up</a></p>
                                             </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+             <!-- forgot password -->
+             <div class="modal fade auth_model" id="ForgotPassword" tabindex="-1" aria-labelledby="loginModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                 <div class="modal-header pb-0 border-0">
+                                <h5 class="modal-title invisible">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <div class="modal-body">
+                                <div class="text text-center">
+                                        <h3>Reset Password </h3>
+                                        <p class="mb-4">Code will be send into your email</p>
+                                    </div>
+                                    <form class="model_form" method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                        <div class="input_group d-flex flex-column">
+                                            <label for="email">Enter Your Email</label>
+                                            <input type="email" name="email" id="email"
+                                                placeholder="Please Enter Your Email">
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <button type="submit" class="btn mt-4 btn-secondary" onclick="forgotPass()">Cancel</button>
+                                            <button type="submit" class="btn mt-4 btn-primary ms-2">Submit</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -198,44 +238,37 @@
                                 <span class="icon">
                                     <!-- <input type="text" name="date" id="datePicker" class="datePicker"
                                         placeholder="test"> -->
-                                        
+
+                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+
                                 </span>
                             </div>
                             <div class="row">
-                                <div class="col-lg-5">
+                                <div class="col-lg-7">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" name="start_time" class="d-block form_control w-100" id="picktimeinput"
+                                        <input type="text" name="start_time" class="d-block timepicker form_control w-100 pickTime" id="picktimeinput"
                                             placeholder="Pickup time">
+                                            <!-- <input type="text" class="timepicker"> -->
+
                                         <span class="icon">
-                                            <input type="time" name="start_time" id="picktime" class="datePicker"
-                                                placeholder="test">
+                                            <!-- <input type="time" name="start_time" id="picktime" class="datePicker"
+                                                placeholder="test" step="900"> -->
+                                                <!-- img -->
+                                                <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="input mb-5 position-relative">
-                                        <select name="start_am_pm" id="select" class="form_control w-100">
-                                            <option value="1">AM</option>
-                                            <option value="1">PM</option>
-                                        </select>
-                                    </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="row">
+                                 <div class="col-lg-7">
                                     <div class="input mb-5 position-relative">
-                                        <input type="text" name="end_time" class="d-block form_control w-100" id="droptimeInput"
+                                        <input type="text" name="end_time" class="d-block timepicker form_control w-100 pickTime" id="droptimeInput"
                                             placeholder="Dropoff time">
                                         <span class="icon">
-                                            <input type="time" name="end_time" id="droptime" class="datePicker"
-                                                placeholder="test">
+                                            <!-- <input type="time" name="end_time" id="droptime" class="datePicker"
+                                                placeholder="test" step="900"> -->
+                                                <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                         </span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="input mb-5 position-relative">
-                                        <select name="end_am_pm" id="select" class="form_control w-100">
-                                            <option value="1">AM</option>
-                                            <option value="1">PM</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -824,6 +857,12 @@
             $('#droptimeInput').val(this.value);
         });
 
+        // $('#droptimeInput').click(function(){
+        //     alert(1)
+        //     // focus input
+        //     $('#droptime').focus()
+        // })
+
         $('#picktime').on('change', function () {
             $('#picktimeinput').val(this.value);
         });
@@ -846,5 +885,44 @@
         // });
         
     </script>
+
+    <script>
+        function toggleModel() {
+            $('#loginModal').modal('toggle');
+            $('#ragisterModel').modal('toggle');
+        }
+
+        function forgotPass() {
+            $('#loginModal').modal('toggle');
+            $('#ForgotPassword').modal('toggle');
+        }
+
+        $('#loginModal #togglePass').on('click', function () {
+            // $('#loginModal #togglePassInput').attr('type', 'text');
+            // toggle type
+            if ($('#loginModal #togglePassInput').attr('type') == 'password') {
+                $('#loginModal #togglePassInput').attr('type', 'text');
+            } else {
+                $('#loginModal #togglePassInput').attr('type', 'password');
+            }
+            
+        });
+    </script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script>
+    $('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 15,
+    minTime: '09:00',
+    maxTime: '6:00pm',
+    defaultTime: '11',
+    startTime: '09:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+</script>
 </body>
 </html>
