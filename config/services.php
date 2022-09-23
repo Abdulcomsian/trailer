@@ -33,7 +33,7 @@ return [
     'google' => [
         'client_id' => '40192878461-5885okgj5gvbsabhvod1pis2775h175b.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'http://localhost:8000/auth/google/callback',
+        'redirect' => 'https://portfolio.accrualhub.com/trailor/public/auth/google/callback',
     ],
 
 ];
