@@ -64,13 +64,19 @@
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Profile</a>
+                            <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li><a class="dropdown-item" href="#">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
-                            <li><a class="dropdown-item" href="#">Logout</a>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Logout</a>
+                                
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                                
                             </li>
                         </ul>
                     </div>
