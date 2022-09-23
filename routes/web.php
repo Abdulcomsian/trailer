@@ -34,6 +34,7 @@ Route::prefix('dashboard')->middleware(['auth','dashboard'])->group(function(){
 
 //brand-profile
 Route::get('/profile',[App\Http\Controllers\DashboardController::class, 'profile'])->name('dashboard.profile');
+Route::post('/update-profile',[App\Http\Controllers\DashboardController::class, 'update_profile'])->name('update.profile');
 
 });
 
