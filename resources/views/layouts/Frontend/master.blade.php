@@ -122,18 +122,7 @@
 
     <!-- load jquery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    @if (count($errors) > 0)
-        @if($errors->first('email')=='These credentials do not match our records.')
-        <script>
-            $('#loginModal').modal('show');
-        </script>
-        @else
-        <script>
-            $('#ragisterModel').modal('show');
-        </script>
-        @endif
-    @endif
+
 
     <script>
         $('#datePicker').on('change', function () {
@@ -178,6 +167,41 @@
             $('#loginModal').modal('toggle');
             $('#ragisterModel').modal('toggle');
         }
+
+
+            
+    @if (count($errors) > 0)
+        @if($errors->first('email')=='These credentials do not match our records.')
+        <script>
+            setTimeout(() => {
+                $('#loginModal').modal('show');
+            }, 300);
+                
+        </script>
+        @else
+        <script>
+         setTimeout(() => {
+             $('#ragisterModel').modal('show');
+            }, 300);
+        </script>
+        @endif
+    @endif
+
+        @if (count($errors) > 0)
+            @if($errors->first('email')=='These credentials do not match our records.')
+            <script>
+                setTimeout(() => {
+                    $('#loginModal').modal('show');
+                }, 300);
+            </script>
+            @else
+            <script>
+            setTimeout(() => {
+                $('#ragisterModel').modal('show');
+                }, 300);
+            </script>
+            @endif
+        @endif
 
         function forgotPass() {
             $('#loginModal').modal('toggle');
