@@ -27,6 +27,9 @@
     .section_7 .swiper-pagination {
         right: -70px;
     }
+    .card_img.absolute{
+        right: 0% !important;
+    }
 }
 
 @media (max-width: 840px){

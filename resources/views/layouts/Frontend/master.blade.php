@@ -56,8 +56,14 @@
 
     <!-- Initialize Swiper -->
     <script>
+        $(".navbar-nav li a").click(function(){
+            console.log("here")
+  var pageId = $(this).attr("data-page");
+  $("html, body").animate({ scrollTop: $("#"+pageId).offset().top-$(".navbar").height() }, 100);
+});
         var swiper1 = new Swiper(".swiper1", {
             direction: "vertical",
+            speed: 2000,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
@@ -69,6 +75,7 @@
             direction: "vertical",
             effect: "flip",
             loop: true,
+            speed: 2000,
             autoplay: {
                 delay: 2500,
                 disableOnInteraction: false,
@@ -84,11 +91,12 @@
       var swiper3 = new Swiper(".swiper3", {
             slidesPerView: 1,
             spaceBetween: 30,
-            // autoplay
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
+            autoplay: true,
+            speed: 2000,
+            // autoplay: {
+            //     delay: 4000,
+            //     disableOnInteraction: false,
+            // },
             pagination: {
             el: ".swiper-pagination",
             clickable: true,

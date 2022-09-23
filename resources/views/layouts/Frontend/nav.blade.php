@@ -28,16 +28,16 @@
                         @endif
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" >
                         <!-- @if(Route::is('pricing')) -->
                         <!-- <a class="nav-link mx-3 active" href="{{url('/#pricing')}}">Trailer
                         @else -->
-                        <a class="nav-link mx-3" href="{{url('/#trailer')}}">Trailer
+                        <a class="nav-link mx-3" href="{{url('/#trailer')}}" data-page="trailer">Trailer
                         <!-- @endif -->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-3" href="{{url('/#pricing')}}">Pricing</a>
+                        <a class="nav-link mx-3" href="{{url('/#pricing')}}" data-page="pricing">Pricing</a>
                     </li>
                     <li class="nav-item">
                         @if(Route::is('contact-us'))
