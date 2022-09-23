@@ -31,8 +31,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => '40192878461-5885okgj5gvbsabhvod1pis2775h175b.apps.googleusercontent.com',
-        'client_secret' => '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',
+        'client_id' => '40192878461-rin5n1teusq5ami9g33a5rcmqpl14buk.apps.googleusercontent.com',
+        'client_secret' => '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',
         'redirect' => 'https://portfolio.accrualhub.com/trailor/public/auth/google/callback',
     ],
 
