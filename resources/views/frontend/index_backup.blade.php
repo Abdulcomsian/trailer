@@ -25,7 +25,7 @@
 <body>
 
     <!-- navbar -->
-    @include('frontend.nav')
+    @include('layouts.Frontend.nav')
 
     <!-- login/register model -->
       <!-- Modal -->
@@ -754,7 +754,7 @@
     </div>
 
     <!-- include footer -->
-    @include('frontend.footer')
+    @include('layouts.Frontend.footer')
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

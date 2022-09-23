@@ -35,7 +35,7 @@
 <body>
 
     <!-- navbar -->
-    @include('frontend.nav')
+    @include('layouts.Frontend.nav')
 
     <div class="hero_div about_us">
         <div class="container">
@@ -152,7 +152,7 @@
     </section>
 
     <!-- include footer -->
-    @include('frontend.footer')
+    @include('layouts.Frontend.footer')  
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -26,7 +26,7 @@ class DashboardController extends Controller
             $this->validate($request,[ 
                 'name'=>'required|min:3|max:180', 
                 'email'=> ['required', Rule::unique('users')->ignore($user)],
-                'password'=>'required|min:6|max:18',
+                'password'=>'required|min:6|max:18|confirmed',
             ]);
         }
         else{
