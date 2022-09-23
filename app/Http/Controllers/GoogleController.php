@@ -48,12 +48,54 @@ class GoogleController extends Controller
                     'google_id'=> $user->id,
                     'password' => Hash::make('password1')
                 ]);
-      
+                $newUser->assignRole('User'); 
                 Auth::login($newUser);
       
                 return redirect()->intended('/');
             }
       
+        // } catch (Exception $e) {
+        //     dd($e->getMessage());
+        // }
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+          
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function handleFacebookCallback()
+    {
+        // try {
+        
+            $user = Socialite::driver('facebook')->stateless()->user();
+         
+            $finduser = User::where('facebook_id', $user->id)->first();
+        
+            if($finduser){
+         
+                Auth::login($finduser);
+        
+                return redirect()->intended('/');
+         
+            }else{
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'facebook_id'=> $user->id,
+                    'password' => Hash::make('password1')
+                ]);
+                $newUser->assignRole('User'); 
+                Auth::login($newUser);
+        
+                return redirect()->intended('/');
+            }
+        
         // } catch (Exception $e) {
         //     dd($e->getMessage());
         // }

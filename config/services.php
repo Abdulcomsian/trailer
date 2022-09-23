@@ -36,4 +36,10 @@ return [
         'redirect' => 'https://portfolio.accrualhub.com/trailor/public/auth/google/callback',
     ],
 
+    'facebook' => [
+        'client_id' => 'app id',
+        'client_secret' => 'add secret',
+        'redirect' => 'https://portfolio.accrualhub.com/trailor/public/auth/google/callback',
+    ],
+
 ];
