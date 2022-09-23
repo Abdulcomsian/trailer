@@ -562,20 +562,10 @@ Trailer | Home
         </div>
     </div>
 </div>
-@if (count($errors) > 0)
-    @if($errors->first('email')=='These credentials do not match our records.')
-    <script>
-        $('#loginModal').modal('show');
-    </script>
-    @else
-    <script>
-        $('#ragisterModel').modal('show');
-    </script>
-    @endif
-@endif
+
 @endsection
 @section('script')
 <script>
-    
+    console.log($,'$')
 </script>
 @endsection
