@@ -56,7 +56,24 @@
                     @else
                         @php $arr = explode(' ',trim(Auth::user()->name)); @endphp
                         <p style="color: #fff; margin: 3px 7px 0px 0px;">Welcome {{$arr[0]}} </p>
-                    <a href="#"><img src="{{asset('assets/img/setting.png') }}" alt="setting"></a>
+                    {{-- <a href="#"><img src="{{asset('assets/img/setting.png') }}" alt="setting"></a> --}}
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- <img src="img/user.png" alt="user"> -->
+                            <img src="{{asset('assets/img/user.png') }}" alt="user">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Profile</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Return Trailer</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
                     @endif
                 </form>
             </div>
