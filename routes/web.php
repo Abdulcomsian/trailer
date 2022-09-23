@@ -28,6 +28,18 @@ Route::prefix('admin')->middleware('can:admin')->group(function(){
 });
 /*****************END ADMIN ROUTES*******************/
 
+
+/*****************DASHBOARD ROUTES*******************/
+Route::prefix('dashboard')->middleware(['auth','dashboard'])->group(function(){
+
+//brand-profile
+Route::get('/profile',[App\Http\Controllers\DashboardController::class, 'profile'])->name('dashboard.profile');
+
+});
+
+
+/********************DASHBOARD ROUTES END******************************/
+
 //order trailer
 Route::post('order-trailer', [App\Http\Controllers\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
 
