@@ -44,7 +44,7 @@
                         <div class="img">
                             <img src="{{asset('assets/img/with.png') }}" class="my-4" alt="img">
                             <div class="social_btn d-flex justify-content-between">
-                                <a href="#">
+                                <a href="{{ url('auth/google') }}">
                                     <img src="{{asset('assets/img/google.png') }}" alt="img">
                                 </a>
                                 <a href="#">
@@ -114,7 +114,7 @@
                                 <div class="img">
                                     <img src="{{asset('assets/img/with.png') }}" class="my-4" alt="img">
                                     <div class="social_btn d-flex justify-content-between">
-                                        <a href="#">
+                                        <a href="{{ url('auth/google') }}">
                                             <img src="{{asset('assets/img/google.png') }}" alt="img">
                                         </a>
                                         <a href="#">
