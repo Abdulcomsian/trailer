@@ -64,12 +64,18 @@
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            @if(Auth::user()->hasRole('User'))
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li><a class="dropdown-item" href="#">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
+                            @elseif(Auth::user()->hasRole('Admin'))
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            @endif
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Logout</a>
                                 

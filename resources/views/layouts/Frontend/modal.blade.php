@@ -47,7 +47,7 @@
                                 <a href="{{ url('auth/google') }}">
                                     <img src="{{asset('assets/img/google.png') }}" alt="img">
                                 </a>
-                                <a href="#">
+                                <a href="{{ url('auth/facebook') }}">
                                     <img src="{{asset('assets/img/facebook.png') }}" alt="img">
                                 </a>
                             </div>
@@ -117,7 +117,7 @@
                                         <a href="{{ url('auth/google') }}">
                                             <img src="{{asset('assets/img/google.png') }}" alt="img">
                                         </a>
-                                        <a href="#">
+                                        <a href="{{ url('auth/facebook') }}">
                                             <img src="{{asset('assets/img/facebook.png') }}" alt="img">
                                         </a>
                                     </div>
