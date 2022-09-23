@@ -168,9 +168,10 @@
             $('#ragisterModel').modal('toggle');
         }
 
-
+</script>
             
     @if (count($errors) > 0)
+        
         @if($errors->first('email')=='These credentials do not match our records.' || $errors->first('email')=='The email field is required.')
         <script>
             setTimeout(() => {
