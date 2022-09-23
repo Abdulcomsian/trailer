@@ -35,16 +35,16 @@ Trailer | Home
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Enter New Password</label>
+                                <label for="exampleInputEmail1" class="form-label">Enter Password</label>
                                 <input type="password" name="password" class="form-control" id="password" aria-describedby="emailHelp" value="">
                                 <span class="text-danger name_valid">{{$errors->first('password')}}</span>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Enter New Password</label>
-                                <input type="password" name="password" class="form-control" id="password" aria-describedby="emailHelp" value="">
-                                <span class="text-danger name_valid">{{$errors->first('password')}}</span>
+                                <label for="exampleInputEmail1" class="form-label">Re-Enter Password</label>
+                                <input type="password" name="password_confirmation" class="form-control" id="password-confirm" aria-describedby="emailHelp" value="">
+                                {{-- <span class="text-danger name_valid">{{$errors->first('password')}}</span> --}}
                             </div>
                         </div>
                             <div class="col-12">
