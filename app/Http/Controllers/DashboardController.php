@@ -5,12 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
+    public function landing_page()
+    {
+        // $user = Auth::user();
+        $orders = Order::first();
+        return view('frontend.index',compact('orders'));
+    }
+
+    public function check_date(Request $request)
+    {   
+        // dd($request->c_date);
+        $hire_time = explode(' - ',trim($request->c_date));
+        $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0]"));
+        $end_time = date('Y-m-d H:i:s', strtotime("$hire_time[1]"));
+        dd($start_time, $end_time);
+        $check_date = Order::where('start_time',)->first();  
+
+        return Response::json($check_date);
+    }
+
     public function profile()
     {
         $user = Auth::user();

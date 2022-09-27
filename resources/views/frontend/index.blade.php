@@ -38,13 +38,29 @@ Trailer | Home
                                 <option value="1">Trailer 1</option>
                                 <option value="2">Trailer 2</option>
                             </select>
-                            <!-- <span class="icon">
+                            <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
+                            {{-- <span class="icon">
                                 <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
-                            </span> -->
+                            </span>  --}}
                         </div>
+                        {{-- @php
+                            // $hire_time = explode(' - ',trim($orders->date));
+                            $start_time = $orders->start_time;
+                            $end_time = $orders->end_time;
+                            $start = date('d-m-Y',$start_time);
+                            $start = strtotime($start->addDays(1));
+                            $end = date('d-m-Y',$end_time);           
+                            $end = strtotime($start->addDays(1));            
+                            for ($i1=$start_time; $i1<=$end_time; $i1+=86400) { 
+                                $dateslistselect1[]= '"'.date('d-m-Y',$i1).'"';   
+                            }
+                            $dateslistselect1=array_filter($dateslistselect1);
+                            dd($dateslistselect1);
+                            
+                        @endphp --}}
                         <div class="input mb-5 position-relative">
-                            <input type="text" name="date" class="d-block form_control w-100" id="datePut"
-                                placeholder="Hire Period">
+                            <input type="text" name="date" class="d-block form_control w-100" id="datePut" placeholder="Hire Period">
+
                             <span class="icon">
                                 <!-- <input type="text" name="date" id="datePicker" class="datePicker"
                                     placeholder="test"> -->
@@ -52,11 +68,12 @@ Trailer | Home
                                     <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
 
                             </span>
+                            <span class="text-danger name_valid">{{$errors->first('date')}}</span>
                         </div>
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 pickTime" id="picktimeinput"
+                                    <input type="text" readonly name="start_time" class="d-block timepicker form_control w-100 pickTime" id="picktimeinput"
                                         placeholder="Pickup time">
                                         <!-- <input type="text" class="timepicker"> -->
 
@@ -66,19 +83,21 @@ Trailer | Home
                                             <!-- img -->
                                             <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
+                                    <span class="text-danger name_valid">{{$errors->first('start_time')}}</span>
                                 </div>
                             </div>
                             </div>
                             <div class="row">
                              <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 pickTime" id="droptimeInput"
+                                    <input type="text" readonly name="end_time" class="d-block timepicker form_control w-100 pickTime" id="droptimeInput"
                                         placeholder="Dropoff time">
                                     <span class="icon">
                                         <!-- <input type="time" name="end_time" id="droptime" class="datePicker"
                                             placeholder="test" step="900"> -->
                                             <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
+                                    <span class="text-danger name_valid">{{$errors->first('end_time')}}</span>
                                 </div>
                             </div>
                         </div>
@@ -566,6 +585,44 @@ Trailer | Home
 @endsection
 @section('script')
 <script>
-    console.log($,'$')
+    // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
+
+    $('.applyBtn').click(function () {
+        var c_date = $('#datePut').val();
+        console.log(c_date);
+        $.ajax({
+            type: "POST",
+            url: "{{ route('check-date') }}",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: {'c_date':c_date} ,
+            datatype: "json",
+            success: function (data) {
+                // console.log(data);
+                $('.close').click();
+                window.location.href="/dashboard/dashboard";
+                 
+            },
+            error: function (data) {
+                console.log('Error:', data.responseJSON);
+                if($('#email').val() == ''){
+                    $('.email_valid').text(data.responseJSON.errors.email);
+                }
+                else{
+                    $('.email_valid').text('');
+                }
+                if($('#password').val() == ''){
+                    $('.password_valid').text(data.responseJSON.errors.password);
+                }
+                else{
+                    $('.password_valid').text('');
+                }
+                
+                
+            }
+        });
+
+    });
+
+
 </script>
 @endsection

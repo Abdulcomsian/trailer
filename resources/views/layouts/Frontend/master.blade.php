@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
 
     <!-- bootstrap 5 CDN -->
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
 </head>
 
-<body>
+<body style="overflow-x: hidden">
 
     <!-- navbar -->
     @include('layouts.Frontend.nav')
@@ -170,7 +171,7 @@
 
 </script>
             
-    @if (count($errors) > 0)
+    {{-- @if (count($errors) > 0)
         
         @if($errors->first('email')=='These credentials do not match our records.' || $errors->first('email')=='The email field is required.')
         <script>
@@ -202,7 +203,8 @@
                 }, 300);
             </script>
             @endif
-        @endif
+        @endif --}}
+        <script>
 
         function forgotPass() {
             $('#loginModal').modal('toggle');
@@ -227,8 +229,8 @@
     $('.timepicker').timepicker({
     timeFormat: 'h:mm p',
     interval: 15,
-    minTime: '09:00',
-    maxTime: '6:00pm',
+    minTime: '00:00',
+    maxTime: '11:45pm',
     defaultTime: '11',
     startTime: '09:00',
     dynamic: false,
@@ -236,5 +238,6 @@
     scrollbar: true
 });
 </script>
+@yield('script')
 </body>
 </html>
