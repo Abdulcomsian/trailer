@@ -101,7 +101,11 @@ Trailer | Home
                                 </div>
                             </div>
                         </div>
+                        @guest
+                        <a href="#" class="me-3 btn btn_yellow"  data-bs-toggle="modal" data-bs-target="#loginModal">Search</a>
+                        @else
                         <button type="submit" class="me-3 btn btn_yellow">Search</button>
+                        @endguest
                     </form>
                 </div>
             </div>

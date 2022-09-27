@@ -13,6 +13,7 @@ class OrderTrailerController extends Controller
 {
     public function order_trailer(Request $request)
     {
+        $user_id = Auth::id();
         $this->validate($request,[ 
             'trailer_id'=>'required', 
             'date'=>'required', 
@@ -27,7 +28,7 @@ class OrderTrailerController extends Controller
         $end_time = date('Y-m-d H:i:s', strtotime("$hire_time[1] $request->end_time"));
         // dd($start_time);
         $order->trailer_id = $request->trailer_id;
-        $order->user_id = 2;
+        $order->user_id = $user_id;
         $order->start_time = strtotime($start_time);
         $order->end_time = strtotime($end_time);
         $order->save();
