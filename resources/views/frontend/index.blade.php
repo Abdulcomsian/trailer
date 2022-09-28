@@ -619,9 +619,10 @@ Trailer | Home
                   
                 [stringTime[0], stringTime[1]],
                 [stringTime[2], stringTime[3]],
-                [stringTime[3], stringTime[4]],
-                [stringTime[5], stringTime[6]],
-                [stringTime[7], stringTime[8]],
+                [stringTime[4], stringTime[5]],
+                [stringTime[6], stringTime[7]],
+                [stringTime[8], stringTime[9]],
+                [stringTime[10], stringTime[11]],
            ] });
     }
 
