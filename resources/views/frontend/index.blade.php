@@ -42,7 +42,7 @@ Trailer | Home
                                 <option value="">Type of trailer</option>
                                 @if(count($trailers) > 0)
                                 @foreach($trailers as $trailer)
-                                <option value="{{$trailer->id}}">{{$trailer->name}}</option>
+                                <option value="{{$trailer->id}}">{{$trailer->trailer_name}}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -58,7 +58,7 @@ Trailer | Home
                                 <option value="">Type of trailer</option>
                                 @if(count($trailers) > 0)
                                 @foreach($trailers as $trailer)
-                                <option value="{{$trailer->id}}">{{$trailer->name}}</option>
+                                <option value="{{$trailer->id}}">{{$trailer->trailer_name}}</option>
                                 @endforeach
                                 @endif
                             </select>
