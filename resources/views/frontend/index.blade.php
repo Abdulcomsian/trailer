@@ -628,7 +628,14 @@ Trailer | Home
         setTimeout(() => {
             c_date = $('#datePut').val();
             trailer_id = $('#trailer_id').val();
-            $.ajax({
+            if(trailer_id == '')
+            {
+                toastr.error("Kindly Select Trailer First"); 
+                $('#disableTimeRangesExample').attr('disabled', 'disabled');
+            }
+            else{
+                $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
+                $.ajax({
                 type: "POST",
                 url: "{{ route('check-date') }}",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -653,6 +660,7 @@ Trailer | Home
                     
                 }
             });
+            }
         }, 200);
 
     });
