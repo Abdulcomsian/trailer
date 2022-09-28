@@ -619,6 +619,9 @@ Trailer | Home
                   
                 [stringTime[0], stringTime[1]],
                 [stringTime[2], stringTime[3]],
+                [stringTime[3], stringTime[4]],
+                [stringTime[5], stringTime[6]],
+                [stringTime[7], stringTime[8]],
            ] });
     }
 
@@ -628,19 +631,21 @@ Trailer | Home
         console.log(time);
         if(stringTime[0] != null)
         {
+            // console.log('valid');
             $('#droptimeInput').timepicker({ 'disableTimeRanges': [
                     //    ['1am', '2am'],
                     
-                    // [stringTime[0], '11:30pm'],
+                    [stringTime[0], '11:30pm'],
                     ['12am', stringTime[1]],
             ] });
         }
         else
         {
+            console.log('Invalid');
             $('#droptimeInput').timepicker({ 'disableTimeRanges': [
                     //    ['1am', '2am'],
                     
-                    [stringTime[0], '11:30pm'],
+                    // [stringTime[0], '11:30pm'],
                     ['12am', stringTime[1]],
             ] });
         }
@@ -689,7 +694,7 @@ Trailer | Home
                 }
             });
             }
-        }, 200);
+        }, 100);
 
     });
 
@@ -726,7 +731,7 @@ Trailer | Home
                     
                 }
             });
-        }, 200);
+        }, 100);
 
     });
 
