@@ -17,7 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->integer('start_time');
             $table->integer('end_time');
-            // $table->text('hire_time');
+            $table->text('start_date');
+            $table->text('end_date');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('trailer_id');

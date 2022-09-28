@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
 
     <!-- bootstrap 5 CDN -->
@@ -20,9 +21,12 @@
     <!-- custom css -->
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.timepicker.css') }}">
+
+    @yield('css')
 </head>
 
-<body>
+<body style="overflow-x: hidden">
 
     <!-- navbar -->
     @include('layouts.Frontend.nav')
@@ -170,7 +174,7 @@
 
 </script>
             
-    @if (count($errors) > 0)
+    {{-- @if (count($errors) > 0)
         
         @if($errors->first('email')=='These credentials do not match our records.' || $errors->first('email')=='The email field is required.')
         <script>
@@ -202,7 +206,8 @@
                 }, 300);
             </script>
             @endif
-        @endif
+        @endif --}}
+        <script>
 
         function forgotPass() {
             $('#loginModal').modal('toggle');
@@ -221,20 +226,25 @@
         });
     </script>
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script src="{{asset('assets/js/jquery.timepicker.js') }}"></script>
 <script>
-    $('.timepicker').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 15,
-    minTime: '09:00',
-    maxTime: '6:00pm',
-    defaultTime: '11',
-    startTime: '09:00',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
+    $(function() {
+        $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
+                // ['1am', '2am'],
+                // ['3am', '4:01am']
+        ] });
+
+        // $('#droptimeInput').timepicker();
+        $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                // ['1am', '2am'],
+                // ['3am', '4:01am']
+        ] });
+        
+    });
+
+    
 </script>
+@yield('script')
 </body>
 </html>
