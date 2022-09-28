@@ -35,6 +35,20 @@ Trailer | Home
                     </p>
                     <form class="header_form mt-5" method="POST" action="{{ route('order-trailer') }}">
                         @csrf
+                        @guest
+                        <div class="input mb-5 position-relative" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
+                            <select disabled name="trailer_id" id="trailer_id" class="form_control w-100">
+                                <option value="">Type of trailer</option>
+                                <option value="1">Trailer 1</option>
+                                <option value="2">Trailer 2</option>
+                            </select>
+                            <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
+                            {{-- <span class="icon">
+                                <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
+                            </span>  --}}
+                        </div>
+                        @else
                         <div class="input mb-5 position-relative">
                             <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
                             <select name="trailer_id" id="trailer_id" class="form_control w-100">
@@ -47,6 +61,7 @@ Trailer | Home
                                 <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
                             </span>  --}}
                         </div>
+                        @endguest
                         {{-- @php
                             // $hire_time = explode(' - ',trim($orders->date));
                             $start_time = $orders->start_time;
@@ -594,6 +609,7 @@ Trailer | Home
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
+
     const timeDisabled = (time) => {
         // alert(time) // 12:00 AM
         const stringTime = time.map(String)
@@ -609,13 +625,25 @@ Trailer | Home
     const dropTimeDisabled = (time) => {
         // alert(time) // 12:00 AM
         const stringTime = time.map(String)
-        console.log(stringTime);
-        $('#droptimeInput').timepicker({ 'disableTimeRanges': [
-                //    ['1am', '2am'],
-                  
-                [stringTime[0], '11:30pm'],
-                ['12am', stringTime[1]],
-           ] });
+        console.log(time);
+        if(stringTime[0] != null)
+        {
+            $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                    //    ['1am', '2am'],
+                    
+                    // [stringTime[0], '11:30pm'],
+                    ['12am', stringTime[1]],
+            ] });
+        }
+        else
+        {
+            $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                    //    ['1am', '2am'],
+                    
+                    [stringTime[0], '11:30pm'],
+                    ['12am', stringTime[1]],
+            ] });
+        }
         $('#search').css({'opacity':'1', 'cursor':'default'});
     }
 
