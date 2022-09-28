@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
-use App\Models\Order;
+use App\Models\Order; 
+use App\Models\Trailer; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,8 @@ class DashboardController extends Controller
     {
         // $user = Auth::user();
         $orders = Order::first();
-        return view('frontend.index',compact('orders'));
+        $trailers = Trailer::get();
+        return view('frontend.index',compact('orders','trailers'));
     }
 
     public function check_date(Request $request)
