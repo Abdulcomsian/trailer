@@ -629,7 +629,8 @@ Trailer | Home
         // alert(time) // 12:00 AM
         const stringTime = time.map(String)
         console.log(time);
-        if(stringTime[0] != null)
+        // console.log(!(stringTime[0] == 'null'), stringTime[0]);
+        if(stringTime[0] != 'null')
         {
             // console.log('valid');
             $('#droptimeInput').timepicker({ 'disableTimeRanges': [
@@ -641,7 +642,6 @@ Trailer | Home
         }
         else
         {
-            console.log('Invalid');
             $('#droptimeInput').timepicker({ 'disableTimeRanges': [
                     //    ['1am', '2am'],
                     
