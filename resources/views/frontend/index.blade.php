@@ -598,18 +598,26 @@ Trailer | Home
         // alert(time) // 12:00 AM
         const stringTime = time.map(String)
         console.log([...stringTime])
-        // stringTime.map((elem, index) => {
-        //     let 
-           
-        // })
         $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
                    // ['1am', '2am'],
-                   // ['3am', '4:01am']
                   
-                   [stringTime[0], stringTime[1]],
-                   [stringTime[2], stringTime[3]],
+                [stringTime[0], stringTime[1]],
+                [stringTime[2], stringTime[3]],
            ] });
     }
+
+    const dropTimeDisabled = (time) => {
+        // alert(time) // 12:00 AM
+        const stringTime = time.map(String)
+        console.log(stringTime);
+        $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                //    ['1am', '2am'],
+                  
+                [stringTime[0], '11:30pm'],
+                ['12am', stringTime[1]],
+           ] });
+    }
+
     // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
     $('#datePut').change( function() {
         // alert(this.value);
@@ -617,7 +625,6 @@ Trailer | Home
     $('.applyBtn').click(function () {
         var c_date;
         setTimeout(() => {
-            // alert($('#datePut').val())
             c_date = $('#datePut').val();
             trailer_id = $('#trailer_id').val();
             $.ajax({
@@ -630,12 +637,48 @@ Trailer | Home
                 } ,
                 datatype: "json",
                 success: function (data) {
-                    // console.log(data);
                     if(data.success == true){
                         toastr.success(data.message);
                         timeDisabled([...data.data])
                     } else {
                         toastr.error(data.message);
+                    }
+                    
+                    
+                },
+                error: function (data) {
+                    console.log('Error:', data.responseJSON);
+                    
+                    
+                }
+            });
+        }, 200);
+
+    });
+
+    $('#disableTimeRangesExample').change(function () {
+        var c_date;
+        var pick_time;
+        setTimeout(() => {
+            c_date = $('#datePut').val();
+            pick_time = $('#disableTimeRangesExample').val();
+            trailer_id = $('#trailer_id').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('check-drop-time') }}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'c_date':c_date,
+                    'pick_time':pick_time,
+                    'trailer_id':trailer_id,
+                } ,
+                datatype: "json",
+                success: function (data) {
+                    // console.log(data);
+                    if(data.success == true){
+                        dropTimeDisabled([...data.data])
+                    } else {
+                        dropTimeDisabled([...data.data])
                     }
                     
                     

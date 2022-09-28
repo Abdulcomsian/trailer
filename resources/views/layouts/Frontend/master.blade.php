@@ -235,10 +235,11 @@
                 // ['3am', '4:01am']
         ] });
 
-        $('#droptimeInput').timepicker();
-        $('#droptimeInput').on('changeTime', function() {
-            $('#onselectTarget').text($(this).val());
-        });
+        // $('#droptimeInput').timepicker();
+        $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                // ['1am', '2am'],
+                // ['3am', '4:01am']
+        ] });
         
     });
 

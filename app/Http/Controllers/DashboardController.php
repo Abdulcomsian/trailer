@@ -86,9 +86,42 @@ class DashboardController extends Controller
                 ]);
             }
         }
-        // $check_date = Order::where('start_time',)->first();  
+    }
 
-        // return Response::json($check_date);
+    public function check_drop_time(Request $request)   
+    {
+        // dd($request->all());
+        $hire_time = explode(' - ',trim($request->c_date));
+        $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
+        $end_time = \Carbon\Carbon::parse($hire_time[1])->format('h:i A');
+        
+        $start_date = strtotime("$hire_time[0]");
+        $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $start_time"));
+        $start_time = strtotime("$start_time");
+        $disable_time = Order::where('trailer_id',$request->trailer_id)->where('start_date', $start_date)->where('start_time','>', $start_time)->first();
+
+        if($disable_time != null)
+        {
+            $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+            $data = [$disable_time , $request->pick_time];
+            return response()->json([
+                'success'=> true,
+                'message' => 'Click On Search Button',
+                'data' => $data
+            ]);
+        }
+        else
+        {
+            $disable_time = null;
+            $data = [$disable_time , $request->pick_time];
+            return response()->json([
+                'error'=> true,
+                'message' => 'No Time Disable on this date',
+                'data' => $data
+            ]);
+        }
+            
+        
     }
 
     public function profile()

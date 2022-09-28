@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\DashboardController::class, 'landing_page'])->name('landing_page');
 Route::post('/check_date', [App\Http\Controllers\DashboardController::class, 'check_date'])->name('check-date');
+Route::post('/check_drop_time', [App\Http\Controllers\DashboardController::class, 'check_drop_time'])->name('check-drop-time');
 
 /*****************ADMIN ROUTES*******************/
 Route::prefix('admin')->middleware('can:admin')->group(function(){
