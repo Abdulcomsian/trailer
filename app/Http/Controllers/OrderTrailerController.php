@@ -31,6 +31,8 @@ class OrderTrailerController extends Controller
         $order->user_id = $user_id;
         $order->start_time = strtotime($start_time);
         $order->end_time = strtotime($end_time);
+        $order->start_date = strtotime($hire_time[0]);
+        $order->end_date = strtotime($hire_time[1]);
         $order->save();
         
         return redirect('/book_trailer');

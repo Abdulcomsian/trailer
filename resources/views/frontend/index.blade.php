@@ -2,6 +2,10 @@
 @section('title')
 Trailer | Home
 @endsection
+@section('css')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+@endsection
 @section('content')
 <div class="hero_div">
     <div class="container">
@@ -73,7 +77,7 @@ Trailer | Home
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" readonly name="start_time" class="d-block timepicker form_control w-100 pickTime" id="picktimeinput"
+                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample"
                                         placeholder="Pickup time">
                                         <!-- <input type="text" class="timepicker"> -->
 
@@ -90,7 +94,7 @@ Trailer | Home
                             <div class="row">
                              <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" readonly name="end_time" class="d-block timepicker form_control w-100 pickTime" id="droptimeInput"
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput"
                                         placeholder="Dropoff time">
                                     <span class="icon">
                                         <!-- <input type="time" name="end_time" id="droptime" class="datePicker"
@@ -588,42 +592,61 @@ Trailer | Home
 
 @endsection
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
+    const timeDisabled = (time) => {
+        // alert(time) // 12:00 AM
+        const stringTime = time.map(String)
+        console.log([...stringTime])
+        // stringTime.map((elem, index) => {
+        //     let 
+           
+        // })
+        $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
+                   // ['1am', '2am'],
+                   // ['3am', '4:01am']
+                  
+                   [stringTime[0], stringTime[1]],
+                   [stringTime[2], stringTime[3]],
+           ] });
+    }
     // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
-
+    $('#datePut').change( function() {
+        // alert(this.value);
+    })
     $('.applyBtn').click(function () {
-        var c_date = $('#datePut').val();
-        console.log(c_date);
-        $.ajax({
-            type: "POST",
-            url: "{{ route('check-date') }}",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data: {'c_date':c_date} ,
-            datatype: "json",
-            success: function (data) {
-                // console.log(data);
-                $('.close').click();
-                window.location.href="/dashboard/dashboard";
-                 
-            },
-            error: function (data) {
-                console.log('Error:', data.responseJSON);
-                if($('#email').val() == ''){
-                    $('.email_valid').text(data.responseJSON.errors.email);
+        var c_date;
+        setTimeout(() => {
+            // alert($('#datePut').val())
+            c_date = $('#datePut').val();
+            trailer_id = $('#trailer_id').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('check-date') }}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'c_date':c_date,
+                    'trailer_id':trailer_id,
+                } ,
+                datatype: "json",
+                success: function (data) {
+                    // console.log(data);
+                    if(data.success == true){
+                        toastr.success(data.message);
+                        timeDisabled([...data.data])
+                    } else {
+                        toastr.error(data.message);
+                    }
+                    
+                    
+                },
+                error: function (data) {
+                    console.log('Error:', data.responseJSON);
+                    
+                    
                 }
-                else{
-                    $('.email_valid').text('');
-                }
-                if($('#password').val() == ''){
-                    $('.password_valid').text(data.responseJSON.errors.password);
-                }
-                else{
-                    $('.password_valid').text('');
-                }
-                
-                
-            }
-        });
+            });
+        }, 200);
 
     });
 

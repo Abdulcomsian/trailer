@@ -21,6 +21,9 @@
     <!-- custom css -->
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.timepicker.css') }}">
+
+    @yield('css')
 </head>
 
 <body style="overflow-x: hidden">
@@ -223,20 +226,23 @@
         });
     </script>
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script src="{{asset('assets/js/jquery.timepicker.js') }}"></script>
 <script>
-    $('.timepicker').timepicker({
-    timeFormat: 'h:mm p',
-    interval: 15,
-    minTime: '00:00',
-    maxTime: '11:45pm',
-    defaultTime: '11',
-    startTime: '09:00',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
+    $(function() {
+        $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
+                // ['1am', '2am'],
+                // ['3am', '4:01am']
+        ] });
+
+        $('#droptimeInput').timepicker();
+        $('#droptimeInput').on('changeTime', function() {
+            $('#onselectTarget').text($(this).val());
+        });
+        
+    });
+
+    
 </script>
 @yield('script')
 </body>
