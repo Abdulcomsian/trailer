@@ -108,7 +108,7 @@ Trailer | Home
                         @guest
                         <a href="#" class="me-3 btn btn_yellow"  data-bs-toggle="modal" data-bs-target="#loginModal">Search</a>
                         @else
-                        <button type="submit" class="me-3 btn btn_yellow">Search</button>
+                        <button type="submit" id="search" class="me-3 btn btn_yellow" style="opacity: 0.6;cursor: not-allowed;">Search</button>
                         @endguest
                     </form>
                 </div>
@@ -616,6 +616,7 @@ Trailer | Home
                 [stringTime[0], '11:30pm'],
                 ['12am', stringTime[1]],
            ] });
+        $('#search').css({'opacity':'1', 'cursor':'default'});
     }
 
     // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
