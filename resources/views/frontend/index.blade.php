@@ -56,8 +56,11 @@ Trailer | Home
                             <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
                             <select name="trailer_id" id="trailer_id" class="form_control w-100">
                                 <option value="">Type of trailer</option>
-                                <option value="1">Trailer 1</option>
-                                <option value="2">Trailer 2</option>
+                                @if(count($trailers) > 0)
+                                @foreach($trailers as $trailer)
+                                <option value="{{$trailer->id}}">{{$trailer->name}}</option>
+                                @endforeach
+                                @endif
                             </select>
                             <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
                             {{-- <span class="icon">
