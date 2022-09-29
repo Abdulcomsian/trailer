@@ -10,6 +10,7 @@ use App\Models\Trailer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
+use Validator;
 
 class DashboardController extends Controller
 {
@@ -167,5 +168,31 @@ class DashboardController extends Controller
         $user->save();
 
         return Redirect::back();
+    }
+
+    public function book_trailer($order_id)
+    {
+        $order= Order::with('user','trailer')->find($order_id);
+        return view('frontend.book_trailer',compact('order'));
+    }
+
+    public function store_licence(Request $request)
+    {
+        $user_id = Auth::id();
+        // dd($request->all());
+        $this->validate($request,[ 
+            'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $user = User::find($user_id);
+        if($request->hasfile('driving_licence'))
+        {
+            $image = $request->file('driving_licence');
+            $extensions =$image->extension();
+
+            $image_name =time().'.'. $extensions;
+            $image->move('driving_licence/',$image_name);
+            $user->driving_licence=$image_name;
+        }
+        $user->save();
     }
 }

@@ -39,7 +39,9 @@ Route::prefix('dashboard')->middleware(['auth','dashboard'])->group(function(){
 //brand-profile
 Route::get('/profile',[App\Http\Controllers\DashboardController::class, 'profile'])->name('dashboard.profile');
 Route::post('/update-profile',[App\Http\Controllers\DashboardController::class, 'update_profile'])->name('update.profile');
-
+Route::get('/book_trailer/{order_id}',[App\Http\Controllers\DashboardController::class, 'book_trailer'])->name('book_trailer');
+Route::post('/store-licence',[App\Http\Controllers\DashboardController::class, 'store_licence'])->name('store-licence');
+    
 });
 
 
@@ -49,9 +51,7 @@ Route::post('/update-profile',[App\Http\Controllers\DashboardController::class, 
 Route::post('order-trailer', [App\Http\Controllers\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
 
 
-Route::get('/book_trailer', function () {
-    return view('frontend.book_trailer');
-});
+
 
 Route::get('/congrats', function () {
     return view('frontend.congrats');
