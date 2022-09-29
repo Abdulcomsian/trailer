@@ -63,29 +63,55 @@
                     <div class="specifi">
                         <div class="row">
                             <div class="col-lg-6">
-                                <p>Type: <span>2T</span></p>
+                                <p>Type: <span>{{$order->trailer->trailer_name}}</span></p>
                             </div>
                             <div class="col-lg-6">
-                                <p>Hire Period: <span>24hrs (1 Day)</span></p>
+                                @php 
+                                    $pickup_time = \Carbon\Carbon::parse($order->start_time)->format('h:i A');
+                                    $dropoff_time = \Carbon\Carbon::parse($order->end_time)->format('h:i A');
+                                    
+                                    $start_date = date('Y-m-d h:i A ', $order->start_time);
+                                    $start_date = \Carbon\Carbon::parse($start_date);
+                                    $end_date = date('Y-m-d h:i A ', $order->end_time);
+                                    $end_date = \Carbon\Carbon::parse($end_date);
+                                    // dd($start_date, $end_date);
+                                    $hire_period = $start_date->diffInDays($end_date, false);
+                                    $hire_hours = $start_date->diffInHours($end_date, false);
+                                    $hire_mins = $start_date->diffInMinutes($end_date, false);
+
+                                @endphp
+                                <p>Hire Period: 
+                                    <span>
+                                        @if($hire_period > 0)
+                                        {{ $hire_period }} days
+                                        @elseif($hire_hours > 0)
+                                        {{$hire_hours}} hrs
+                                        @else
+                                        {{$hire_mins}} mins
+                                        @endif
+                                    </span>
+                                </p>
                             </div>
                             <div class="col-lg-6">
-                                <p>Pickup Time: <span>7am </span></p>
+                                <p>Pickup Time: <span>{{ $pickup_time }} </span></p>
                             </div>
                             <div class="col-lg-6">
-                                <p>Dropoff Time: <span>7am</span></p>
+                                <p>Dropoff Time: <span>{{ $dropoff_time }}</span></p>
                             </div>
                         </div>
                     </div>
                     <p class="s_des mt-2">Note: The trailer address will be shared with you via email after booking
                         your trailer for rent.</p>
-                    <form>
+                    <form id="driving_licence_form" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="order_id" value="{{ $order->id }}" />
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label"> 
                                 <!-- <img src="img/label_icon1.png" alt="label"> -->
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
                                      Driver’s Licence</label>
-                            <input type="file" class="form_control py-1" id="exampleFormControlInput1"
-                                placeholder="Upload Photo">
+                            <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
+                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label"> 
@@ -96,25 +122,28 @@
                                 placeholder="Enter promo code (if any)">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">     
                             <label class="form-check-label" for="flexCheckDefault">
                                 I agree to <a href="#">Terms & Conditions</a>
                             </label>
                         </div>
-                    </form>
-                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
-                        <div class="progress_bar text-center mt-2">
-                            <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    
+                        <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                            <div class="progress_bar text-center mt-2">
+                                <div class="progress" style="width: 90px;height: 7px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span for="#">1/3</span>
                             </div>
-                            <span for="#">1/3</span>
+                            <div class="btns d-flex align-items-center">
+                                <a href="#" class="btn link text-white">GO BACK</a>
+                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
+                                {{-- onclick="navigate('content2')" --}}
+                                >CONTINUE</button>
+                            </div>
                         </div>
-                        <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2" onclick="navigate('content2')">CONTINUE</a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <!-- 2 -->
                 <div class="side_content content2 d-none">
@@ -122,7 +151,25 @@
                     <div class="payment_form">
                         <div class="d-flex justify-content-between">
                             <p>Trailer payment:</p>
-                            <p>$60</p>
+                            <p>
+                                @if($hire_hours == 0 || $hire_hours <= 6)
+                                    $60
+                                @elseif($hire_hours >= 6 || $hire_hours <= 12)
+                                    $70
+                                @elseif($hire_hours >= 12 || $hire_hours <= 24)
+                                    $80
+                                @elseif($hire_period == 2)
+                                    $150
+                                @elseif($hire_period == 3)
+                                    $210
+                                @elseif($hire_period == 4)
+                                    $260
+                                @elseif($hire_period == 5)
+                                    $300
+                                @elseif($hire_period >= 5)
+                                    $500
+                                @endif
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between borderBottom">
                             <p>Bond charges (Refundable):</p>
@@ -241,9 +288,46 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function navigate(content) {
+            // alert(content);
             $('.side_content').addClass('d-none');
             $(`.${content}`).removeClass('d-none');
         }
+
+        $('#flexCheckDefault').change(function(e) {  
+            console.log(e.target.checked);
+            if(e.target.checked)
+            {
+                $('#continue').css({'opacity':'1', 'cursor':'default'});
+            }
+            else{
+                $('#continue').css({'opacity':'0.7', 'cursor':'not-allowed'});
+            }
+        });
+
+
+        $('#driving_licence_form').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{{ route('store-licence') }}",
+            data: new FormData(this),
+            datatype: "json",
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+                console.log("Success");
+                $('.side_content').addClass('d-none');
+                $('.content2').removeClass('d-none');
+                
+
+            },
+            error: function (data) {
+                    $('.driving_licence_valid').text(data?.responseJSON?.errors?.driving_licence);
+            }
+        });
+    });
+
     </script>
 </body>
 

@@ -24,8 +24,8 @@ class OrderTrailerController extends Controller
 
         $order= new Order;
         $hire_time = explode(' - ',trim($request->date));
-        $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $request->start_time"));
-        $end_time = date('Y-m-d H:i:s', strtotime("$hire_time[1] $request->end_time"));
+        $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
+        $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
         // dd($start_time);
         $order->trailer_id = $request->trailer_id;
         $order->user_id = $user_id;
@@ -34,7 +34,9 @@ class OrderTrailerController extends Controller
         $order->start_date = strtotime($hire_time[0]);
         $order->end_date = strtotime($hire_time[1]);
         $order->save();
+
+        $url = 'dashboard/book_trailer/' . $order->id;
         
-        return redirect('/book_trailer');
+        return redirect($url);
     }
 }
