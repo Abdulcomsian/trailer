@@ -15,7 +15,7 @@ Trailer | Home
                 <div class="text mb-4">
                     <h3>Personal Details</h2>
                 </div>
-                <form action="{{ route('update.profile') }}" method="POST">
+                <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="user_id" value="{{ $user->id }}" />
                     <div class="row">
@@ -47,13 +47,25 @@ Trailer | Home
                                 {{-- <span class="text-danger name_valid">{{$errors->first('password')}}</span> --}}
                             </div>
                         </div>
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Phone Number</label>
-                                    <input type="number" class="form-control" id="phone" name="phone" value="{{$user->phone ?? ''}}">
-                                    <span class="text-danger name_valid">{{$errors->first('phone')}}</span>
-                                    </div>
-                                </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Phone Number</label>
+                                <input type="number" class="form-control" id="phone" name="phone" value="{{$user->driving_licence ?? ''}}">
+                                <span class="text-danger name_valid">{{$errors->first('phone')}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Driving Licence</label>
+                                @if($user->driving_licence)
+                                <br>
+                                <img src="{{asset('driving_licence/'.$user->driving_licence)}}" alt="logo" style="width: 230px; height:270px;">
+                                @endif
+                                <input type="file" class="form-control" id="driving_licence" name="driving_licence" value="{{$user->phone ?? ''}}">
+                                <span class="text-danger name_valid">{{$errors->first('driving_licence')}}</span>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="d-flex justify-content-end mt-4">

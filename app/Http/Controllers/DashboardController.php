@@ -165,6 +165,17 @@ class DashboardController extends Controller
         {
             $user->phone = $request->phone;
         }
+
+        if($request->hasfile('driving_licence'))
+        {
+            $image = $request->file('driving_licence');
+            $extensions =$image->extension();
+
+            $image_name =time().'.'. $extensions;
+            $image->move('driving_licence/',$image_name);
+            $user->driving_licence=$image_name;
+        }
+        
         $user->save();
 
         return Redirect::back();
