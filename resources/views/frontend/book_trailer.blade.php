@@ -106,12 +106,24 @@
                         @csrf
                         <input type="hidden" name="order_id" value="{{ $order->id }}" />
                         <div class="mb-3">
+                            
+                            @if($order->user->driving_licence == null)
                             <label for="exampleFormControlInput1" class="form-label"> 
                                 <!-- <img src="img/label_icon1.png" alt="label"> -->
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
-                                     Driver’s Licence</label>
+                                     Driver’s Licence
+                            </label>
                             <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
                             <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
+                            @else
+                            <label for="exampleFormControlInput1" class="form-label"> 
+                                <!-- <img src="img/label_icon1.png" alt="label"> -->
+                                <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
+                                     Driver’s Licence (Already Uploaded)
+                            </label>
+                            <input type="file" disabled class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
+                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label"> 
@@ -138,9 +150,15 @@
                             </div>
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
+                                @if($order->user->driving_licence == null)
                                 <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
                                 {{-- onclick="navigate('content2')" --}}
                                 >CONTINUE</button>
+                                @else
+                                <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
+                                onclick="navigate('content2')"
+                                >CONTINUE</a>
+                                @endif
                             </div>
                         </div>
                     </form>
@@ -212,7 +230,7 @@
                                 placeholder="####-####-####-####">
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Expiration Date:</label>
                                     <input type="email" class="form_control" id="exampleFormControlInput1"
