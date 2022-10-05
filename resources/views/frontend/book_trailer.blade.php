@@ -58,7 +58,9 @@
             </div>
         </div>
     </nav>
+<?php
 
+?>
     <main class="inquiry_main">
         <div class="row mx-0">
             <div class="col-lg-5">
@@ -67,16 +69,17 @@
                     <div class="specifi">
                         <div class="row">
                             <div class="col-lg-6">
-                                <p>Type: <span>{{$order->trailer->trailer_name}}</span></p>
+                                <p>Type: <span>{{$trailor->trailer_name}}</span></p>
                             </div>
                             <div class="col-lg-6">
                                 @php 
-                                    $pickup_time = \Carbon\Carbon::parse($order->start_time)->format('h:i A');
-                                    $dropoff_time = \Carbon\Carbon::parse($order->end_time)->format('h:i A');
-                                    
-                                    $start_date = date('Y-m-d h:i A ', $order->start_time);
+                                    $pickup_time = \Carbon\Carbon::parse($start_time)->format('h:i A');
+                                    $dropoff_time = \Carbon\Carbon::parse($end_time)->format('h:i A');
+                                    dd($start_time);
+                                    $start_date = date('Y-m-d h:i A ', $start_time);
+                                   
                                     $start_date = \Carbon\Carbon::parse($start_date);
-                                    $end_date = date('Y-m-d h:i A ', $order->end_time);
+                                    $end_date = date('Y-m-d h:i A ', $end_time);
                                     $end_date = \Carbon\Carbon::parse($end_date);
                                     // dd($start_date, $end_date);
                                     $hire_period = $start_date->diffInDays($end_date, false);
@@ -108,10 +111,10 @@
                         your trailer for rent.</p>
                     <form id="driving_licence_form" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                        <!-- <input type="hidden" name="order_id" value="{{ $order->id }}" /> -->
                         <div class="mb-3">
                             
-                            @if($order->user->driving_licence == null)
+                            @if($user->driving_licence == null)
                             <label for="exampleFormControlInput1" class="form-label"> 
                                 <!-- <img src="img/label_icon1.png" alt="label"> -->
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
@@ -119,14 +122,14 @@
                             </label>
                             <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
                             <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
-                            @else
-                            <label for="exampleFormControlInput1" class="form-label"> 
-                                <!-- <img src="img/label_icon1.png" alt="label"> -->
+                            {{-- @else --}}
+                            <!-- <label for="exampleFormControlInput1" class="form-label"> 
+                                
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
                                      Driver’s Licence (Already Uploaded)
                             </label>
                             <input type="file" disabled class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
-                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
+                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span> -->
                             @endif
                         </div>
                         <div class="mb-3">
@@ -154,7 +157,7 @@
                             </div>
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
-                                @if($order->user->driving_licence == null)
+                                @if($user->driving_licence == null)
                                 <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
                                 {{-- onclick="navigate('content2')" --}}
                                 >CONTINUE</button>
@@ -208,7 +211,7 @@
                             <div class="d-flex">
                                 <div class="bank_cards me-2">
                                     <a href="#" class="card_img">
-                                        <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
+                                        <img src="{{asset('assets/img/credit-card.png') }}" width="40" alt="paypal">
                                     </a>
                                 </div>
                                 <div class="bank_cards me-2">

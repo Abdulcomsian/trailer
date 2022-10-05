@@ -33,11 +33,11 @@ Trailer | Home
                     <p class="hero_text text-white">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </p>
-                    <form class="header_form mt-5" method="POST" action="{{ route('order-trailer') }}">
+                    <form class="header_form mt-5" id="trailor_book" method="POST" action="{{ route('order-trailer') }}">
                         @csrf
-                        @guest
-                        <div class="input mb-5 position-relative" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
+                        {{-- @guest --}}
+                        <!-- <div class="input mb-5 position-relative" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            
                             <select disabled name="trailer_id" id="trailer_id" class="form_control w-100">
                                 <option value="">Type of trailer</option>
                                 @if(count($trailers) > 0)
@@ -50,8 +50,8 @@ Trailer | Home
                             {{-- <span class="icon">
                                 <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
                             </span>  --}}
-                        </div>
-                        @else
+                        </div> -->
+                        {{-- @else  --}}
                         <div class="input mb-5 position-relative">
                             <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
                             <select name="trailer_id" id="trailer_id" class="form_control w-100">
@@ -67,7 +67,7 @@ Trailer | Home
                                 <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
                             </span>  --}}
                         </div>
-                        @endguest
+                        {{-- @endguest  --}}
                         {{-- @php
                             // $hire_time = explode(' - ',trim($orders->date));
                             $start_time = $orders->start_time;
@@ -614,6 +614,32 @@ Trailer | Home
 @endsection
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+            jQuery( document ).ready( function( $ ) {
+
+                $( '#model_login' ).on( 'submit', function(e) {
+                    e.preventDefault();
+                    var datastring = $("#model_login").serialize();
+                    console.log(datastring);
+                    $.ajax({
+                        url: "{{route('custom-login')}}",
+                        type: "POST",
+                        data: datastring,
+                        dataType: 'json',
+                        success: function (result) {
+                            if(result.status=="Success" && result.data.login=="loggedin"){
+                                $("#trailor_book").submit();
+                            }else{
+                                toastr.error("Incorrect Credentials");
+                            }
+                        }
+                    });
+                })
+            })
+
+    </script>
+
 <script>
 
     const timeDisabled = (time) => {
@@ -668,12 +694,12 @@ Trailer | Home
         setTimeout(() => {
             c_date = $('#datePut').val();
             trailer_id = $('#trailer_id').val();
-            if(trailer_id == '')
-            {
-                toastr.error("Kindly Select Trailer First"); 
-                $('#disableTimeRangesExample').attr('disabled', 'disabled');
-            }
-            else{
+            // if(trailer_id == '')
+            // {
+            //     toastr.error("Kindly Select Trailer First"); 
+            //     $('#disableTimeRangesExample').attr('disabled', 'disabled');
+            // }
+            // else{
                 $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
                 $.ajax({
                 type: "POST",
@@ -700,7 +726,7 @@ Trailer | Home
                     
                 }
             });
-            }
+            // }
         }, 100);
 
     });

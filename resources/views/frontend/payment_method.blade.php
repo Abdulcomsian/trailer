@@ -61,14 +61,14 @@
                             <p class="mb-0"><b>$210</b></p>
                         </div>
                     </div>
-                    <form>
+                   
                         <div class="mb-3 mt-3">
                             <label for="exampleFormControlInput1" class="form-label">Choose payment method:</label>
                             <div class="d-flex">
                                 <div class="bank_cards me-2">
                                     <a href="#" class="card_img">
                                         <!-- <img src="img/paypal.png" width="80" alt="paypal"> -->
-                                        <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
+                                        <img src="{{asset('assets/img/credit-card.png') }}" width="40" alt="paypal">
                                     </a>
                                 </div>
                                 <div class="bank_cards me-2">
@@ -85,6 +85,7 @@
                                 </div>
                             </div>
                         </div>
+                        <form id="credit">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Card Name:</label>
                             <input type="email" class="form_control" id="exampleFormControlInput1"
@@ -110,8 +111,9 @@
                                         placeholder="###">
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>    
+                    </div>
+                    
                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                         <div class="progress_bar text-center mt-2">
                             <div class="progress" style="width: 90px;height: 7px;">
