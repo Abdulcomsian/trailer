@@ -17,32 +17,28 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            User::truncate();
-            // DB::table('roles')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        User::truncate();
+        $adminRole = DB::table('roles')->where('name', 'Admin')->first();
+        $userRole = DB::table('roles')->where('name', 'User')->first();
 
-            $adminRole = DB::table('roles')->where('name','Admin')->first();
-            $userRole = DB::table('roles')->where('name','User')->first();
-
-            $admin = User::create([
-                'name' => 'Admin User',
-                'email' => 'admin@gmail.com',
-                'phone' => '03045433455',
-                'password' => Hash::make('password1')
-            ]);
+        $admin = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@gmail.com',
+            'phone' => '03045433455',
+            'password' => Hash::make('password1')
+        ]);
 
 
-            $user = User::create([
-                'name' => 'Simple User',
-                'email' => 'user@gmail.com',
-                'phone' => '03045433451',
-                'password' => Hash::make('password1')
-            ]);
+        $user = User::create([
+            'name' => 'Simple User',
+            'email' => 'user@gmail.com',
+            'phone' => '03045433451',
+            'password' => Hash::make('password1')
+        ]);
 
-            
-            $admin->assignRole($adminRole->name);
-            $user->assignRole($userRole->name);
-        }
+
+        $admin->assignRole($adminRole->name);
+        $user->assignRole($userRole->name);
     }
 }

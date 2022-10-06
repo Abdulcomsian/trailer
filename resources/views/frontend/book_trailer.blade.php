@@ -8,11 +8,10 @@
     <title>Trailer | Home</title>
 
     <!-- bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- font awesome 5 CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css"> -->
 
     <!-- custom css -->
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
@@ -28,14 +27,15 @@
                 <!-- <img src="img/logo.png" alt="logo"> -->
                 <img src="{{asset('assets/img/logo.png') }}" alt="logo">
             </a>
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <!-- img --> <img src="{{asset('assets/img/menu.png') }}" alt="menu"> </button>
+            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <!-- img --> <img src="{{asset('assets/img/menu.png') }}" alt="menu">
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex align-items-center ms-auto">
                     <a href="{{url('/contact_us')}}" class="mx-2 me-3 btn btn_yellow">Contact</a>
                     <!-- <a href="#"><img src="img/user.png" alt="user"></a> -->
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <!-- <img src="img/user.png" alt="user"> -->
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
@@ -47,10 +47,9 @@
                                 <hr class="mx-1 my-0">
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    >
-                                        {{ __('Logout') }}
-                                    </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                    {{ __('Logout') }}
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -58,9 +57,9 @@
             </div>
         </div>
     </nav>
-<?php
+    <?php
 
-?>
+    ?>
     <main class="inquiry_main">
         <div class="row mx-0">
             <div class="col-lg-5">
@@ -72,29 +71,19 @@
                                 <p>Type: <span>{{$trailor->trailer_name}}</span></p>
                             </div>
                             <div class="col-lg-6">
-                                @php 
-                                    $pickup_time = \Carbon\Carbon::parse($start_time)->format('h:i A');
-                                    $dropoff_time = \Carbon\Carbon::parse($end_time)->format('h:i A');
-                                    dd($start_time);
-                                    $start_date = date('Y-m-d h:i A ', $start_time);
-                                   
-                                    $start_date = \Carbon\Carbon::parse($start_date);
-                                    $end_date = date('Y-m-d h:i A ', $end_time);
-                                    $end_date = \Carbon\Carbon::parse($end_date);
-                                    // dd($start_date, $end_date);
-                                    $hire_period = $start_date->diffInDays($end_date, false);
-                                    $hire_hours = $start_date->diffInHours($end_date, false);
-                                    $hire_mins = $start_date->diffInMinutes($end_date, false);
-
+                                @php
+                                $pickup_time = \Carbon\Carbon::parse($start_time)->format('h:i A');
+                                $dropoff_time = \Carbon\Carbon::parse($end_time)->format('h:i A');
+                                $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($start_time,$end_time);
                                 @endphp
-                                <p>Hire Period: 
+                                <p>Hire Period:
                                     <span>
-                                        @if($hire_period > 0)
-                                        {{ $hire_period }} days
-                                        @elseif($hire_hours > 0)
-                                        {{$hire_hours}} hrs
+                                        @if($periodTimes['hire_period'] > 0)
+                                        {{ $periodTimes['hire_period'] }} days
+                                        @elseif($periodTimes['hire_hours'] > 0)
+                                        {{$periodTimes['hire_hours']}} hrs
                                         @else
-                                        {{$hire_mins}} mins
+                                        {{$periodTimes['hire_mins']}} mins
                                         @endif
                                     </span>
                                 </p>
@@ -111,14 +100,12 @@
                         your trailer for rent.</p>
                     <form id="driving_licence_form" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <!-- <input type="hidden" name="order_id" value="{{ $order->id }}" /> -->
                         <div class="mb-3">
-                            
+
                             @if($user->driving_licence == null)
-                            <label for="exampleFormControlInput1" class="form-label"> 
-                                <!-- <img src="img/label_icon1.png" alt="label"> -->
+                            <label for="exampleFormControlInput1" class="form-label">
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
-                                     Driver’s Licence
+                                Driver’s Licence
                             </label>
                             <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
                             <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
@@ -133,38 +120,33 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label"> 
+                            <label for="exampleFormControlInput1" class="form-label">
                                 <!-- <img src="img/label_icon2.png" alt="label">  -->
                                 <img src="{{asset('assets/img/label_icon2.png') }}" alt="label">
-                                Promo code</label>
-                            <input type="email" class="form_control" id="exampleFormControlInput1"
-                                placeholder="Enter promo code (if any)">
+                                Promo code
+                            </label>
+                            <input type="text" class="form_control" id="exampleFormControlInput1" placeholder="Enter promo code (if any)">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">     
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
                                 I agree to <a href="#">Terms & Conditions</a>
                             </label>
                         </div>
-                    
+
                         <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                             <div class="progress_bar text-center mt-2">
                                 <div class="progress" style="width: 90px;height: 7px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span for="#">1/3</span>
                             </div>
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
                                 @if($user->driving_licence == null)
-                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
-                                {{-- onclick="navigate('content2')" --}}
-                                >CONTINUE</button>
+                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" {{-- onclick="navigate('content2')" --}}>CONTINUE</button>
                                 @else
-                                <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" 
-                                onclick="navigate('content2')"
-                                >CONTINUE</a>
+                                <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2')">CONTINUE</a>
                                 @endif
                             </div>
                         </div>
@@ -176,24 +158,11 @@
                     <div class="payment_form">
                         <div class="d-flex justify-content-between">
                             <p>Trailer payment:</p>
+                            @php
+                            $payment=App\Utils\HelperFunctions::getPaymentByHours($periodTimes['hire_hours']);
+                            @endphp
                             <p>
-                                @if($hire_hours == 0 || $hire_hours <= 6)
-                                    $60
-                                @elseif($hire_hours >= 6 || $hire_hours <= 12)
-                                    $70
-                                @elseif($hire_hours >= 12 || $hire_hours <= 24)
-                                    $80
-                                @elseif($hire_period == 2)
-                                    $150
-                                @elseif($hire_period == 3)
-                                    $210
-                                @elseif($hire_period == 4)
-                                    $260
-                                @elseif($hire_period == 5)
-                                    $300
-                                @elseif($hire_period >= 5)
-                                    $500
-                                @endif
+                                ${{$payment}}
                             </p>
                         </div>
                         <div class="d-flex justify-content-between borderBottom">
@@ -202,70 +171,100 @@
                         </div>
                         <div class="d-flex mt-2 justify-content-between">
                             <p class="mb-0"><b>Total:</b></p>
-                            <p class="mb-0"><b>$210</b></p>
+                            <p class="mb-0"><b>${{(float)$payment+150}}</b></p>
                         </div>
                     </div>
-                    <form>
-                        <div class="mb-3 mt-3">
-                            <label for="exampleFormControlInput1" class="form-label">Choose payment method:</label>
-                            <div class="d-flex">
-                                <div class="bank_cards me-2">
-                                    <a href="#" class="card_img">
-                                        <img src="{{asset('assets/img/credit-card.png') }}" width="40" alt="paypal">
-                                    </a>
-                                </div>
-                                <div class="bank_cards me-2">
-                                    <a href="#" class="card_img">
-                                        <img src="{{asset('assets/img/gpay.png') }}" width="80" alt="gpay">
-                                    </a>
-                                </div>
-                                <div class="bank_cards me-2">
-                                    <a href="#" class="card_img">
-                                        <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
-                                    </a>
-                                </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="exampleFormControlInput1" class="form-label">Choose payment method:</label>
+                        <div class="d-flex">
+                            <div class="bank_cards me-2">
+                                <a href="#" class="card_img">
+                                    <img src="{{asset('assets/img/credit-card.png') }}" width="40" alt="paypal">
+                                </a>
+                            </div>
+                            <div class="bank_cards me-2">
+                                <a href="#" class="card_img">
+                                    <img src="{{asset('assets/img/gpay.png') }}" width="80" alt="gpay">
+                                </a>
+                            </div>
+                            <div class="bank_cards me-2">
+                                <a href="#" class="card_img">
+                                    <img src="{{asset('assets/img/paypal.png') }}" width="80" alt="paypal">
+                                </a>
                             </div>
                         </div>
-                        <div class="mb-3">
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <form action="{{route('order.submit')}}" method="POST" id="payment-form">
+                                    @csrf
+                                    <input type="hidden" name="amount" value="{{(float)$payment+150}}" />
+                                    <input type="hidden" name="trailer_id" value="{{$trailor->id}}" />
+                                    <input type="hidden" name="start_time" value="{{$start_time}}" />
+                                    <input type="hidden" name="end_time" value="{{$end_time}}" />
+                                    <input type="hidden" name="start_date" value="{{$hire_time[0]}}" />>
+                                    <input type="hidden" name="end_date" value="{{$hire_time[1]}}" />
+                                    <div class="form-group">
+                                        <div class="card-header text-warning">
+                                            <label for="card-element">
+                                                Enter your credit card information
+                                            </label>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="card-element">
+                                                <!-- A Stripe Element will be inserted here. -->
+                                            </div>
+                                            <!-- Used to display form errors. -->
+                                            <div id="card-errors" role="alert"></div>
+                                            <input type="hidden" name="plan" value="{{Auth::user()->id}}" />
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Card Name:</label>
-                            <input type="email" class="form_control" id="exampleFormControlInput1"
-                                placeholder="Enter card holder name">
+                            <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="Enter card holder name">
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Card Number:</label>
-                            <input type="email" class="form_control" id="exampleFormControlInput1"
-                                placeholder="####-####-####-####">
+                            <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="####-####-####-####">
                         </div>
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Expiration Date:</label>
-                                    <input type="email" class="form_control" id="exampleFormControlInput1"
-                                        placeholder="MM/YY">
+                                    <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="MM/YY">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">CCV:</label>
-                                    <input type="email" class="form_control" id="exampleFormControlInput1"
-                                        placeholder="###">
+                                    <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="###">
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </div> -->
+
                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                         <div class="progress_bar text-center mt-2">
                             <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"
-                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <span for="#">2/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
                             <a href="#" class="btn link text-white" onclick="navigate('content1')">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2"  onclick="navigate('content3')">Pay $210</a>
+                            <button type="submit" class="btn btn_yellow ms-2">Pay ${{(float)$payment+150}}</button>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <!-- 3 -->
                 <div class="side_content content3 d-none">
@@ -281,14 +280,13 @@
                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                         <div class="progress_bar text-center mt-2">
                             <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <span for="#">3/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
                             <a href="#" class="btn link text-white" onclick="navigate('content2')">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2" >Pay $210</a>
+                            <a href="#" class="btn btn_yellow ms-2">Pay $210</a>
                         </div>
                     </div>
                 </div>
@@ -301,16 +299,11 @@
             </div>
         </div>
     </main>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
-
-   <!-- load jquery 3 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- load jquery 3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=Aae4GB5knrVLrqV6EpSXQMJkNbM3kaa6bGLTbGX0vkRUWn19sH-pDWUgmY72qhsGBuU402gTwIppueK1&currency=EUR"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         function navigate(content) {
             // alert(content);
@@ -318,41 +311,152 @@
             $(`.${content}`).removeClass('d-none');
         }
 
-        $('#flexCheckDefault').change(function(e) {  
-            console.log(e.target.checked);
-            if(e.target.checked)
-            {
-                $('#continue').css({'opacity':'1', 'cursor':'default'});
-            }
-            else{
-                $('#continue').css({'opacity':'0.7', 'cursor':'not-allowed'});
-            }
-        });
-
-
-        $('#driving_licence_form').submit(function(e){
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: "{{ route('store-licence') }}",
-            data: new FormData(this),
-            datatype: "json",
-            processData: false,
-            contentType: false,
-            cache: false,
-            success: function (data) {
-                console.log("Success");
-                $('.side_content').addClass('d-none');
-                $('.content2').removeClass('d-none');
-                
-
-            },
-            error: function (data) {
-                    $('.driving_licence_valid').text(data?.responseJSON?.errors?.driving_licence);
+        $('#flexCheckDefault').change(function(e) {
+            if (e.target.checked) {
+                $('#continue').css({
+                    'opacity': '1',
+                    'cursor': 'default'
+                });
+            } else {
+                $('#continue').css({
+                    'opacity': '0.7',
+                    'cursor': 'not-allowed'
+                });
             }
         });
-    });
+        //driving licence submit form
+        $('#driving_licence_form').submit(function(e) {
+            e.preventDefault();
+            console.log("submited");
+            $.ajax({
+                type: "POST",
+                url: "{{ route('store-licence') }}",
+                data: new FormData(this),
+                datatype: "json",
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    $('.side_content').addClass('d-none');
+                    $('.content2').removeClass('d-none');
+                },
+                error: function(err) {
+                    console.log(err.responseJSON);
+                    $('.driving_licence_valid').text(err.responseJSON.message);
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var stripe = Stripe('pk_test_51H6zNfDIr4vVZ16GTMYDTcZb9IJpNuGaqT6b7oED9QQQ8cCtNqk0Nphoxo2p1YTT8ze35JGrjrtpiIOPIFxB2t22008OeJYgig');
+            var elements = stripe.elements();
+            // Custom styling can be passed to options when creating an Element.
+            var style = {
+                base: {
+                    color: "#32325d",
+                    fontFamily: 'Arial, sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                        color: "#32325d"
+                    }
+                },
+                invalid: {
+                    fontFamily: 'Arial, sans-serif',
+                    color: "#fa755a",
+                    iconColor: "#fa755a"
+                }
+            };
 
+            // Create an instance of the card Element.
+            var card = elements.create('card', {
+                style: style
+            });
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+
+            // Create a token or display an error when the form is submitted.
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                hiddenInput.setAttribute('style', "border:1px");
+                form.appendChild(hiddenInput);
+                // Submit the form
+                form.submit();
+            }
+        })
+    </script>
+    <script>
+        // paypal.Buttons({
+        //     style: {
+        //         layout: 'horizontal',
+        //         fundingicons: 'true',
+        //     },
+        //     funding: {
+        //         allowed: [paypal.FUNDING.CARD],
+
+        //     },
+        //     createOrder: function(data, actions) {
+        //         return actions.order.create({
+        //             purchase_units: [{
+        //                 amount: {
+        //                     value: '{{(float)$payment+150}}'
+        //                 }
+        //             }]
+        //         });
+        //     },
+        //     onApprove: function(data, actions) {
+        //         return actions.order.capture().then(function(details) {
+        //             console.log(details);
+        //             // Call your server to save the transaction
+        //             return fetch('/paypal-transaction-complete', {
+        //                 method: 'post',
+        //                 headers: {
+        //                     'content-type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify({
+        //                     orderID: '1',
+        //                     userDetail: details,
+        //                     bookingId: '1',
+        //                     _token: '{{csrf_token()}}'
+        //                 })
+        //             }).then(function() {
+        //                 location.href = "{{url('booking/checkout')}}/1";
+        //             });
+        //         });
+        //     }
+        // }).render('#paypal-button-container');
+        // $(window).scroll(function() {
+        //     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        //         if ($(".summary-bar-area").hasClass('open')) {
+        //             $(".summary-bar-area").attr("style", "position:fixed;top:0px !important;z-index:999999");
+        //         }
+        //     } else {
+        //         $(".summary-bar-area").attr("style", "");
+        //     }
+        // });
     </script>
 </body>
 
