@@ -70,21 +70,9 @@
                         <img src="{{asset('assets/img/congrats.png') }}" alt="congrats">
                         <h1>Congratulations!</h1>
                         <p>You have successfully made payment
-                            of <b class="text-white">2T Trailer</b> for <b class="text-white">24hrs</b> . We have sent
-                            further details to your email <b class="text-white">johndoe@gmail.com</b>.
+                            of <b class="text-white">{{$orderData->trailer->trailer_name ?? ''}}</b> for <b class="text-white">{{$hours['hire_hours'] ?? ''}}hrs</b> . We have sent
+                            further details to your email <b class="text-white">{{$orderData->user->email ?? ''}}</b>.
                             Please check your email</p>
-                    </div>
-                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
-                        <div class="progress_bar text-center mt-2">
-                            <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <span for="#">3/3</span>
-                        </div>
-                        <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white" onclick="navigate('content2')">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2">Pay $210</a>
-                        </div>
                     </div>
                 </div>
             </div>

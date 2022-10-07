@@ -50,7 +50,7 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     //order trailer
     Route::get('/order-trailer', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
     Route::post('/order-submit', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSubmit'])->name('order.submit');
-    Route::get('/order-sucess', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSuccess'])->name('order.success');
+    Route::get('/order-sucess/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSuccess'])->name('order.success');
 });
 
 

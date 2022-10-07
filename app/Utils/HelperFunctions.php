@@ -66,7 +66,11 @@ class HelperFunctions
             $payment = $extrahoursrate + $onetwentyhourrate->price;
         } else {
             $payment = TrailerTimming::where(['time' => $where])->first();
-            $payment = $payment->price;
+            if ($payment) {
+                $payment = $payment->price;
+            } else {
+                $payment = 0;
+            }
         }
         return $payment;
     }

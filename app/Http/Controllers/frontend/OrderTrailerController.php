@@ -191,8 +191,11 @@ class OrderTrailerController extends Controller
                 $order->end_date = $request->end_date;
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
-                $order->save();
-                return redirect('User/order-sucess');
+                if ($order->save()) {
+                    $orderData = Order::with('user', 'trailer')->find($order->id);
+                    $hours = HelperFunctions::getHirePeriodTimes($request->start_time, $request->end_time);
+                    return view('frontend.order-sucess', compact('orderData', 'hours'));
+                }
             }
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
@@ -200,8 +203,9 @@ class OrderTrailerController extends Controller
     }
 
     //order success
-    public function orderSuccess()
+    public function orderSuccess($orderid = null)
     {
-        return view('frontend.order-sucess');
+        $orderData = Order::with('user', 'trailer')->find($order->id);
+        return view('frontend.order-sucess', compact('orderData'));
     }
 }
