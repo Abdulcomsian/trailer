@@ -208,4 +208,10 @@ class OrderTrailerController extends Controller
         $orderData = Order::with('user', 'trailer')->find($order->id);
         return view('frontend.order-sucess', compact('orderData'));
     }
+    //User Bookings
+    public function UserBooking()
+    {
+        $orderData = Order::with('user', 'trailer')->where(['user_id' => Auth::id()])->get();
+        return view('frontend.my_booking', compact('orderData'));
+    }
 }

@@ -33,17 +33,6 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
 /*****************END ADMIN ROUTES*******************/
 
 
-/*****************DASHBOARD ROUTES*******************/
-Route::prefix('dashboard')->middleware(['auth', 'dashboard'])->group(function () {
-
-    //brand-profile
-    Route::get('/profile', [App\Http\Controllers\frontend\DashboardController::class, 'profile'])->name('dashboard.profile');
-    Route::post('/update-profile', [App\Http\Controllers\frontend\DashboardController::class, 'update_profile'])->name('update.profile');
-    Route::get('/book_trailer/{order_id}', [App\Http\Controllers\DashboardController::class, 'book_trailer'])->name('book_trailer');
-    Route::post('/store-licence', [App\Http\Controllers\frontend\OrderTrailerController::class, 'store_licence'])->name('store-licence');
-});
-
-
 /********************DASHBOARD ROUTES END******************************/
 
 Route::prefix('User')->middleware(['auth'])->group(function () {
@@ -51,7 +40,16 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     Route::get('/order-trailer', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
     Route::post('/order-submit', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSubmit'])->name('order.submit');
     Route::get('/order-sucess/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSuccess'])->name('order.success');
+
+    //USER ORDERS
+    Route::get('/my_booking', [App\Http\Controllers\frontend\OrderTrailerController::class, 'UserBooking'])->name('user.bookings');
+    //brand-profile
+    Route::get('/profile', [App\Http\Controllers\frontend\DashboardController::class, 'profile'])->name('dashboard.profile');
+    Route::post('/update-profile', [App\Http\Controllers\frontend\DashboardController::class, 'update_profile'])->name('update.profile');
+    Route::get('/book_trailer/{order_id}', [App\Http\Controllers\DashboardController::class, 'book_trailer'])->name('book_trailer');
+    Route::post('/store-licence', [App\Http\Controllers\frontend\OrderTrailerController::class, 'store_licence'])->name('store-licence');
 });
+
 
 
 
@@ -93,9 +91,6 @@ Route::get('/legal', function () {
     return view('frontend.legal');
 });
 
-Route::get('/my_booking', function () {
-    return view('frontend.my_booking');
-});
 
 Route::get('/user_profile', function () {
     return view('frontend.user_profile');
