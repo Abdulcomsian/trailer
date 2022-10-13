@@ -29,6 +29,8 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     })->name('dashboard');
     //trailer
     Route::resource('trailers', App\Http\Controllers\admin\TrailerController::class);
+    //Coupon
+    Route::resource('coupons', App\Http\Controllers\admin\CouponController::class);
 });
 /*****************END ADMIN ROUTES*******************/
 
@@ -36,6 +38,9 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
 /********************DASHBOARD ROUTES END******************************/
 
 Route::prefix('User')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('frontend.userDashboard.dashboard');
+    });
     //order trailer
     Route::get('/order-trailer', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
     Route::post('/order-submit', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSubmit'])->name('order.submit');
@@ -43,6 +48,7 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
 
     //USER ORDERS
     Route::get('/my_booking', [App\Http\Controllers\frontend\OrderTrailerController::class, 'UserBooking'])->name('user.bookings');
+    Route::delete('/delete-booking/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'destroy'])->name('user.bookings');
     //brand-profile
     Route::get('/profile', [App\Http\Controllers\frontend\DashboardController::class, 'profile'])->name('dashboard.profile');
     Route::post('/update-profile', [App\Http\Controllers\frontend\DashboardController::class, 'update_profile'])->name('update.profile');
@@ -92,15 +98,6 @@ Route::get('/legal', function () {
 });
 
 
-Route::get('/user_profile', function () {
-    return view('frontend.user_profile');
-});
-
-Route::get('/dashboard', function () {
-    return view('frontend.dashboard');
-});
-
-// about_us.blade
 
 
 

@@ -9,7 +9,7 @@ Trailer | Home
             <div class="col-lg-3">
                 {{-- sidebar --}}
                 @include('layouts.UserBackend.side-bar')
-                
+
             </div>
             <div class="col-lg-9 mb-5">
                 <div class="text mb-4">
@@ -17,14 +17,14 @@ Trailer | Home
                 </div>
                 <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{ $user->id }}" />
+                    <input type="hidden" name="user_id" value="{{$user->id}}" />
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="name" class="form-control" id="name" name="name" value="{{$user->name}}">
-                            <span class="text-danger name_valid">{{$errors->first('name')}}</span>
-                        </div>
+                                <label for="exampleInputEmail1" class="form-label">Name</label>
+                                <input type="name" class="form-control" id="name" name="name" value="{{$user->name}}">
+                                <span class="text-danger name_valid">{{$errors->first('name')}}</span>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
@@ -60,7 +60,7 @@ Trailer | Home
                                 <label for="exampleFormControlTextarea1" class="form-label">Driving Licence</label>
                                 @if($user->driving_licence)
                                 <br>
-                                <img src="{{asset('driving_licence/'.$user->driving_licence)}}" alt="logo" style="width: 230px; height:270px;">
+                                <img src="{{asset($user->driving_licence)}}" alt="logo" style="width: 230px; height:270px;">
                                 @endif
                                 <input type="file" class="form-control" id="driving_licence" name="driving_licence" value="{{$user->phone ?? ''}}">
                                 <span class="text-danger name_valid">{{$errors->first('driving_licence')}}</span>
@@ -80,6 +80,6 @@ Trailer | Home
 @endsection
 @section('script')
 <script>
-    
+
 </script>
 @endsection

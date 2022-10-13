@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function profile()
     {
         $user = Auth::user();
-        return view('frontend.user_profile', compact('user'));
+        return view('frontend.userDashboard.user_profile', compact('user'));
     }
     //UPDATE PROFILE
     public function update_profile(Request $request)
@@ -36,30 +36,27 @@ class DashboardController extends Controller
 
             ]);
         }
+        try {
 
-        $user = User::find($request->user_id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
+            $user = User::find($request->user_id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
+            if ($request->phone) {
+                $user->phone = $request->phone;
+            }
+            if ($request->hasfile('driving_licence')) {
+                $filePath = 'uploads/driving_licence/';
+                $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
+                $user->driving_licence = $image_name;
+            }
+            $user->save();
+            return redirect()->back()->with('success', 'Success .. ! User Profile Updated');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
-
-        if ($request->phone) {
-            $user->phone = $request->phone;
-        }
-
-        if ($request->hasfile('driving_licence')) {
-            $image = $request->file('driving_licence');
-            $extensions = $image->extension();
-
-            $image_name = time() . '.' . $extensions;
-            $image->move('driving_licence/', $image_name);
-            $user->driving_licence = $image_name;
-        }
-
-        $user->save();
-
-        return Redirect::back();
     }
 
     public function book_trailer($order_id)

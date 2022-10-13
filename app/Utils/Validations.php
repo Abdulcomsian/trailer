@@ -22,6 +22,18 @@ class Validations
         ]);
     }
 
+    //store coupon
+    public static function coupon($request)
+    {
+        $request->validate([
+            'code' => 'unique:coupons|required',
+            'value' => 'required',
+            'total_count' => 'required',
+            'expired_at' => 'required',
+
+        ]);
+    }
+
     //Cutom Login Vaidations
     public static function customLogin($request)
     {

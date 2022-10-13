@@ -32,8 +32,8 @@ class TrailerController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        // try {
+       
+        try {
             $user_id = Auth::id();
             $trailer= new Trailer;
 
@@ -54,10 +54,10 @@ class TrailerController extends Controller
        
             toastr()->success('Trailer successfully added!');
             return Redirect::back();
-        // } catch (\Exception $exception) {
-        //     toastr()->error('Something went wrong, try again!');
-        //     return Redirect::back();
-        // }
+        } catch (\Exception $exception) {
+            toastr()->error('Something went wrong, try again!');
+            return Redirect::back();
+        }
     }
 
     public function edit($id)
@@ -69,8 +69,8 @@ class TrailerController extends Controller
 
     public function update(Request $request,$trailer)
     {
-        // dd($request->all());
-        // try {
+        
+        try {
             $user_id = Auth::id();
             $trailer= Trailer::find($trailer);
 
@@ -92,10 +92,10 @@ class TrailerController extends Controller
        
             toastr()->success('Trailer successfully updated!');
             return redirect('admin/trailers');
-        // } catch (\Exception $exception) {
-        //     toastError('Something went wrong, try again!');
-        //     return Redirect::back();
-        // }
+        } catch (\Exception $exception) {
+            toastError('Something went wrong, try again!');
+            return Redirect::back();
+        }
     }
 
     public function destroy(Request $request , $id)

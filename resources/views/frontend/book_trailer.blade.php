@@ -72,6 +72,7 @@
                             </div>
                             <div class="col-lg-6">
                                 @php
+
                                 $pickup_time = \Carbon\Carbon::parse($start_time)->format('h:i A');
                                 $dropoff_time = \Carbon\Carbon::parse($end_time)->format('h:i A');
                                 $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($start_time,$end_time);
@@ -81,7 +82,7 @@
                                         @if($periodTimes['hire_period'] > 0)
                                         {{ $periodTimes['hire_period'] }} days
                                         @elseif($periodTimes['hire_hours'] > 0)
-                                        {{$periodTimes['hire_hours']}} hrs
+                                        {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
                                         @else
                                         {{$periodTimes['hire_mins']}} mins
                                         @endif
@@ -198,12 +199,13 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card">
+
                                 <form action="{{route('order.submit')}}" method="POST" id="payment-form">
                                     @csrf
                                     <input type="hidden" name="amount" value="{{(float)$payment+150}}" />
                                     <input type="hidden" name="trailer_id" value="{{$trailor->id}}" />
-                                    <input type="hidden" name="start_time" value="{{$start_time}}" />
-                                    <input type="hidden" name="end_time" value="{{$end_time}}" />
+                                    <input type="hidden" name="start_time" value="{{$pickup_time}}" />
+                                    <input type="hidden" name="end_time" value="{{$dropoff_time}}" />
                                     <input type="hidden" name="start_date" value="{{$hire_time[0]}}" />>
                                     <input type="hidden" name="end_date" value="{{$hire_time[1]}}" />
                                     <div class="form-group">

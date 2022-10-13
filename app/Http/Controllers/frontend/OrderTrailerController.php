@@ -209,9 +209,33 @@ class OrderTrailerController extends Controller
         return view('frontend.order-sucess', compact('orderData'));
     }
     //User Bookings
-    public function UserBooking()
+    public function UserBooking(Request $request)
     {
-        $orderData = Order::with('user', 'trailer')->where(['user_id' => Auth::id()])->get();
-        return view('frontend.my_booking', compact('orderData'));
+        try {
+            if (isset($request->trailer) || isset($request->sort)) {
+                $sort = $request->sort == "" ? 'asc' : $request->sort;
+                if (!empty($request->trailer)) {
+                    $orderData = Order::with('user', 'trailer')->where(['user_id' => Auth::id(), 'trailer_id' => $request->trailer])->orderBy('id', $sort)->get();
+                } else {
+                    $orderData = Order::with('user', 'trailer')->where(['user_id' => Auth::id()])->orderBy('id', $sort)->get();
+                }
+            } else {
+                $orderData = Order::with('user', 'trailer')->where(['user_id' => Auth::id()])->get();
+            }
+            $trailer = Trailer::get();
+            return view('frontend.userDashboard.my_booking', compact('orderData', 'trailer'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+    }
+
+    public function destroy(Request $request, $order)
+    {
+        try {
+            Order::find($order)->delete();
+            return redirect()->back()->with('success', 'Success .. ! Order Deleted');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
     }
 }
