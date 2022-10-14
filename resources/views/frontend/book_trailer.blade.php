@@ -99,7 +99,8 @@
                     </div>
                     <p class="s_des mt-2">Note: The trailer address will be shared with you via email after booking
                         your trailer for rent.</p>
-                    <form id="driving_licence_form" method="POST" enctype="multipart/form-data">
+                   <!--  <form id="driving_licence_form" method="POST" enctype="multipart/form-data"> -->
+                     <form action="{{route('order.submit')}}" method="POST" id="payment-form">
                         @csrf
                         <div class="mb-3">
 
@@ -109,15 +110,9 @@
                                 Driver’s Licence
                             </label>
                             <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
-                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span>
-                            {{-- @else --}}
-                            <!-- <label for="exampleFormControlInput1" class="form-label"> 
-                                
-                                <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
-                                     Driver’s Licence (Already Uploaded)
-                            </label>
-                            <input type="file" disabled class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
-                            <span class="text-danger driving_licence_valid">{{$errors->first('driving_licence')}}</span> -->
+                            <span class="text-danger driving_licence_valid">
+                                {{$errors->first('driving_licence')}}
+                            </span>
                             @endif
                         </div>
                         <div class="mb-3">
@@ -126,7 +121,7 @@
                                 <img src="{{asset('assets/img/label_icon2.png') }}" alt="label">
                                 Promo code
                             </label>
-                            <input type="text" class="form_control" id="exampleFormControlInput1" placeholder="Enter promo code (if any)">
+                            <input type="text" class="form_control" name="code" id="exampleFormControlInput1" placeholder="Enter promo code (if any)">
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -144,14 +139,15 @@
                             </div>
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
-                                @if($user->driving_licence == null)
-                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" {{-- onclick="navigate('content2')" --}}>CONTINUE</button>
+                                 <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2','checkcoupon')">CONTINUE</a>
+                                {{--@if($user->driving_licence == null)
+                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue">CONTINUE</button>
                                 @else
                                 <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2')">CONTINUE</a>
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
                 <!-- 2 -->
                 <div class="side_content content2 d-none">
@@ -162,9 +158,7 @@
                             @php
                             $payment=App\Utils\HelperFunctions::getPaymentByHours($periodTimes['hire_hours']);
                             @endphp
-                            <p>
-                                ${{$payment}}
-                            </p>
+                            <p id="trailer-payment" data-val="{{$payment}}">${{$payment}}</p>
                         </div>
                         <div class="d-flex justify-content-between borderBottom">
                             <p>Bond charges (Refundable):</p>
@@ -172,7 +166,7 @@
                         </div>
                         <div class="d-flex mt-2 justify-content-between">
                             <p class="mb-0"><b>Total:</b></p>
-                            <p class="mb-0"><b>${{(float)$payment+150}}</b></p>
+                            <p class="mb-0"><b id="total">${{(float)$payment+150}}</b></p>
                         </div>
                     </div>
 
@@ -199,9 +193,6 @@
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card">
-
-                                <form action="{{route('order.submit')}}" method="POST" id="payment-form">
-                                    @csrf
                                     <input type="hidden" name="amount" value="{{(float)$payment+150}}" />
                                     <input type="hidden" name="trailer_id" value="{{$trailor->id}}" />
                                     <input type="hidden" name="start_time" value="{{$pickup_time}}" />
@@ -231,29 +222,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Card Name:</label>
-                            <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="Enter card holder name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Card Number:</label>
-                            <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="####-####-####-####">
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Expiration Date:</label>
-                                    <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="MM/YY">
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">CCV:</label>
-                                    <input type="email" class="form_control" id="exampleFormControlInput1" placeholder="###">
-                                </div>
-                            </div>
-                        </div> -->
-
                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                         <div class="progress_bar text-center mt-2">
                             <div class="progress" style="width: 90px;height: 7px;">
@@ -262,8 +230,8 @@
                             <span for="#">2/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white" onclick="navigate('content1')">GO BACK</a>
-                            <button type="submit" class="btn btn_yellow ms-2">Pay ${{(float)$payment+150}}</button>
+                            <a href="#" class="btn link text-white" onclick="navigate('content1','back')">GO BACK</a>
+                            <button type="submit" class="btn btn_yellow ms-2" id="paybutton">Pay ${{(float)$payment+150}}</button>
                         </div>
                     </div>
                     </form>
@@ -287,7 +255,7 @@
                             <span for="#">3/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white" onclick="navigate('content2')">GO BACK</a>
+                            <a href="#" class="btn link text-white" onclick="navigate('content2','back')">GO BACK</a>
                             <a href="#" class="btn btn_yellow ms-2">Pay $210</a>
                         </div>
                     </div>
@@ -307,10 +275,45 @@
     <script src="https://www.paypal.com/sdk/js?client-id=Aae4GB5knrVLrqV6EpSXQMJkNbM3kaa6bGLTbGX0vkRUWn19sH-pDWUgmY72qhsGBuU402gTwIppueK1&currency=EUR"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        function navigate(content) {
-            // alert(content);
-            $('.side_content').addClass('d-none');
-            $(`.${content}`).removeClass('d-none');
+        function navigate(content,$checkcoupon) {
+            if($checkcoupon=='checkcoupon')
+            {
+                let code=$("input[name='code']").val();
+                if(code)
+                {
+                    $.ajax({
+                    type: "get",
+                    url: "{{ route('checkcoupon') }}",
+                    data:{code},
+                    success: function(data) {
+                        console.log(data.data);
+                         $('.side_content').addClass('d-none');
+                         $(`.${content}`).removeClass('d-none');
+                         alert("coupon applied");
+                         let tprice=parseFloat($("#trailer-payment").attr('data-val'));
+                         tprice=tprice-data.data;
+                         $("#trailer-payment").text("$"+(tprice));
+                         $("#total").text("$"+(parseInt(tprice)+parseInt(150)));
+                         $("#paybutton").text('Pay $'+(parseInt(tprice)+parseInt(150)));
+                         $("input[name='amount']").val(parseInt(tprice)+parseInt(150));
+                         
+                    },
+                    error: function(err) {
+                        console.log(err);
+                       // $('.driving_licence_valid').text(err.responseJSON.message);
+                    }
+                });
+                }
+                else{
+                     $('.side_content').addClass('d-none');
+                     $(`.${content}`).removeClass('d-none');
+                }
+            }
+            else{
+              $('.side_content').addClass('d-none');
+              $(`.${content}`).removeClass('d-none');   
+            }
+           
         }
 
         $('#flexCheckDefault').change(function(e) {
@@ -329,7 +332,6 @@
         //driving licence submit form
         $('#driving_licence_form').submit(function(e) {
             e.preventDefault();
-            console.log("submited");
             $.ajax({
                 type: "POST",
                 url: "{{ route('store-licence') }}",
@@ -339,6 +341,10 @@
                 contentType: false,
                 cache: false,
                 success: function(data) {
+                    if(data.value)
+                    {
+
+                    }
                     $('.side_content').addClass('d-none');
                     $('.content2').removeClass('d-none');
                 },

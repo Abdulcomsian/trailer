@@ -27,6 +27,8 @@ class CreateOrdersTable extends Migration
             $table->enum('status', ['Pending', 'Return'])->default('Pending');
             $table->tinyInteger('payment_status')->default(0);
             $table->string('payment_method')->nullable();
+            $table->unsignedBigInteger('coupon_id');
+            $table->foreign('coupon_id')->references('id')->on('coupons');
             $table->timestamps();
         });
     }

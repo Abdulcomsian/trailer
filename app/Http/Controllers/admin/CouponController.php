@@ -44,18 +44,33 @@ class CouponController extends Controller
 
     public function edit($id)
     {
-        //
+        $coupondata = Coupon::find($id);
+        return view('admin.coupon.edit', compact('coupondata'));
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $coupon)
     {
-        //
+        Validations::updatecoupon($request);
+        try {
+            $all_inputs = $request->except('id', '_token');
+            Coupon::find($coupon)->update($all_inputs);;
+            return redirect()->back()->with('success', 'Success .. ! Coupon Updated');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
     }
 
 
     public function destroy($id)
     {
-        //
+        try {
+            Coupon::FindorFail($id)->delete();
+            toastr()->error('Coupon successfully deleted!');
+            return Redirect::back();
+        } catch (\Exception $exception) {
+            toastr()->error('Something Went Wrong!');
+            return Redirect::back();
+        }
     }
 }

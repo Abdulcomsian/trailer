@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Utils\Validations;
 use App\Utils\HelperFunctions;
-use App\Models\{User, Trailer, Order};
+use App\Models\{User, Trailer, Order, Coupon};
 use Auth;
 use Session;
 use Stripe;
@@ -161,16 +161,65 @@ class OrderTrailerController extends Controller
                 $user->driving_licence = $image_name;
                 $user->save();
             }
-
-            $this->successResponse($user, 'Driving Licence Uploaded', 200);
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'File Uploaded',
+                'value' => $value,
+                'redirectURL' => '',
+            ], 200);
         } catch (\Exception $exception) {
             $this->errorResponse('Something Went Wrong', 400);
+        }
+    }
+    //check coupon
+    public function checkcoupon(Request $request)
+    {
+        if ($request->code) {
+            //check coupon code
+            $couponsData = Coupon::where(['code' => $request->code])->first();
+            if ($couponsData) {
+                if ($couponsData->toal_count > $couponsData->use_count) {
+                    $value = $couponsData->value;
+                    return response()->json([
+                        'status' => 'success',
+                        'message' => 'Coupon Applied',
+                        'data' => $value,
+                        'redirectURL' => '',
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'status' => 'Error',
+                        'message' => 'Coupon Not Valid',
+                        'data' => null,
+                        'redirectURL' => '',
+                    ], 400);
+                }
+            } else {
+                return response()->json([
+                    'status' => 'Error',
+                    'message' => 'Coupon Code Invalid',
+                    'data' => null,
+                    'redirectURL' => '',
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Coupon Not Found',
+                'data' => null,
+                'redirectURL' => '',
+            ], 400);
         }
     }
 
     //submit order
     public function orderSubmit(Request $request)
     {
+        if ($request->hasfile('driving_licence')) {
+            $request->validate([
+                'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+        }
         $amount = $request->amount;
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -181,8 +230,16 @@ class OrderTrailerController extends Controller
                 "description" => "This payment is for tested purpose"
             ]);
             if ($stripedata->status == "succeeded") {
+                $user_id = Auth::id();
+                $user = $this->getUserById($user_id);
+                if ($request->hasfile('driving_licence')) {
+                    $filePath = 'uploads/driving_licence/';
+                    $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
+                    $user->driving_licence = $image_name;
+                    $user->save();
+                }
                 $order = new Order();
-                $order->user_id = Auth::user()->id;
+                $order->user_id = $user_id;
                 $order->trailer_id = $request->trailer_id;
                 $order->amount = $request->amount;
                 $order->start_time = $request->start_time;
@@ -191,6 +248,11 @@ class OrderTrailerController extends Controller
                 $order->end_date = $request->end_date;
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
+                if ($request->code) {
+                    $coupon = Coupon::where(['code' => $request->code])->first();
+                    $order->coupon_id = $coupon->id;
+                }
+
                 if ($order->save()) {
                     $orderData = Order::with('user', 'trailer')->find($order->id);
                     $hours = HelperFunctions::getHirePeriodTimes($request->start_time, $request->end_time);

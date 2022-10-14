@@ -26,13 +26,26 @@ class Validations
     public static function coupon($request)
     {
         $request->validate([
-            'code' => 'unique:coupons|required',
+            'code' => 'unique:code|required',
             'value' => 'required',
-            'total_count' => 'required',
+            'toal_count' => 'required',
             'expired_at' => 'required',
 
         ]);
     }
+
+    public static function updatecoupon($request)
+    {
+        $request->validate([
+            'code' => ['required', Rule::unique('coupons')->ignore($request->id)],
+            'value' => 'required',
+            'toal_count' => 'required',
+            'expired_at' => 'required',
+
+        ]);
+    }
+
+
 
     //Cutom Login Vaidations
     public static function customLogin($request)
