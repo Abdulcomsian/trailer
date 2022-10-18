@@ -55,7 +55,8 @@ class OrderTrailerController extends Controller
         $end_time = date('Y-m-d', strtotime("$hire_time[1]"));
         if ($start_time == $end_time) {
             $start_date = strtotime("$hire_time[0]");
-            $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->orWhere('end_date', $start_date)->get();
+            //dd($hire_time[0]);
+            $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
             $start_time = array();
             $end_time = array();
             // dd($disable_time);
@@ -140,18 +141,17 @@ class OrderTrailerController extends Controller
     //store driving licence
     public function store_licence(Request $request)
     {
+        $hire_period=$request->hire_period;
+        $trailer_id=$request->trailer_id;
+        $start_time=$request->start_time;
+        $end_time=$request->end_time;
+        $start_date=$request->start_date;
+        $end_date=$request->end_date;
+        $code=$request->code;
         // Setup the validator
-        $rules = array('driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048');
-        $validator = Validator::make($request->all(), $rules);
-        // Validate the input and return correct response
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Input filed required',
-                'data' => null,
-                'redirectURL' => '',
-            ], 400);
-        }
+         $request->validate([
+                'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
         try {
             $user_id = Auth::id();
             $user = $this->getUserById($user_id);
@@ -161,65 +161,25 @@ class OrderTrailerController extends Controller
                 $user->driving_licence = $image_name;
                 $user->save();
             }
-            return response()->json([
-                'status' => 'Success',
-                'message' => 'File Uploaded',
-                'value' => $value,
-                'redirectURL' => '',
-            ], 200);
-        } catch (\Exception $exception) {
-            $this->errorResponse('Something Went Wrong', 400);
-        }
-    }
-    //check coupon
-    public function checkcoupon(Request $request)
-    {
-        if ($request->code) {
-            //check coupon code
-            $couponsData = Coupon::where(['code' => $request->code])->first();
-            if ($couponsData) {
-                if ($couponsData->toal_count > $couponsData->use_count) {
-                    $value = $couponsData->value;
-                    return response()->json([
-                        'status' => 'success',
-                        'message' => 'Coupon Applied',
-                        'data' => $value,
-                        'redirectURL' => '',
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'status' => 'Error',
-                        'message' => 'Coupon Not Valid',
-                        'data' => null,
-                        'redirectURL' => '',
-                    ], 400);
-                }
-            } else {
-                return response()->json([
-                    'status' => 'Error',
-                    'message' => 'Coupon Code Invalid',
-                    'data' => null,
-                    'redirectURL' => '',
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Coupon Not Found',
-                'data' => null,
-                'redirectURL' => '',
-            ], 400);
-        }
-    }
+            //check coupon code=====================
+             $value='';
 
+            if ($request->code) {
+                $couponsData = Coupon::where(['code' => $request->code])->first();
+                    if ($couponsData) {
+                        if ($couponsData->toal_count > $couponsData->use_count) {
+                            $value = $couponsData->value;
+                        } 
+                    } 
+            } 
+            return view('frontend.order-checkout',compact('value','hire_period','trailer_id','start_time','end_time','start_date','end_date','code'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+    }
     //submit order
     public function orderSubmit(Request $request)
     {
-        if ($request->hasfile('driving_licence')) {
-            $request->validate([
-                'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-        }
         $amount = $request->amount;
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -232,16 +192,11 @@ class OrderTrailerController extends Controller
             if ($stripedata->status == "succeeded") {
                 $user_id = Auth::id();
                 $user = $this->getUserById($user_id);
-                if ($request->hasfile('driving_licence')) {
-                    $filePath = 'uploads/driving_licence/';
-                    $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
-                    $user->driving_licence = $image_name;
-                    $user->save();
-                }
                 $order = new Order();
                 $order->user_id = $user_id;
                 $order->trailer_id = $request->trailer_id;
                 $order->amount = $request->amount;
+                $order->charges=150;
                 $order->start_time = $request->start_time;
                 $order->end_time = $request->end_time;
                 $order->start_date = $request->start_date;
@@ -251,6 +206,7 @@ class OrderTrailerController extends Controller
                 if ($request->code) {
                     $coupon = Coupon::where(['code' => $request->code])->first();
                     $order->coupon_id = $coupon->id;
+                    $order->discount_price=$coupon->value;
                 }
 
                 if ($order->save()) {
@@ -267,7 +223,7 @@ class OrderTrailerController extends Controller
     //order success
     public function orderSuccess($orderid = null)
     {
-        $orderData = Order::with('user', 'trailer')->find($order->id);
+        $orderData = Order::with('user', 'trailer')->find($orderid);
         return view('frontend.order-sucess', compact('orderData'));
     }
     //User Bookings
@@ -296,6 +252,22 @@ class OrderTrailerController extends Controller
         try {
             Order::find($order)->delete();
             return redirect()->back()->with('success', 'Success .. ! Order Deleted');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+    }
+
+    //paypal transaction
+    public function paypal_transaction(Request $request)
+    {
+    }
+
+    //refund order
+    public function refund_booking(Request $request)
+    {
+        try {
+            Order::find($request->id)->update(['status'=>'Refund']);
+            return redirect()->back()->with('success', 'Success .. ! Order Refunded');
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }

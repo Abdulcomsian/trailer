@@ -24,7 +24,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('trailer_id');
             $table->foreign('trailer_id')->references('id')->on('trailers')->onDelete('cascade');
             $table->double('amount');
-            $table->enum('status', ['Pending', 'Return'])->default('Pending');
+            $table->integer('charges');
+            $table->integer('discount_price')->nullable();
+            $table->enum('status', ['Pending', 'Refund','Completed'])->default('Pending');
             $table->tinyInteger('payment_status')->default(0);
             $table->string('payment_method')->nullable();
             $table->unsignedBigInteger('coupon_id');

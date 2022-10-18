@@ -72,7 +72,6 @@
                             </div>
                             <div class="col-lg-6">
                                 @php
-
                                 $pickup_time = \Carbon\Carbon::parse($start_time)->format('h:i A');
                                 $dropoff_time = \Carbon\Carbon::parse($end_time)->format('h:i A');
                                 $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($start_time,$end_time);
@@ -99,12 +98,18 @@
                     </div>
                     <p class="s_des mt-2">Note: The trailer address will be shared with you via email after booking
                         your trailer for rent.</p>
-                   <!--  <form id="driving_licence_form" method="POST" enctype="multipart/form-data"> -->
-                     <form action="{{route('order.submit')}}" method="POST" id="payment-form">
+                        <!-- id="driving_licence_form" -->
+                      <form  action="{{route('store-licence')}}" method="post" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="hire_period" value="{{$periodTimes['hire_hours']}}">
+                         <input type="hidden" name="trailer_id" value="{{$trailor->id}}" />
+                         <input type="hidden" name="start_time" value="{{$pickup_time}}" />
+                         <input type="hidden" name="end_time" value="{{$dropoff_time}}" />
+                         <input type="hidden" name="start_date" value="{{$hire_time[0]}}" />
+                         <input type="hidden" name="end_date" value="{{$hire_time[1]}}" />
                         <div class="mb-3">
 
-                            @if($user->driving_licence == null)
+                            {{-- @if($user->driving_licence == null) --}}
                             <label for="exampleFormControlInput1" class="form-label">
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
                                 Driver’s Licence
@@ -113,7 +118,7 @@
                             <span class="text-danger driving_licence_valid">
                                 {{$errors->first('driving_licence')}}
                             </span>
-                            @endif
+                          {{--   @endif --}}
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">
@@ -139,18 +144,19 @@
                             </div>
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
-                                 <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2','checkcoupon')">CONTINUE</a>
-                                {{--@if($user->driving_licence == null)
-                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue">CONTINUE</button>
+                                 <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue">CONTINUE</button>
+                                @if($user->driving_licence == null)
+                                <!-- <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue">CONTINUE</button> -->
                                 @else
-                                <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2')">CONTINUE</a>
-                                @endif--}}
+                                <!-- <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2','checkcoupon')">CONTINUE</a> -->
+                                @endif
                             </div>
                         </div>
+                     </form>
                     
                 </div>
                 <!-- 2 -->
-                <div class="side_content content2 d-none">
+                <!-- <div class="side_content content2 d-none">
                     <h2 class="head">Payment Method</h2>
                     <div class="payment_form">
                         <div class="d-flex justify-content-between">
@@ -190,6 +196,7 @@
                             </div>
                         </div>
                     </div>
+                    <form action="{{route('order.submit')}}" method="POST" id="payment-form">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
                             <div class="card">
@@ -207,9 +214,10 @@
                                         </div>
                                         <div class="card-body">
                                             <div id="card-element">
-                                                <!-- A Stripe Element will be inserted here. -->
+                                               
                                             </div>
-                                            <!-- Used to display form errors. -->
+                                           
+                                            
                                             <div id="card-errors" role="alert"></div>
                                             <input type="hidden" name="plan" value="{{Auth::user()->id}}" />
                                         </div>
@@ -235,11 +243,11 @@
                         </div>
                     </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- 3 -->
-                <div class="side_content content3 d-none">
+                <!-- <div class="side_content content3 d-none">
                     <div class="congrats_box d-flex align-items-center justify-content-center flex-column">
-                        <!-- <img src="img/congrats.png" alt="congrats"> -->
+                      
                         <img src="{{asset('assets/img/congrats.png') }}" alt="congrats">
                         <h1>Congratulations!</h1>
                         <p>You have successfully made payment
@@ -259,7 +267,7 @@
                             <a href="#" class="btn btn_yellow ms-2">Pay $210</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-lg-7 p-0">
                 <div class="img">
@@ -272,8 +280,8 @@
     <!-- load jquery 3 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=Aae4GB5knrVLrqV6EpSXQMJkNbM3kaa6bGLTbGX0vkRUWn19sH-pDWUgmY72qhsGBuU402gTwIppueK1&currency=EUR"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=Aae4GB5knrVLrqV6EpSXQMJkNbM3kaa6bGLTbGX0vkRUWn19sH-pDWUgmY72qhsGBuU402gTwIppueK1&currency=EUR"></script>
+    <script src="https://js.stripe.com/v3/"></script> -->
     <script>
         function navigate(content,$checkcoupon) {
             if($checkcoupon=='checkcoupon')
@@ -343,6 +351,12 @@
                 success: function(data) {
                     if(data.value)
                     {
+                         let tprice=parseFloat($("#trailer-payment").attr('data-val'));
+                         tprice=tprice-data.data;
+                         $("#trailer-payment").text("$"+(tprice));
+                         $("#total").text("$"+(parseInt(tprice)+parseInt(150)));
+                         $("#paybutton").text('Pay $'+(parseInt(tprice)+parseInt(150)));
+                         $("input[name='amount']").val(parseInt(tprice)+parseInt(150));
 
                     }
                     $('.side_content').addClass('d-none');
@@ -356,65 +370,65 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
-            var stripe = Stripe('pk_test_51H6zNfDIr4vVZ16GTMYDTcZb9IJpNuGaqT6b7oED9QQQ8cCtNqk0Nphoxo2p1YTT8ze35JGrjrtpiIOPIFxB2t22008OeJYgig');
-            var elements = stripe.elements();
-            // Custom styling can be passed to options when creating an Element.
-            var style = {
-                base: {
-                    color: "#32325d",
-                    fontFamily: 'Arial, sans-serif',
-                    fontSmoothing: "antialiased",
-                    fontSize: "16px",
-                    "::placeholder": {
-                        color: "#32325d"
-                    }
-                },
-                invalid: {
-                    fontFamily: 'Arial, sans-serif',
-                    color: "#fa755a",
-                    iconColor: "#fa755a"
-                }
-            };
+        // $(document).ready(function() {
+        //     var stripe = Stripe('pk_test_51H6zNfDIr4vVZ16GTMYDTcZb9IJpNuGaqT6b7oED9QQQ8cCtNqk0Nphoxo2p1YTT8ze35JGrjrtpiIOPIFxB2t22008OeJYgig');
+        //     var elements = stripe.elements();
+        //     // Custom styling can be passed to options when creating an Element.
+        //     var style = {
+        //         base: {
+        //             color: "#32325d",
+        //             fontFamily: 'Arial, sans-serif',
+        //             fontSmoothing: "antialiased",
+        //             fontSize: "16px",
+        //             "::placeholder": {
+        //                 color: "#32325d"
+        //             }
+        //         },
+        //         invalid: {
+        //             fontFamily: 'Arial, sans-serif',
+        //             color: "#fa755a",
+        //             iconColor: "#fa755a"
+        //         }
+        //     };
 
-            // Create an instance of the card Element.
-            var card = elements.create('card', {
-                style: style
-            });
+        //     // Create an instance of the card Element.
+        //     var card = elements.create('card', {
+        //         style: style
+        //     });
 
-            // Add an instance of the card Element into the `card-element` <div>.
-            card.mount('#card-element');
+        //     // Add an instance of the card Element into the `card-element` <div>.
+        //     card.mount('#card-element');
 
-            // Create a token or display an error when the form is submitted.
-            var form = document.getElementById('payment-form');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
+        //     // Create a token or display an error when the form is submitted.
+        //     var form = document.getElementById('payment-form');
+        //     form.addEventListener('submit', function(event) {
+        //         event.preventDefault();
 
-                stripe.createToken(card).then(function(result) {
-                    if (result.error) {
-                        // Inform the customer that there was an error.
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                    } else {
-                        // Send the token to your server.
-                        stripeTokenHandler(result.token);
-                    }
-                });
-            });
+        //         stripe.createToken(card).then(function(result) {
+        //             if (result.error) {
+        //                 // Inform the customer that there was an error.
+        //                 var errorElement = document.getElementById('card-errors');
+        //                 errorElement.textContent = result.error.message;
+        //             } else {
+        //                 // Send the token to your server.
+        //                 stripeTokenHandler(result.token);
+        //             }
+        //         });
+        //     });
 
-            function stripeTokenHandler(token) {
-                // Insert the token ID into the form so it gets submitted to the server
-                var form = document.getElementById('payment-form');
-                var hiddenInput = document.createElement('input');
-                hiddenInput.setAttribute('type', 'hidden');
-                hiddenInput.setAttribute('name', 'stripeToken');
-                hiddenInput.setAttribute('value', token.id);
-                hiddenInput.setAttribute('style', "border:1px");
-                form.appendChild(hiddenInput);
-                // Submit the form
-                form.submit();
-            }
-        })
+        //     function stripeTokenHandler(token) {
+        //         // Insert the token ID into the form so it gets submitted to the server
+        //         var form = document.getElementById('payment-form');
+        //         var hiddenInput = document.createElement('input');
+        //         hiddenInput.setAttribute('type', 'hidden');
+        //         hiddenInput.setAttribute('name', 'stripeToken');
+        //         hiddenInput.setAttribute('value', token.id);
+        //         hiddenInput.setAttribute('style', "border:1px");
+        //         form.appendChild(hiddenInput);
+        //         // Submit the form
+        //         form.submit();
+        //     }
+        // })
     </script>
     <script>
         // paypal.Buttons({
@@ -437,7 +451,6 @@
         //     },
         //     onApprove: function(data, actions) {
         //         return actions.order.capture().then(function(details) {
-        //             console.log(details);
         //             // Call your server to save the transaction
         //             return fetch('/paypal-transaction-complete', {
         //                 method: 'post',
@@ -445,9 +458,8 @@
         //                     'content-type': 'application/json'
         //                 },
         //                 body: JSON.stringify({
-        //                     orderID: '1',
-        //                     userDetail: details,
-        //                     bookingId: '1',
+        //                     amount:'{{(float)$payment+150}}',
+        //                     trailerid:'{{$trailor->id}}',
         //                     _token: '{{csrf_token()}}'
         //                 })
         //             }).then(function() {
@@ -464,7 +476,7 @@
         //     } else {
         //         $(".summary-bar-area").attr("style", "");
         //     }
-        // });
+        //  });
     </script>
 </body>
 

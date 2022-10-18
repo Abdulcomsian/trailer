@@ -3,39 +3,35 @@
     $(function () {
         //Delete Confirmation
         $(document).on("click",".confirm",function(event) {
+
             event.preventDefault();
             let form_id = '';
             let link = '';
+            text='Are you sure? to Delete it.';
             if($(event.target).is('button')){
-                console.log('Button clicked');
-                form_id = '#form_'+ $(this).attr('id');
+               form_id = '#form_'+ $(this).attr('id');
             }else if($(event.target).is('span')){
-                console.log('span clicked');
                 form_id = '#form_'+ $(this).closest('button').attr('id');
             }else if($(event.target).is('svg')){
                 form_id = '#form_'+ $(this).closest('button').attr('id');
-                console.log('svg clicked');
-
             }
             else if($(event.target).is('i')){
-                form_id = '#form_'+ $(this).closest('button').attr('id');
-                console.log('i clicked');
-
+                let type= $(this).closest('button').attr('data-type')
+                if(type)
+                {
+                    form_id = '#refundform_'+ $(this).closest('button').attr('id');
+                    text='Are you Sure? to Refund it.';
+                }
+                else{
+                     form_id = '#form_'+ $(this).closest('button').attr('id');
+                }
+               
             }else{
                 link = $(this).attr('href');
             }
-            if($(this).hasClass('unload'))
-            {
-                $("#permit_modal_id").hide();
-            }
-            var text=$(this).attr('data-text');
-            if(!text)
-            {
-                text="Are you sure? to Delete it.";
-            }
             swal({
-                    title: text,
-                    // text: "You will not be able to recover this record!",
+                    title:text,
+                    text: "You will not be able to recover this record!",
                     type: "warning",
                     confirmButtonColor: '#DD6B55',
                     confirmButtonText: 'Yes!',

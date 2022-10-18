@@ -26,7 +26,7 @@ class Validations
     public static function coupon($request)
     {
         $request->validate([
-            'code' => 'unique:code|required',
+            'code' => 'unique:coupons|required',
             'value' => 'required',
             'toal_count' => 'required',
             'expired_at' => 'required',
