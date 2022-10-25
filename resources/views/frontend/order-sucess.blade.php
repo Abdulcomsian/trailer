@@ -43,7 +43,7 @@
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
-                            <li><a class="dropdown-item" href="#">Return Trailer</a>
+                            <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li>
@@ -73,6 +73,15 @@
                             of <b class="text-white">{{$orderData->trailer->trailer_name ?? ''}}</b> for <b class="text-white">{{$hours['hire_hours'] ?? ''}}hrs</b> . We have sent
                             further details to your email <b class="text-white">{{$orderData->user->email ?? ''}}</b>.
                             Please check your email</p>
+                    </div>
+                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                        <div class="progress_bar text-center mt-2">
+                            <div class="progress" style="width: 90px;height: 7px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span for="#">3/3</span>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

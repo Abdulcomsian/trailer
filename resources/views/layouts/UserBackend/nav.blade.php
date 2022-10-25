@@ -20,7 +20,7 @@
                         <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                             <hr class="mx-1 my-0">
                         </li>
-                        <li><a class="dropdown-item" href="#">Return Trailer</a>
+                        <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                             <hr class="mx-1 my-0">
                         </li>
                         <li>

@@ -68,6 +68,14 @@ Edit Trailer
                                 @endif 
                             </table> 
                         </div>
+                         <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-bold fs-6 mb-2">Per Hour Price</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="per_hour_price" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Enter Per Hour Price"  required value="{{$trailer->per_hour_price}}" />
+                            <!--end::Input-->
+                        </div>
 
                         <div class="text-center pt-15">
                             <button type="submit" class="btn btn-success" data-kt-users-modal-action="submit">

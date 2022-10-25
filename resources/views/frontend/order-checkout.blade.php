@@ -21,7 +21,7 @@
 <body class="form_page">
 
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg inquiry_nav">
+    <nav class="navbar navbar-expand-lg inquiry_nav ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <!-- <img src="img/logo.png" alt="logo"> -->
@@ -43,7 +43,7 @@
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
-                            <li><a class="dropdown-item" href="#">Return Trailer</a>
+                            <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li>
@@ -73,7 +73,7 @@
                             $stime=date('Y-m-d h:i A', strtotime("$start_date $start_time"));
                             $etime = date('Y-m-d h:i A', strtotime("$end_date $end_time"));
                             $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($stime,$etime);
-                            $payment=App\Utils\HelperFunctions::getPaymentByHours($periodTimes['hire_hours']);
+                            $payment=App\Utils\HelperFunctions::getPaymentByHours($periodTimes['hire_hours'],$trailer_id);
                             if($value)
                             {
                                 $payment=$payment-$value;
@@ -155,7 +155,7 @@
                             <span for="#">2/3</span>
                         </div>
                         <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn link text-white" onclick="navigate('content1','back')">GO BACK</a>
+                            <a href="{{ url()->previous()  }}" class="btn link text-white">GO BACK</a>
                             <button type="submit" class="btn btn_yellow ms-2" id="paybutton">Pay ${{(float)$payment+150}}</button>
                              
                         </div>
@@ -178,7 +178,7 @@
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         $(document).ready(function() {
-            var stripe = Stripe('pk_test_51H6zNfDIr4vVZ16GTMYDTcZb9IJpNuGaqT6b7oED9QQQ8cCtNqk0Nphoxo2p1YTT8ze35JGrjrtpiIOPIFxB2t22008OeJYgig');
+            var stripe = Stripe('pk_test_9y4Gd3xTRMGZOq1vAXtSjrZ1');
             var elements = stripe.elements();
             // Custom styling can be passed to options when creating an Element.
             var style = {

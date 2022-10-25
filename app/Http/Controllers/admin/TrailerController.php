@@ -38,6 +38,7 @@ class TrailerController extends Controller
             $trailer= new Trailer;
 
             $trailer->trailer_name = $request->trailer_name;
+            $trailer->per_hour_price=$request->per_hour_price;
             $trailer->user_id = $user_id;
             $trailer->save();
 
@@ -75,6 +76,7 @@ class TrailerController extends Controller
             $trailer= Trailer::find($trailer);
 
             $trailer->trailer_name = $request->trailer_name;
+            $trailer->per_hour_price=$request->per_hour_price;
             $trailer->user_id = $user_id;
             $trailer->save();
 
@@ -93,7 +95,7 @@ class TrailerController extends Controller
             toastr()->success('Trailer successfully updated!');
             return redirect('admin/trailers');
         } catch (\Exception $exception) {
-            toastError('Something went wrong, try again!');
+            toastr()->error('Something went wrong, try again!');
             return Redirect::back();
         }
     }

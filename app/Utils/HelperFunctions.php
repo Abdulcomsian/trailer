@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use Illuminate\Support\Facades\File;
 use App\Models\TrailerTimming;
+use App\Models\Trailer;
 
 class HelperFunctions
 {
@@ -38,7 +39,7 @@ class HelperFunctions
     }
 
     //get payment by time
-    public static function getPaymentByHours($hours)
+    public static function getPaymentByHours($hours,$trailer_id)
     {
         $where = '';
         if ($hours > 0 && $hours <= 6) {
@@ -56,16 +57,16 @@ class HelperFunctions
         } elseif ($hours > 96 && $hours <= 120) {
             $where = '96 - 120 hrs (5 Days)';
         }
-
-
+        
+        $per_hour_price=Trailer::find($trailer_id);
         if ($hours > 120) {
             $extrahours = $hours - 120;
-            $onetwentyhourrate = TrailerTimming::where(['time' => '96 - 120 hrs (5 Days)'])->first();
+            $onetwentyhourrate = TrailerTimming::where(['time' => '96 - 120 hrs (5 Days)','trailer_id'=>$trailer_id])->first();
             //let suppose extra hours rate is $10 then 
-            $extrahoursrate = $extrahours * 10;
+            $extrahoursrate = $extrahours * $per_hour_price->per_hour_price;
             $payment = $extrahoursrate + $onetwentyhourrate->price;
         } else {
-            $payment = TrailerTimming::where(['time' => $where])->first();
+            $payment = TrailerTimming::where(['time' => $where,'trailer_id'=>$trailer_id])->first();
             if ($payment) {
                 $payment = $payment->price;
             } else {

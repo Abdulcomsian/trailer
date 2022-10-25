@@ -43,8 +43,12 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     });
     //order trailer
     Route::get('/order-trailer', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
+    Route::post('/upload-licence', [App\Http\Controllers\frontend\OrderTrailerController::class, 'store_licence'])->name('store-licence');
+    Route::get('order-checkout',[App\Http\Controllers\frontend\OrderTrailerController::class, 'order_checkout'])->name('order-checkout');
     Route::post('/order-submit', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSubmit'])->name('order.submit');
     Route::get('/order-sucess/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSuccess'])->name('order.success');
+
+    Route::get('/check-coupon', [App\Http\Controllers\frontend\OrderTrailerController::class, 'checkcoupon'])->name('checkcoupon');
 
     //USER ORDERS
     Route::get('/my_booking', [App\Http\Controllers\frontend\OrderTrailerController::class, 'UserBooking'])->name('user.bookings');
@@ -53,7 +57,6 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\frontend\DashboardController::class, 'profile'])->name('dashboard.profile');
     Route::post('/update-profile', [App\Http\Controllers\frontend\DashboardController::class, 'update_profile'])->name('update.profile');
     Route::get('/book_trailer/{order_id}', [App\Http\Controllers\DashboardController::class, 'book_trailer'])->name('book_trailer');
-    Route::post('/order-checkout', [App\Http\Controllers\frontend\OrderTrailerController::class, 'store_licence'])->name('store-licence');
    
     Route::post('/paypal-transaction-complete', [App\Http\Controllers\frontend\OrderTrailerController::class, 'paypal_transaction']);
 

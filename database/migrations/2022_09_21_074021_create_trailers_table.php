@@ -16,6 +16,7 @@ class CreateTrailersTable extends Migration
         Schema::create('trailers', function (Blueprint $table) {
             $table->id();
             $table->string('trailer_name');
+            $table->integer('per_hour_price');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

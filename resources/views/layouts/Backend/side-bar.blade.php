@@ -62,7 +62,7 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="menu-title">Tralers</span>
+                            <span class="menu-title">Trailers</span>
                         </a>
                 </div>
                 <div class="menu-item">
