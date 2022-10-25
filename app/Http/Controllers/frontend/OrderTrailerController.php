@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Utils\Validations;
 use App\Utils\HelperFunctions;
-use App\Models\{User, Trailer, Order, Coupon};
+use App\Models\{User, Trailer, Order, Coupon,OrderReturnTrailerImage};
 use Auth;
 use Session;
 use Stripe;
@@ -280,7 +280,7 @@ class OrderTrailerController extends Controller
                 $order->end_date = $request->end_date;
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
-                $order->status="Completed";
+                $order->status="New Order";
                 if ($request->code) {
                     $coupon = Coupon::where(['code' => $request->code])->first();
                     $order->coupon_id = $coupon->id;
@@ -351,5 +351,47 @@ class OrderTrailerController extends Controller
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
+    }
+
+    //refund trailer
+    public function refund_trailer()
+    {
+        return view('frontend.upload_photo');
+    }
+
+    //upload photo and return trailer
+    public function OrderReturnTrailer(Request $request,$id){
+         return view('frontend.photo_uploaded',compact('id'));
+    }
+
+    //upload photo
+    public function Order_Trailer_Upload_Photo(Request $request)
+    {
+        $request->validate([
+            'images.*' => 'required|mimes:jpeg,png,PNG,jpg,gif|min:1',
+
+        ]);
+            
+        //upload car images
+        $image_links = [];
+        if ($request->file('images')) {
+            $files = $request->file('images');
+            foreach ($files  as $key => $file) {
+                $filePath = 'uploads/trailer/images/';
+                $imagename = HelperFunctions::saveFile(null, $file, $filePath);
+                $image_links[] = $imagename;
+            }
+
+        }
+        $model = new OrderReturnTrailerImage();
+        $model->images=json_encode($image_links);
+        $model->user_id = Auth::user()->id;
+        $model->order_id=$request->order_id;
+        if($model->save())
+        {
+            Order::find($request->order_id)->update(['status'=>'Refund']);
+            return redirect('User/my_booking')->with('sucess', 'Success .. !  Images Uploaded');
+        }
+
     }
 }

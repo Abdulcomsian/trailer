@@ -45,49 +45,34 @@
         <div class="row mx-0">
             <div class="col-lg-5">
                 <div class="side_content content1">
-                    <div class="upload_photo">
-                        <h2 class="mb-0">Upload Photos </h2>
-                        <p>Upload at least 4 photos of trailer from different angles</p>
-                        <div class="photo_upload d-flex">
-                            <img src="{{asset('assets/img/car.png') }}" alt="car">
-                            <img src="{{asset('assets/img/car2.png') }}" alt="car">
-                            <img src="{{asset('assets/img/car3.png') }}" alt="car">
-                            <img src="{{asset('assets/img/car.png') }}" alt="car">
-                            <img src="{{asset('assets/img/car.png') }}" alt="car">
-                        </div>
-                    </div>
-                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
-                        <div class="progress_bar text-center mt-2">
-                            <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                     <form method="post" action="{{url('User/Order/trailer-upload-photo')}}" enctype="multipart/form-data">
+                            @csrf
+                        <div class="upload_photo">
+                            <h2 class="mb-0">Upload Photos </h2>
+                            <p>Upload at least 4 photos of trailer from different angles</p>
+                            <input type="hidden" name="order_id" value="{{$id}}">
+                            <div class="mt-3">
+                                <input class="form-control w-100 form_control" type="file" id="images" name="images[]" multiple required>
+                                <span class="text-end mt-2 d-block">(max. 0/8)</span>
                             </div>
-                            <span for="#">1/3</span>
+                            <span class="text-danger images_valid">
+                                 {{$errors->first('images')}}
+                            </span>
                         </div>
-                        <div class="btns d-flex align-items-center">
-                            <a href="{{url('/my_booking')}}" class="btn link text-white">GO BACK</a>
-                            <a href="#" class="btn btn_yellow ms-2" onclick="navigate('content2')">Get Code</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="side_content d-none content2">
-                    <div class="congrats_box done_box d-flex align-items-center justify-content-center flex-column">
-                        <h1>123456</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mi, eget nulla sagittis curabitur
-                            proin id mi odio.</p>
-                    </div>
-                    <div class="buttons pt-lg-5 mt-5 d-flex align-items-start justify-content-between">
-                        <div class="progress_bar invisible text-center mt-2">
-                            <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                            <div class="progress_bar text-center mt-2">
+                                <div class="progress" style="width: 90px;height: 7px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span for="#">1/2</span>
                             </div>
-                            <span for="#">3/3</span>
+                            <div class="btns d-flex align-items-center">
+                                <a href="{{url('User/my_booking')}}" class="btn link text-white">GO BACK</a>
+                                <button type="submit" class="btn btn_yellow ms-2">Return Trailer</button>
+                            </div>
                         </div>
-                        <div class="btns d-flex align-items-center">
-                            <a href="#" class="btn btn_yellow ms-2">DONE</a>
-                        </div>
-                    </div>
+                     </form>
                 </div>
             </div>
             <div class="col-lg-7 p-0">
@@ -106,12 +91,7 @@
         crossorigin="anonymous"></script>
     <!-- load jquery 3 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function navigate(content) {
-            $('.side_content').addClass('d-none');
-            $(`.${content}`).removeClass('d-none');
-        }
-    </script>
+    
 </body>
 
 </html>

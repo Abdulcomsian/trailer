@@ -50,7 +50,10 @@ Trailer | My Booking
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">New Booking</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Refunded</button>
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Request Refunded</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -81,7 +84,7 @@ Trailer | My Booking
                                     $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
 
                                     @endphp
-                                    @if($order->status=="Completed")
+                                    @if($order->status=="New Order")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
@@ -104,7 +107,10 @@ Trailer | My Booking
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
-                                            <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
+                                            <a href="{{url('User/Order/return-trailer',$order->id)}}">
+                                                <i class="fa fa-undo"  aria-hidden="true" ></i>
+                                            </a>
+                                           <!--  <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" id="{{$order->id}}" class="confirm"><span class="text-danger fa fa-trash"></span></button>
@@ -117,7 +123,7 @@ Trailer | My Booking
                                                     <i class="fa fa-undo"  aria-hidden="true" ></i>
                                                 </button>
 
-                                            </form>
+                                            </form> -->
                                             
 
                                         </td>
@@ -179,18 +185,20 @@ Trailer | My Booking
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
-                                            <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" id="{{$order->id}}" class="confirm"><span class="text-danger fa fa-trash"></span></button>
-
-                                            </form>
+                                            
                                         </td>
                                     </tr>
                                     @endif
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="profile-tab">
+                         <div class="table-responsive">
+                            <h3>Completed</h3>
+                            
                         </div>
                     </div>
                 </div>

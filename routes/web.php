@@ -31,6 +31,8 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::resource('trailers', App\Http\Controllers\admin\TrailerController::class);
     //Coupon
     Route::resource('coupons', App\Http\Controllers\admin\CouponController::class);
+    //Refund work
+    Route::post('/refund-booking',[App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_booking']);
 });
 /*****************END ADMIN ROUTES*******************/
 
@@ -60,8 +62,13 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
    
     Route::post('/paypal-transaction-complete', [App\Http\Controllers\frontend\OrderTrailerController::class, 'paypal_transaction']);
 
-    //Refund work
-    Route::post('/refund-booking',[App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_booking']);
+    
+
+    //return trailer
+    Route::get('/photo-upload',[App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_trailer']);
+    Route::get('/Order/return-trailer/{id}',[App\Http\Controllers\frontend\OrderTrailerController::class, 'OrderReturnTrailer']);
+    Route::post('/Order/trailer-upload-photo',[App\Http\Controllers\frontend\OrderTrailerController::class, 'Order_Trailer_Upload_Photo']);
+    
 });
 
 
@@ -73,21 +80,17 @@ Route::get('/congrats', function () {
     return view('frontend.congrats');
 });
 
-Route::get('/done', function () {
-    return view('frontend.done');
-});
+// Route::get('/done', function () {
+//     return view('frontend.done');
+// });
 
 Route::get('/payment_method', function () {
     return view('frontend.payment_method');
 });
 
-Route::get('/photo_uploaded', function () {
-    return view('frontend.photo_uploaded');
-});
 
-Route::get('/upload_photo', function () {
-    return view('frontend.upload_photo');
-});
+
+
 
 Route::get('/about_us', function () {
     return view('frontend.about_us');
