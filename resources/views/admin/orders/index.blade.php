@@ -66,9 +66,7 @@ Admin Orders
                                 @foreach($orderData as $order)
                                 @php
                                 $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
-
                                 @endphp
-                                @if($order->status=="New Order")
                                 <tr>
                                     <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                     <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
@@ -112,7 +110,6 @@ Admin Orders
 
                                     </td>
                                 </tr>
-                                @endif
                                 @endforeach
                             </tbody>
                         </table>
