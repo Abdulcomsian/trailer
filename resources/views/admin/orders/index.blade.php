@@ -18,17 +18,15 @@ Admin Orders
                 <div class="card-header border-0 pt-6">
                     <!--begin::Card title-->
                     <div class="card-title">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form method="get" action="{{url('admin/orders')}}" id="order_status_form">
-                                    <select name="status" id="status" class="form-control">
-                                        <option value="New Order" {{isset($_GET['status']) && $_GET['status']=='New Order' ? 'selected':''}}>New Order</option>
-                                        <option value="Refund Request" {{isset($_GET['status']) && $_GET['status']=='Refund Request' ? 'selected':''}}>Refund Request</option>
-                                        <option value="Completed" {{ isset($_GET['status']) && $_GET['status']=='Completed' ? 'selected':''}}>Completed</option>
-                                    </select>
-                                </form>
-                            </div>
-                        </div>
+
+                        <form method="get" action="{{url('admin/orders')}}" id="order_status_form" style="width:250px">
+                            <select name="status" id="status" class="form-select form-control">
+                                <option value="New Order" {{isset($_GET['status']) && $_GET['status']=='New Order' ? 'selected':''}}>New Order</option>
+                                <option value="Refund Request" {{isset($_GET['status']) && $_GET['status']=='Refund Request' ? 'selected':''}}>Refund Request</option>
+                                <option value="Completed" {{ isset($_GET['status']) && $_GET['status']=='Completed' ? 'selected':''}}>Completed</option>
+                            </select>
+                        </form>
+
                     </div>
                     <!--begin::Card title-->
                     <!--begin::Card toolbar-->
