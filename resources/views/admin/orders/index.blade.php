@@ -37,7 +37,7 @@ Admin Orders
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">New Booking</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Request Refunded</button>
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Refund Requests</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
@@ -149,7 +149,7 @@ Admin Orders
                                         $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
 
                                         @endphp
-                                        @if($order->status=="Refund")
+                                        @if($order->status=="Refund Request")
                                         <tr>
                                             <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                             <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>

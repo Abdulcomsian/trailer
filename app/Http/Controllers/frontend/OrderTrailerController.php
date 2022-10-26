@@ -378,7 +378,7 @@ class OrderTrailerController extends Controller
         $model->user_id = Auth::user()->id;
         $model->order_id = $request->order_id;
         if ($model->save()) {
-            Order::find($request->order_id)->update(['status' => 'Refund']);
+            Order::find($request->order_id)->update(['status' => 'Refund Request']);
             \Mail::to('admin@gmail.com')->send(new TrailerRefunMail());
             return redirect('User/my_booking')->with('sucess', 'Success .. !  Images Uploaded');
         }
