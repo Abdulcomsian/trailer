@@ -8,10 +8,15 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $orderData = Order::with('user', 'trailer')->paginate(20);
+            if (isset($_GET['status'])) {
+                $orderData = Order::with('user', 'trailer')->where(['status' => $_GET['status']])->paginate(1);
+            } else {
+                $orderData = Order::with('user', 'trailer')->where(['status' => 'New Order'])->paginate(1);
+            }
+
             return view('admin.orders.index', compact('orderData'));
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
