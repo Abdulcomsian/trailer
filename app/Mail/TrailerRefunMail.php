@@ -28,7 +28,7 @@ class TrailerRefunMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from ItSolutionStuff.com')
+        return $this->subject('Trailer')
             ->view('emails.returntrailermail');
     }
 }
