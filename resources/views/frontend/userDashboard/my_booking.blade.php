@@ -244,10 +244,6 @@ Trailer | My Booking
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
-
-
-
-
                                         </td>
                                     </tr>
                                     @endif
