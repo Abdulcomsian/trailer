@@ -28,14 +28,6 @@ Admin Orders
                         </form>
 
                     </div>
-                    <!--begin::Card title-->
-                    <!--begin::Card toolbar-->
-                    <div class="card-toolbar">
-
-
-
-                    </div>
-                    <!--end::Card toolbar-->
                 </div>
                 <!--end::Card header-->
                 <!--begin::Card body-->
