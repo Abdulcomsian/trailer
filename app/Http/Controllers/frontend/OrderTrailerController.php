@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Utils\Validations;
 use App\Utils\HelperFunctions;
-use App\Models\{User, Trailer, Order, Coupon,OrderReturnTrailerImage};
+use App\Models\{User, Trailer, Order, Coupon, OrderReturnTrailerImage};
+use App\Mail\TrailerRefunMail;
 use Auth;
 use Session;
 use Stripe;
@@ -142,17 +143,17 @@ class OrderTrailerController extends Controller
     public function store_licence(Request $request)
     {
         $rules = array('driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048');
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 'Error',
-                    'message' => 'Input filed required',
-                    'data' => null,
-                    'redirectURL' => '',
-                ], 400);
-            }
-        $code=$request->code;
-          try {
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Input filed required',
+                'data' => null,
+                'redirectURL' => '',
+            ], 400);
+        }
+        $code = $request->code;
+        try {
             $user_id = Auth::id();
             $user = $this->getUserById($user_id);
             if ($request->hasfile('driving_licence')) {
@@ -164,27 +165,25 @@ class OrderTrailerController extends Controller
 
             if ($request->code) {
                 $couponsData = Coupon::where(['code' => $request->code])->first();
-                    if ($couponsData) {
-                        if ($couponsData->toal_count > $couponsData->use_count) {
-                            $value = $couponsData->value;
-                        }
-                        else{
-                             return response()->json([
+                if ($couponsData) {
+                    if ($couponsData->toal_count > $couponsData->use_count) {
+                        $value = $couponsData->value;
+                    } else {
+                        return response()->json([
                             'status' => 'Error',
                             'message' => 'Coupon EXpired or Max count reached',
                             'data' => null,
                             'redirectURL' => '',
-                            ], 400);
-                        } 
+                        ], 400);
                     }
-                    else{
-                            return response()->json([
-                            'status' => 'Error',
-                            'message' => 'Coupon Code not found',
-                            'data' => null,
-                            'redirectURL' => '',
-                            ], 400);
-                    } 
+                } else {
+                    return response()->json([
+                        'status' => 'Error',
+                        'message' => 'Coupon Code not found',
+                        'data' => null,
+                        'redirectURL' => '',
+                    ], 400);
+                }
             }
 
             $this->successResponse($user, 'Driving Licence Uploaded', 200);
@@ -193,7 +192,7 @@ class OrderTrailerController extends Controller
         }
     }
 
-       //check coupon
+    //check coupon
     public function checkcoupon(Request $request)
     {
         if ($request->code) {
@@ -236,28 +235,28 @@ class OrderTrailerController extends Controller
 
     public function order_checkout(Request $request)
     {
-        $trailer_id=$request->trailer_id;
-        $start_time=$request->start_time;
-        $end_time=$request->end_time;
-        $start_date=$request->start_date;
-        $end_date=$request->end_date;
-        $code=$request->code;
-        $value='';
+        $trailer_id = $request->trailer_id;
+        $start_time = $request->start_time;
+        $end_time = $request->end_time;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $code = $request->code;
+        $value = '';
         if ($code) {
             $couponsData = Coupon::where(['code' => $request->code])->first();
-                if ($couponsData) {
-                    if ($couponsData->toal_count > $couponsData->use_count) {
-                        $value = $couponsData->value;
-                    } 
-                } 
+            if ($couponsData) {
+                if ($couponsData->toal_count > $couponsData->use_count) {
+                    $value = $couponsData->value;
+                }
+            }
         }
-        return view('frontend.order-checkout',compact('value','trailer_id','start_time','end_time','start_date','end_date','code'));
+        return view('frontend.order-checkout', compact('value', 'trailer_id', 'start_time', 'end_time', 'start_date', 'end_date', 'code'));
     }
     //submit order
     public function orderSubmit(Request $request)
     {
         $amount = $request->amount;
-        $amount=$amount+150;
+        $amount = $amount + 150;
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             $stripedata = Stripe\Charge::create([
@@ -273,25 +272,25 @@ class OrderTrailerController extends Controller
                 $order->user_id = $user_id;
                 $order->trailer_id = $request->trailer_id;
                 $order->amount = $request->amount;
-                $order->charges=150;
+                $order->charges = 150;
                 $order->start_time = $request->start_time;
                 $order->end_time = $request->end_time;
                 $order->start_date = $request->start_date;
                 $order->end_date = $request->end_date;
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
-                $order->status="New Order";
+                $order->status = "New Order";
                 if ($request->code) {
                     $coupon = Coupon::where(['code' => $request->code])->first();
                     $order->coupon_id = $coupon->id;
-                    $order->discount_price=$coupon->value;
+                    $order->discount_price = $coupon->value;
                 }
 
                 if ($order->save()) {
                     $orderData = Order::with('user', 'trailer')->find($order->id);
                     $start_time = date('Y-m-d h:i A', strtotime("$order->start_date $request->start_time"));
                     $end_time = date('Y-m-d h:i A', strtotime("$order->end_date $request->end_time"));
-                    $hours = HelperFunctions::getHirePeriodTimes($start_time,$end_time);
+                    $hours = HelperFunctions::getHirePeriodTimes($start_time, $end_time);
                     return view('frontend.order-sucess', compact('orderData', 'hours'));
                 }
             }
@@ -342,16 +341,7 @@ class OrderTrailerController extends Controller
     {
     }
 
-    //refund order
-    public function refund_booking(Request $request)
-    {
-        try {
-            Order::find($request->id)->update(['status'=>'Refund']);
-            return redirect()->back()->with('success', 'Success .. ! Order Refunded');
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
-        }
-    }
+
 
     //refund trailer
     public function refund_trailer()
@@ -360,8 +350,9 @@ class OrderTrailerController extends Controller
     }
 
     //upload photo and return trailer
-    public function OrderReturnTrailer(Request $request,$id){
-         return view('frontend.photo_uploaded',compact('id'));
+    public function OrderReturnTrailer(Request $request, $id)
+    {
+        return view('frontend.photo_uploaded', compact('id'));
     }
 
     //upload photo
@@ -371,7 +362,7 @@ class OrderTrailerController extends Controller
             'images.*' => 'required|mimes:jpeg,png,PNG,jpg,gif|min:1',
 
         ]);
-            
+
         //upload car images
         $image_links = [];
         if ($request->file('images')) {
@@ -381,17 +372,15 @@ class OrderTrailerController extends Controller
                 $imagename = HelperFunctions::saveFile(null, $file, $filePath);
                 $image_links[] = $imagename;
             }
-
         }
         $model = new OrderReturnTrailerImage();
-        $model->images=json_encode($image_links);
+        $model->images = json_encode($image_links);
         $model->user_id = Auth::user()->id;
-        $model->order_id=$request->order_id;
-        if($model->save())
-        {
-            Order::find($request->order_id)->update(['status'=>'Refund']);
+        $model->order_id = $request->order_id;
+        if ($model->save()) {
+            Order::find($request->order_id)->update(['status' => 'Refund']);
+            \Mail::to('admin@gmail.com')->send(new TrailerRefunMail());
             return redirect('User/my_booking')->with('sucess', 'Success .. !  Images Uploaded');
         }
-
     }
 }

@@ -32,7 +32,8 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     //Coupon
     Route::resource('coupons', App\Http\Controllers\admin\CouponController::class);
     //Refund work
-    Route::post('/refund-booking',[App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_booking']);
+    Route::get('/orders', [App\Http\Controllers\admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::post('/order-completed', [App\Http\Controllers\admin\OrderController::class, 'OrderCompleted']);
 });
 /*****************END ADMIN ROUTES*******************/
 
@@ -46,7 +47,7 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     //order trailer
     Route::get('/order-trailer', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_trailer'])->name('order-trailer');
     Route::post('/upload-licence', [App\Http\Controllers\frontend\OrderTrailerController::class, 'store_licence'])->name('store-licence');
-    Route::get('order-checkout',[App\Http\Controllers\frontend\OrderTrailerController::class, 'order_checkout'])->name('order-checkout');
+    Route::get('order-checkout', [App\Http\Controllers\frontend\OrderTrailerController::class, 'order_checkout'])->name('order-checkout');
     Route::post('/order-submit', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSubmit'])->name('order.submit');
     Route::get('/order-sucess/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'orderSuccess'])->name('order.success');
 
@@ -59,16 +60,15 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\frontend\DashboardController::class, 'profile'])->name('dashboard.profile');
     Route::post('/update-profile', [App\Http\Controllers\frontend\DashboardController::class, 'update_profile'])->name('update.profile');
     Route::get('/book_trailer/{order_id}', [App\Http\Controllers\DashboardController::class, 'book_trailer'])->name('book_trailer');
-   
+
     Route::post('/paypal-transaction-complete', [App\Http\Controllers\frontend\OrderTrailerController::class, 'paypal_transaction']);
 
-    
+
 
     //return trailer
-    Route::get('/photo-upload',[App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_trailer']);
-    Route::get('/Order/return-trailer/{id}',[App\Http\Controllers\frontend\OrderTrailerController::class, 'OrderReturnTrailer']);
-    Route::post('/Order/trailer-upload-photo',[App\Http\Controllers\frontend\OrderTrailerController::class, 'Order_Trailer_Upload_Photo']);
-    
+    Route::get('/photo-upload', [App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_trailer']);
+    Route::get('/Order/return-trailer/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'OrderReturnTrailer']);
+    Route::post('/Order/trailer-upload-photo', [App\Http\Controllers\frontend\OrderTrailerController::class, 'Order_Trailer_Upload_Photo']);
 });
 
 

@@ -108,9 +108,9 @@ Trailer | My Booking
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
                                             <a href="{{url('User/Order/return-trailer',$order->id)}}">
-                                                <i class="fa fa-undo"  aria-hidden="true" ></i>
+                                                <i class="fa fa-undo" aria-hidden="true"></i>
                                             </a>
-                                           <!--  <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
+                                            <!--  <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" id="{{$order->id}}" class="confirm"><span class="text-danger fa fa-trash"></span></button>
@@ -124,7 +124,7 @@ Trailer | My Booking
                                                 </button>
 
                                             </form> -->
-                                            
+
 
                                         </td>
                                     </tr>
@@ -136,7 +136,7 @@ Trailer | My Booking
                     </div>
 
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                         <div class="table-responsive">
+                        <div class="table-responsive">
 
                             <table class="table bookingTable">
                                 <thead>
@@ -162,7 +162,7 @@ Trailer | My Booking
                                     $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
 
                                     @endphp
-                                     @if($order->status=="Refund")
+                                    @if($order->status=="Refund")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
@@ -185,7 +185,7 @@ Trailer | My Booking
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
-                                            
+
                                         </td>
                                     </tr>
                                     @endif
@@ -196,9 +196,65 @@ Trailer | My Booking
                     </div>
 
                     <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="profile-tab">
-                         <div class="table-responsive">
-                            <h3>Completed</h3>
-                            
+                        <div class="table-responsive">
+                            <table class="table bookingTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Trailer Type</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                        <th scope="col">Pickup Time</th>
+                                        <th scope="col">Dropoff Time</th>
+                                        <th scope="col">Hire Period</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Charges</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Payment Method</th>
+                                        <th scope="col">Payment Status</th>
+                                        <th scope="col">Order Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($orderData as $order)
+                                    @php
+                                    $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
+
+                                    @endphp
+                                    @if($order->status=="Completed")
+                                    <tr>
+                                        <td>{{$order->trailer->trailer_name ?? '-'}}</td>
+                                        <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
+                                        <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
+                                        <td>{{$order->start_time}} </td>
+                                        <td>{{$order->end_time}}</td>
+                                        <td>
+                                            @if($periodTimes['hire_period'] > 0)
+                                            {{ $periodTimes['hire_period'] }} days
+                                            @elseif($periodTimes['hire_hours'] > 0)
+                                            {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
+                                            @else
+                                            {{$periodTimes['hire_mins']}} mins
+                                            @endif
+                                        </td>
+                                        <td>${{$order->amount}}</td>
+                                        <td>${{$order->charges}}</td>
+                                        <td>${{$order->discount_price}}</td>
+                                        <td>{{$order->payment_method}}</td>
+                                        <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
+                                        <td><span class="text-success">{{$order->status}}</span></td>
+                                        <td>
+
+
+
+
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </div>

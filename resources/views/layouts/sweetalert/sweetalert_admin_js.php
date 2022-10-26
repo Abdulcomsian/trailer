@@ -2,7 +2,7 @@
 <script>
     $(function() {
         //Delete Confirmation
-        $(document).on("click", ".confirm", function(event) {
+        $(document).on("click", ".confirm1", function(event) {
 
             event.preventDefault();
             let form_id = '';
@@ -17,7 +17,7 @@
             } else if ($(event.target).is('i')) {
                 let type = $(this).closest('button').attr('data-type')
                 if (type) {
-                    form_id = '#refundform_' + $(this).closest('button').attr('id');
+                    form_id = '#completeform_' + $(this).closest('button').attr('id');
                     text = 'Are you Sure? to complete it.';
                 } else {
                     form_id = '#form_' + $(this).closest('button').attr('id');
@@ -37,7 +37,6 @@
                     //closeOnCancel: false
                 },
                 function() {
-                    swal("Deleted!", "Record has been deleted!", "success");
                     if (link) {
                         window.location = link;
                     }

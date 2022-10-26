@@ -40,16 +40,23 @@
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            @if(Auth::user()->hasRole('User'))
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
+                            @elseif(Auth::user()->hasRole('Admin'))
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            @endif
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}">
                                     {{ __('Logout') }}
                                 </a>
+
                             </li>
                         </ul>
                     </div>
@@ -99,11 +106,11 @@
                     </div>
                     <p class="s_des mt-2">Note: The trailer address will be shared with you via email after booking
                         your trailer for rent.</p>
-                      <form  id="driving_licence_form" action="{{route('store-licence')}}" method="post" enctype="multipart/form-data">
+                    <form id="driving_licence_form" action="{{route('store-licence')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
 
-                            @if($user->driving_licence == null) 
+                            @if($user->driving_licence == null)
                             <label for="exampleFormControlInput1" class="form-label">
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
                                 Driver’s Licence
@@ -112,7 +119,7 @@
                             <span class="text-danger driving_licence_valid">
                                 {{$errors->first('driving_licence')}}
                             </span>
-                           @endif 
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">
@@ -121,8 +128,8 @@
                                 Promo code
                             </label>
                             <input type="text" class="form_control" name="code" id="exampleFormControlInput1" placeholder="Enter promo code (if any)">
-                             <span class="text-danger code_valid">
-                               
+                            <span class="text-danger code_valid">
+
                             </span>
                         </div>
                         <div class="form-check">
@@ -148,8 +155,8 @@
                                 @endif
                             </div>
                         </div>
-                     </form>
-                    
+                    </form>
+
                 </div>
             </div>
             <div class="col-lg-7 p-0">
@@ -166,33 +173,32 @@
     <!-- <script src="https://www.paypal.com/sdk/js?client-id=Aae4GB5knrVLrqV6EpSXQMJkNbM3kaa6bGLTbGX0vkRUWn19sH-pDWUgmY72qhsGBuU402gTwIppueK1&currency=EUR"></script>
     <script src="https://js.stripe.com/v3/"></script> -->
     <script>
-        function navigate(content,$checkcoupon) {
-            if($checkcoupon=='checkcoupon')
-            {
-                let code=$("input[name='code']").val();
-                if(code)
-                {
+        function navigate(content, $checkcoupon) {
+            if ($checkcoupon == 'checkcoupon') {
+                let code = $("input[name='code']").val();
+                if (code) {
                     $.ajax({
-                    type: "get",
-                    url: "{{ route('checkcoupon') }}",
-                    data:{code},
-                    success: function(data) {
-                        var reloadurl="{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}&code="+code;
-                       window.location.href =reloadurl;
-                         
-                    },
-                    error: function(err) {
-                        console.log(err);
-                        $('.code_valid').text(err.responseJSON.message);
-                    }
-                });
-                }
-                else{
-                      var reloadurl="{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}&code="
-                       window.location.href =reloadurl;
+                        type: "get",
+                        url: "{{ route('checkcoupon') }}",
+                        data: {
+                            code
+                        },
+                        success: function(data) {
+                            var reloadurl = "{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}&code=" + code;
+                            window.location.href = reloadurl;
+
+                        },
+                        error: function(err) {
+                            console.log(err);
+                            $('.code_valid').text(err.responseJSON.message);
+                        }
+                    });
+                } else {
+                    var reloadurl = "{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}&code="
+                    window.location.href = reloadurl;
                 }
             }
-           
+
         }
         $('#flexCheckDefault').change(function(e) {
             if (e.target.checked) {
@@ -219,8 +225,8 @@
                 contentType: false,
                 cache: false,
                 success: function(data) {
-                     var reloadurl="{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}"
-                       window.location.href =reloadurl;
+                    var reloadurl = "{{url('User/order-checkout')}}?trailer_id={{$trailor->id}}&start_time={{$pickup_time}}&end_time={{$dropoff_time}}&start_date={{$hire_time[0]}}&end_date={{$hire_time[1]}}"
+                    window.location.href = reloadurl;
                 },
                 error: function(err) {
                     $('.driving_licence_valid').text(err.responseJSON.message);

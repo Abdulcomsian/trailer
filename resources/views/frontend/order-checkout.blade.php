@@ -40,16 +40,23 @@
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            @if(Auth::user()->hasRole('User'))
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
+                            @elseif(Auth::user()->hasRole('Admin'))
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            @endif
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}">
                                     {{ __('Logout') }}
                                 </a>
+
                             </li>
                         </ul>
                     </div>
@@ -76,7 +83,7 @@
                             $payment=App\Utils\HelperFunctions::getPaymentByHours($periodTimes['hire_hours'],$trailer_id);
                             if($value)
                             {
-                                $payment=$payment-$value;
+                            $payment=$payment-$value;
                             }
                             @endphp
                             <p id="trailer-payment" data-val="{{$payment}}">${{$payment}}</p>
@@ -113,11 +120,11 @@
                     </div>
                     <form action="{{route('order.submit')}}" method="POST" id="payment-form">
                         @csrf
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div id="paypal-button-container" class="d-none">
-                             </div>
-                            <div class="card">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div id="paypal-button-container" class="d-none">
+                                </div>
+                                <div class="card">
                                     <input type="hidden" name="amount" value="{{(float)$payment}}" />
                                     <input type="hidden" name="trailer_id" value="{{$trailer_id}}" />
                                     <input type="hidden" name="start_time" value="{{$start_time}}" />
@@ -135,7 +142,7 @@
                                             <div id="card-element">
                                                 <!-- A Stripe Element will be inserted here. -->
                                             </div>
-                                           
+
                                             <!-- Used to display form errors. -->
                                             <div id="card-errors" role="alert"></div>
 
@@ -144,22 +151,22 @@
                                     <div class="card-footer">
 
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
-                        <div class="progress_bar text-center mt-2">
-                            <div class="progress" style="width: 90px;height: 7px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                            <div class="progress_bar text-center mt-2">
+                                <div class="progress" style="width: 90px;height: 7px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span for="#">2/3</span>
                             </div>
-                            <span for="#">2/3</span>
+                            <div class="btns d-flex align-items-center">
+                                <a href="{{ url()->previous()  }}" class="btn link text-white">GO BACK</a>
+                                <button type="submit" class="btn btn_yellow ms-2" id="paybutton">Pay ${{(float)$payment+150}}</button>
+
+                            </div>
                         </div>
-                        <div class="btns d-flex align-items-center">
-                            <a href="{{ url()->previous()  }}" class="btn link text-white">GO BACK</a>
-                            <button type="submit" class="btn btn_yellow ms-2" id="paybutton">Pay ${{(float)$payment+150}}</button>
-                             
-                        </div>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -262,13 +269,13 @@
                             'content-type': 'application/json'
                         },
                         body: JSON.stringify({
-                            amount:'{{(float)$payment}}',
-                            trailerid:'{{$trailer_id}}',
-                            start_time:'{{$start_time}}',
-                            end_time:'{{$end_time}}',
-                            start_date:'{{$start_date}}',
-                            end_date:'{{$end_date}}',
-                            code:'{{$code}}',
+                            amount: '{{(float)$payment}}',
+                            trailerid: '{{$trailer_id}}',
+                            start_time: '{{$start_time}}',
+                            end_time: '{{$end_time}}',
+                            start_date: '{{$start_date}}',
+                            end_date: '{{$end_date}}',
+                            code: '{{$code}}',
                             _token: '{{csrf_token()}}'
                         })
                     }).then(function(res) {
@@ -286,20 +293,20 @@
             } else {
                 $(".summary-bar-area").attr("style", "");
             }
-         });
+        });
     </script>
 
     <script type="text/javascript">
-        $(".paypalimg").on('click',function(){
+        $(".paypalimg").on('click', function() {
             $("#payment-form .card").hide();
             $("#paybutton").hide();
             $("#paypal-button-container").removeClass('d-none');
         })
 
-        $(".cardimg").on('click',function(){
+        $(".cardimg").on('click', function() {
             $("#paypal-button-container").addClass('d-none');
             $("#payment-form .card").show();
-             $("#paybutton").show();
+            $("#paybutton").show();
         })
     </script>
 </body>

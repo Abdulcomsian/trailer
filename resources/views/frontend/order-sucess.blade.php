@@ -40,16 +40,23 @@
                             <img src="{{asset('assets/img/user.png') }}" alt="user">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            @if(Auth::user()->hasRole('User'))
                             <li><a class="dropdown-item" href="{{ route('dashboard.profile') }}">Profile</a>
                                 <hr class="mx-1 my-0">
                             </li>
                             <li><a class="dropdown-item" href="{{url('User/my_booking')}}">Return Trailer</a>
                                 <hr class="mx-1 my-0">
                             </li>
+                            @elseif(Auth::user()->hasRole('Admin'))
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                <hr class="mx-1 my-0">
+                            </li>
+                            @endif
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}">
                                     {{ __('Logout') }}
                                 </a>
+
                             </li>
                         </ul>
                     </div>
@@ -74,14 +81,14 @@
                             further details to your email <b class="text-white">{{$orderData->user->email ?? ''}}</b>.
                             Please check your email</p>
                     </div>
-                     <div class="buttons mt-5 d-flex align-items-start justify-content-between">
+                    <div class="buttons mt-5 d-flex align-items-start justify-content-between">
                         <div class="progress_bar text-center mt-2">
                             <div class="progress" style="width: 90px;height: 7px;">
                                 <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <span for="#">3/3</span>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
