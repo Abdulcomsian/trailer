@@ -106,6 +106,16 @@ Admin Orders
                                                 </button>
 
                                             </form> -->
+                                        @if(isset($_GET['status']) && $_GET['status']=='Refund Request')
+                                        <form id="completeform_{{$order->id}}" action="{{url('admin/order-completed')}}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$order->id}}">
+                                            <button type="submit" id="{{$order->id}}" data-type="complete" title="Refund">
+                                                <i class="fa fa-undo confirm1" aria-hidden="true"></i>
+                                            </button>
+
+                                        </form>
+                                        @endif
 
 
                                     </td>
