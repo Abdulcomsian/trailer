@@ -138,7 +138,6 @@ class OrderTrailerController extends Controller
             ]);
         }
     }
-
     //store driving licence
     public function store_licence(Request $request)
     {
@@ -340,9 +339,6 @@ class OrderTrailerController extends Controller
     public function paypal_transaction(Request $request)
     {
     }
-
-
-
     //refund trailer
     public function refund_trailer()
     {
@@ -362,7 +358,6 @@ class OrderTrailerController extends Controller
             'images.*' => 'required|mimes:jpeg,png,PNG,jpg,gif|min:1',
 
         ]);
-
         //upload car images
         $image_links = [];
         if ($request->file('images')) {
