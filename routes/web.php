@@ -22,7 +22,9 @@ Route::post('/check_date', [App\Http\Controllers\frontend\OrderTrailerController
 Route::post('/check_date1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_date1'])->name('check-date1');
 Route::post('/check_drop_time', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time'])->name('check-drop-time');
 Route::post('/check_drop_time1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time1'])->name('check-drop-time1');
-Route::post('/check-trailer-avialablity',[App\Http\Controllers\frontend\OrderTrailerController::class, 'trailer_availability'])->name('check-trailer-avialablity');
+Route::post('/check-end-date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_end_date'])->name('check-end-date');
+
+
 
 
 /*****************ADMIN ROUTES*******************/

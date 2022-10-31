@@ -149,9 +149,9 @@
                             <div class="btns d-flex align-items-center">
                                 <a href="#" class="btn link text-white">GO BACK</a>
                                 @if($user->driving_licence == null)
-                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue">CONTINUE</button>
+                                <button type="submit" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" disabled>CONTINUE</button>
                                 @else
-                                <a href="#" class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" id="continue" onclick="navigate('content2','checkcoupon')">CONTINUE</a>
+                               <button class="btn btn_yellow ms-2" style="cursor: not-allowed; opacity:0.7;" disabled id="continue" onclick="navigate('content2','checkcoupon')">CONTINUE</button>
                                 @endif
                             </div>
                         </div>
@@ -206,11 +206,13 @@
                     'opacity': '1',
                     'cursor': 'default'
                 });
+                $("#continue").removeAttr('disabled');
             } else {
                 $('#continue').css({
                     'opacity': '0.7',
                     'cursor': 'not-allowed'
                 });
+                $("#continue").attr('disabled','disabled');
             }
         });
         //driving licence submit form

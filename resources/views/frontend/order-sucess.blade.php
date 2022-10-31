@@ -23,7 +23,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg inquiry_nav">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{url('/')}}">
                 <!-- <img src="img/logo.png" alt="logo"> -->
                 <img src="{{asset('assets/img/logo.png') }}" alt="logo">
             </a>
