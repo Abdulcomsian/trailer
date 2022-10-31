@@ -88,6 +88,7 @@ Trailer | Home
                             <div class="col-lg-6">
 
                                  <input type="date" name="s_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>"  disabled>
+                                   <span class="text-danger name_valid">{{$errors->first('s_date')}}</span>
                                 
                             </div>
                             <div class="col-lg-6">
@@ -104,6 +105,7 @@ Trailer | Home
                             <label class="label text-white" >Dropoff (Date / Time)</label>
                             <div class="col-lg-6">
                                 <input type="date" name="e_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>" disabled>
+                                  <span class="text-danger name_valid">{{$errors->first('e_date')}}</span>
                                 
                             </div>
                             <div class="col-lg-6">
