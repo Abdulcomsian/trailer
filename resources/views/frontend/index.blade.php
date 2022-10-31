@@ -83,15 +83,40 @@ Trailer | Home
                             dd($dateslistselect1);
                             
                         @endphp --}}
-                        <div class="input mb-5 position-relative">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>">
+                                
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input mb-5 position-relative">
+                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time">
+                                    <span class="icon">
+                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+                                    </span>
+                                    <span class="text-danger name_valid">{{$errors->first('start_time')}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="date" name="e_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>">
+                                
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input mb-5 position-relative">
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time">
+                                    <span class="icon">
+                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+                                    </span>
+                                    <span class="text-danger name_valid">{{$errors->first('end_time')}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="input mb-5 position-relative">
                             <input type="text" name="date" class="d-block form_control w-100" id="datePut" placeholder="Hire Period">
-
                             <span class="icon">
-                                <!-- <input type="text" name="date" id="datePicker" class="datePicker"
-                                    placeholder="test"> -->
-
                                 <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
-
                             </span>
                             <span class="text-danger name_valid">{{$errors->first('date')}}</span>
                         </div>
@@ -99,12 +124,7 @@ Trailer | Home
                             <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
                                     <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time">
-                                    <!-- <input type="text" class="timepicker"> -->
-
                                     <span class="icon">
-                                        <!-- <input type="time" name="start_time" id="picktime" class="datePicker"
-                                            placeholder="test" step="900"> -->
-                                        <!-- img -->
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
                                     <span class="text-danger name_valid">{{$errors->first('start_time')}}</span>
@@ -116,18 +136,17 @@ Trailer | Home
                                 <div class="input mb-5 position-relative">
                                     <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time">
                                     <span class="icon">
-                                        <!-- <input type="time" name="end_time" id="droptime" class="datePicker"
-                                            placeholder="test" step="900"> -->
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
                                     <span class="text-danger name_valid">{{$errors->first('end_time')}}</span>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         @guest
                         <a href="#" class="me-3 btn btn_yellow" data-bs-toggle="modal" data-bs-target="#loginModal">Search</a>
                         @else
-                        <button type="submit" id="search" class="me-3 btn btn_yellow" style="opacity: 0.6;cursor: not-allowed;">Search</button>
+                        <!-- style="opacity: 0.6;cursor: not-allowed;" -->
+                        <button type="submit" id="search" class="me-3 btn btn_yellow" >Search</button>
                         @endguest
                     </form>
                 </div>
@@ -638,13 +657,20 @@ Trailer | Home
     </script>
 
     <script>
-        const timeDisabled = (time) => {
+        const timeDisabled = (time,pravioustime) => {
             const stringTime = time.map(String)
-            console.log([...stringTime])
-            $('#disableTimeRangesExample').timepicker({
+            console.log([...stringTime]);
+            if(pravioustime)
+            {
+                $('#disableTimeRangesExample').timepicker({
                 'disableTimeRanges': [
-                    // ['1am', '2am'],
-
+                    ["12:00am", stringTime[0]],
+                ]
+               });
+            }
+            else{
+                $('#disableTimeRangesExample').timepicker({
+                'disableTimeRanges': [
                     [stringTime[0], stringTime[1]],
                     [stringTime[2], stringTime[3]],
                     [stringTime[4], stringTime[5]],
@@ -653,69 +679,124 @@ Trailer | Home
                     [stringTime[10], stringTime[11]],
                 ]
             });
+            }
+            
+
+            
         }
 
-        const dropTimeDisabled = (time) => {
+        const dropTimeDisabled = (time,pravioustime) => {
+            console.log(time);
             const stringTime = time.map(String)
-            if (stringTime[0] != 'null') {
-                // console.log('valid');
-                $('#droptimeInput').timepicker({
-                    'disableTimeRanges': [
-                        //    ['1am', '2am'],
-                        [stringTime[0], '11:30pm'],
-                        ['12am', stringTime[1]],
-                    ]
-                });
-            } else {
-                $('#droptimeInput').timepicker({
-                    'disableTimeRanges': [
-                        //    ['1am', '2am'],
-                        ['12am', stringTime[1]],
-                    ]
-                });
+             if(pravioustime)
+            {
+                 $('#droptimeInput').timepicker({
+                'disableTimeRanges': [
+                    ["12:00am", stringTime[0]],
+                ]
+               });
             }
-            $('#search').css({
-                'opacity': '1',
-                'cursor': 'default'
+            else{
+                 $('#droptimeInput').timepicker({
+                'disableTimeRanges': [
+                    [stringTime[0], stringTime[1]],
+                    [stringTime[2], stringTime[3]],
+                    [stringTime[4], stringTime[5]],
+                    [stringTime[6], stringTime[7]],
+                    [stringTime[8], stringTime[9]],
+                    [stringTime[10], stringTime[11]],
+                ]
             });
+            }
         }
+
+        // const dropTimeDisabled = (time) => {
+        //     const stringTime = time.map(String)
+        //     if (stringTime[0] != 'null') {
+        //         // console.log('valid');
+        //         $('#droptimeInput').timepicker({
+        //             'disableTimeRanges': [
+        //                 //    ['1am', '2am'],
+        //                 [stringTime[0], '11:30pm'],
+        //                 ['12am', stringTime[1]],
+        //             ]
+        //         });
+        //     } else {
+        //         $('#droptimeInput').timepicker({
+        //             'disableTimeRanges': [
+        //                 //    ['1am', '2am'],
+        //                 ['12am', stringTime[1]],
+        //             ]
+        //         });
+        //     }
+        //     $('#search').css({
+        //         'opacity': '1',
+        //         'cursor': 'default'
+        //     });
+        // }
 
         // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
         $('#datePut').change(function() {
             // alert(this.value);
         })
-        $('.applyBtn').click(function() {
-            var c_date;
-            setTimeout(() => {
-                c_date = $('#datePut').val();
-                trailer_id = $('#trailer_id').val();
-                // if(trailer_id == '')
-                // {
-                //     toastr.error("Kindly Select Trailer First"); 
-                //     $('#disableTimeRangesExample').attr('disabled', 'disabled');
-                // }
-                // else{
-                $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
-                $.ajax({
+
+        //new work here
+        $("#trailer_id").change(function(){
+            var trailer_id=$(this).val();
+            $.ajax({
                     type: "POST",
-                    url: "{{ route('check-date') }}",
+                    url: "{{ route('check-trailer-avialablity') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        'c_date': c_date,
+                        'trailer_id': trailer_id,
+                    },
+                    datatype: "json",
+                    success: function(data) {
+                       //$("input[name='s_date']").attr('min',data.data.end_date);
+
+                    },
+                    error: function(data) {
+                        console.log('Error:', data.responseJSON);
+
+
+                    }
+                });
+        })
+
+        $("input[name='s_date']").change(function(){
+            var s_date;
+             setTimeout(() => {
+                s_date = $(this).val();
+                trailer_id = $('#trailer_id').val();
+                $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('check-date1') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        's_date': s_date,
                         'trailer_id': trailer_id,
                     },
                     datatype: "json",
                     success: function(data) {
                         if (data.success == true) {
                             toastr.success(data.message);
-                            timeDisabled([...data.data])
+                            if(data.disablednext)
+                            {
+                             $("input[name='e_date']").attr('max',data.disablednext);
+                            }
+                            else{
+                                $("input[name='e_date']").attr('min',data.disabledpravious);
+                            }
+                            timeDisabled([...data.data],data.pravioustime);
                         } else {
                             toastr.error(data.message);
                         }
 
-
                     },
                     error: function(data) {
                         console.log('Error:', data.responseJSON);
@@ -723,38 +804,34 @@ Trailer | Home
 
                     }
                 });
-                // }
             }, 100);
+        })
 
-        });
 
-        $('#disableTimeRangesExample').change(function() {
-            var c_date;
-            var pick_time;
-            setTimeout(() => {
-                c_date = $('#datePut').val();
-                pick_time = $('#disableTimeRangesExample').val();
+        $("input[name='e_date']").change(function(){
+            var s_date;
+            var trailer_id;
+             setTimeout(() => {
+                s_date = $(this).val();
                 trailer_id = $('#trailer_id').val();
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('check-drop-time') }}",
+                    url: "{{ route('check-date1') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        'c_date': c_date,
-                        'pick_time': pick_time,
+                        's_date': s_date,
                         'trailer_id': trailer_id,
                     },
                     datatype: "json",
                     success: function(data) {
-                        // console.log(data);
                         if (data.success == true) {
-                            dropTimeDisabled([...data.data])
+                            toastr.success(data.message);
+                             dropTimeDisabled([...data.data],data.pravioustime);
                         } else {
-                            dropTimeDisabled([...data.data])
+                            toastr.error(data.message);
                         }
-
 
                     },
                     error: function(data) {
@@ -764,7 +841,133 @@ Trailer | Home
                     }
                 });
             }, 100);
+        })
 
-        });
+
+
+
+        // $('.applyBtn').click(function() {
+        //     var c_date;
+        //     setTimeout(() => {
+        //         c_date = $('#datePut').val();
+        //         trailer_id = $('#trailer_id').val();
+        //         // if(trailer_id == '')
+        //         // {
+        //         //     toastr.error("Kindly Select Trailer First"); 
+        //         //     $('#disableTimeRangesExample').attr('disabled', 'disabled');
+        //         // }
+        //         // else{
+        //         $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('check-date') }}",
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 'c_date': c_date,
+        //                 'trailer_id': trailer_id,
+        //             },
+        //             datatype: "json",
+        //             success: function(data) {
+        //                 if (data.success == true) {
+        //                     toastr.success(data.message);
+        //                     timeDisabled([...data.data])
+        //                 } else {
+        //                     toastr.error(data.message);
+        //                 }
+
+
+        //             },
+        //             error: function(data) {
+        //                 console.log('Error:', data.responseJSON);
+
+
+        //             }
+        //         });
+        //         // }
+        //     }, 100);
+
+        // });
+
+        //new work obaid====================================
+        //   $('#disableTimeRangesExample').change(function() {
+        //     var s_date;
+        //     var pick_time;
+        //     var trailer_id;
+        //     setTimeout(() => {
+        //         s_date =  $("input[name='s_date']").val();
+        //         pick_time = $(this).val();
+        //         trailer_id = $('#trailer_id').val();
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('check-drop-time1') }}",
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 's_date': s_date,
+        //                 'pick_time': pick_time,
+        //                 'trailer_id': trailer_id,
+        //             },
+        //             datatype: "json",
+        //             success: function(data) {
+        //                  console.log(data);
+        //                 if (data.success == true) {
+        //                     dropTimeDisabled([...data.data])
+        //                 } else {
+        //                     dropTimeDisabled([...data.data])
+        //                 }
+
+
+        //             },
+        //             error: function(data) {
+        //                 console.log('Error:', data.responseJSON);
+
+
+        //             }
+        //         });
+        //     }, 100);
+
+        // });
+
+        // $('#disableTimeRangesExample').change(function() {
+        //     var c_date;
+        //     var pick_time;
+        //     setTimeout(() => {
+        //         c_date = $('#datePut').val();
+        //         pick_time = $('#disableTimeRangesExample').val();
+        //         trailer_id = $('#trailer_id').val();
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('check-drop-time') }}",
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 'c_date': c_date,
+        //                 'pick_time': pick_time,
+        //                 'trailer_id': trailer_id,
+        //             },
+        //             datatype: "json",
+        //             success: function(data) {
+        //                 // console.log(data);
+        //                 if (data.success == true) {
+        //                     dropTimeDisabled([...data.data])
+        //                 } else {
+        //                     dropTimeDisabled([...data.data])
+        //                 }
+
+
+        //             },
+        //             error: function(data) {
+        //                 console.log('Error:', data.responseJSON);
+
+
+        //             }
+        //         });
+        //     }, 100);
+
+        // });
     </script>
     @endsection

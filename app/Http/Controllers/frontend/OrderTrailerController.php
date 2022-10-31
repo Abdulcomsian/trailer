@@ -21,11 +21,20 @@ class OrderTrailerController extends Controller
         Validations::order_trailer($request);
         try {
             $user_id = Auth::id();
-            $hire_time = explode(' - ', trim($request->date));
-            $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
-            $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
-            $start_date = strtotime($hire_time[0]);
-            $end_date = strtotime($hire_time[1]);
+            //old work here==========================================================================
+            // $hire_time = explode(' - ', trim($request->date));
+            // $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
+            // $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
+            // $start_date = strtotime($hire_time[0]);
+            // $end_date = strtotime($hire_time[1]);
+
+            //new work here ========================================================================
+            $hire_time=[];
+            $hire_time[]=$request->s_date;
+            $hire_time[]=$request->e_date;
+            $start_time = date('Y-m-d h:i A', strtotime("$request->s_date $request->start_time"));
+            $end_time = date('Y-m-d h:i A', strtotime("$request->e_date $request->end_time"));
+            
             $trailor = $this->getTrailerById($request->trailer_id);
             $user = $this->getUserById($user_id);
             return view('frontend.book_trailer', compact('hire_time', 'start_time', 'end_time', 'trailor', 'user'));
@@ -108,6 +117,99 @@ class OrderTrailerController extends Controller
         }
     }
 
+
+    //check trailer availbilty
+    public function trailer_availability(Request $request)
+    {
+        $lastbokkdate=Order::where('trailer_id', $request->trailer_id)->latest('end_date')->first(); 
+        if ($lastbokkdate) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Select Time',
+                    'data' => $lastbokkdate
+                ]);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Select Time',
+                    'data' => ''
+                ]);
+            }
+
+    }
+
+    //check Date1 
+    public function check_date1(Request $request)
+    {
+            $start_date = date('Y-m-d', strtotime($request->s_date));
+            $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->get();
+             
+                       
+            if(count($disable_time)>0)
+            {
+                    $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->where('end_date','!=',$start_date)->first();
+                    $onward_disable_date=$start_date;
+                    $disabletext='disabledpravious';
+                    if($disable_date)
+                    {
+                        $disabletext='disablednext';
+                        $onward_disable_date=$start_date;
+                    }
+
+                    $start_time = array();
+                    foreach ($disable_time as $disable_t) {
+                        $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+                        $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                    }
+                    if (count($disable_time) > 0) {
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Select Time',
+                            'data' => $start_time,
+                            'pravioustime'=>false,
+                             $disabletext=>$onward_disable_date,
+                        ]);
+                    } else {
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Select Time',
+                            'data' => $disable_time,
+                            'pravioustime'=>false,
+                        ]);
+                    }
+                
+            }
+            else{
+                 $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->first();
+                 if($disable_time)
+                 {
+                    $start_time = array();
+                     $start_time[] = \Carbon\Carbon::parse($disable_time->end_time)->format('h:i A');
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Select Time',
+                            'data' => $start_time,
+                            'pravioustime'=>true,
+                            'disabledpravious'=> $start_date,
+                        
+                      ]);
+                 }
+                 else{
+                    $start_time = array();
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Select Time',
+                            'data' => $start_time,
+                            'pravioustime'=>true,
+                            'disabledpravious'=> $start_date,
+                        
+                      ]);
+                 }
+                 
+                    
+            }
+    }
+
     public function check_drop_time(Request $request)
     {
         // dd($request->all());
@@ -138,6 +240,9 @@ class OrderTrailerController extends Controller
             ]);
         }
     }
+
+
+   
     //store driving licence
     public function store_licence(Request $request)
     {

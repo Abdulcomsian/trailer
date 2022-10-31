@@ -55,7 +55,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script>
-        $('input[name="date"]').daterangepicker();
+        //$('input[name="date"]').daterangepicker();
     </script>
 
     <!-- Initialize Swiper -->
