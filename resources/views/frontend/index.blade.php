@@ -84,8 +84,9 @@ Trailer | Home
                             
                         @endphp --}}
                         <div class="row">
+
                             <div class="col-lg-6">
-                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>">
+                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>" >
                                 
                             </div>
                             <div class="col-lg-6">
