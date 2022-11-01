@@ -39,8 +39,8 @@ Admin Orders
                                 <tr>
                                     <th scope="col">Trailer Type</th>
                                     <th scope="col">Start Date</th>
-                                    <th scope="col">End Date</th>
                                     <th scope="col">Pickup Time</th>
+                                    <th scope="col">End Date</th>
                                     <th scope="col">Dropoff Time</th>
                                     <th scope="col">Hire Period</th>
                                     <th scope="col">Amount</th>
@@ -60,28 +60,28 @@ Admin Orders
                                 <tr>
                                     <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                     <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
-                                    <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
                                     <td>{{$order->start_time}} </td>
-                                    <td>{{$order->end_time}}</td>
+                                    <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
+                                    <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                     <td>
                                         @if($periodTimes['hire_period'] > 0)
                                         {{ $periodTimes['hire_period'] }} days
                                         @elseif($periodTimes['hire_hours'] > 0)
-                                        {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
+                                        {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                         @else
                                         {{$periodTimes['hire_mins']}} mins
                                         @endif
                                     </td>
                                     <td>${{$order->amount}}</td>
                                     <td>${{$order->charges}}</td>
-                                    <td>${{$order->discount_price}}</td>
+                                    <td>${{$order->discount_price ?? '0.00'}}</td>
                                     <td>{{$order->payment_method}}</td>
                                     <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                     <td><span class="text-success">{{$order->status}}</span></td>
                                     <td>
-                                        <a href="{{url('User/Order/return-trailer',$order->id)}}">
+                                        <!-- <a href="{{url('User/Order/return-trailer',$order->id)}}">
                                             <i class="fa fa-undo" aria-hidden="true"></i>
-                                        </a>
+                                        </a> -->
                                         <!--  <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')

@@ -90,19 +90,19 @@ Trailer | My Booking
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
                                          <td>{{$order->start_time}} </td>
                                         <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
-                                        <td>{{$order->end_time}}</td>
+                                        <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
                                             {{ $periodTimes['hire_period'] }} days
                                             @elseif($periodTimes['hire_hours'] > 0)
-                                            {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
+                                            {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                             @else
                                             {{$periodTimes['hire_mins']}} mins
                                             @endif
                                         </td>
                                         <td>${{$order->amount}}</td>
                                         <td>${{$order->charges}}</td>
-                                        <td>${{$order->discount_price}}</td>
+                                        <td>${{$order->discount_price ?? '0.00'}}</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
@@ -168,19 +168,19 @@ Trailer | My Booking
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
                                         <td>{{$order->start_time}} </td>
                                         <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
-                                        <td>{{$order->end_time}}</td>
+                                        <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
                                             {{ $periodTimes['hire_period'] }} days
                                             @elseif($periodTimes['hire_hours'] > 0)
-                                            {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
+                                            {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif--}}
                                             @else
                                             {{$periodTimes['hire_mins']}} mins
                                             @endif
                                         </td>
                                         <td>${{$order->amount}}</td>
                                         <td>${{$order->charges}}</td>
-                                        <td>${{$order->discount_price}}</td>
+                                        <td>$ @if($order->discount_price) {{$order->discount_price}}@else {{'0.00'}}@endif</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>
@@ -225,21 +225,21 @@ Trailer | My Booking
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
-                                        <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
                                         <td>{{$order->start_time}} </td>
-                                        <td>{{$order->end_time}}</td>
+                                        <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
+                                        <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
                                             {{ $periodTimes['hire_period'] }} days
                                             @elseif($periodTimes['hire_hours'] > 0)
-                                            {{$periodTimes['hire_hours']}} hrs @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif
+                                            {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                             @else
                                             {{$periodTimes['hire_mins']}} mins
                                             @endif
                                         </td>
                                         <td>${{$order->amount}}</td>
                                         <td>${{$order->charges}}</td>
-                                        <td>${{$order->discount_price}}</td>
+                                        <td>${{$order->discount_price ?? '0.00'}}</td>
                                         <td>{{$order->payment_method}}</td>
                                         <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                         <td><span class="text-success">{{$order->status}}</span></td>

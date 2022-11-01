@@ -82,7 +82,7 @@
                                 <h3>Hi, Welcome Back! </h3>
                                 <p>Hello again, you’ve been missed!</p>
                             </div>
-                            <form class="model_form" id="model_login" method="POST" action="{{ route('login') }}">
+                            <form class="model_form" id="model_login" method="POST" action="{{ route('custom-login') }}">
                             @csrf
                                 <div class="input_group d-flex flex-column">
                                     <label for="email">Email</label>

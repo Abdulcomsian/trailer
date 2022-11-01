@@ -34,6 +34,24 @@ Trailer | Home
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </p>
                     <form class="header_form mt-5" id="trailor_book" method="GET" action="{{ route('order-trailer') }}">
+
+                        {{-- @guest --}}
+                        <!-- <div class="input mb-5 position-relative" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            
+                            <select disabled name="trailer_id" id="trailer_id" class="form_control w-100">
+                                <option value="">Type of trailer</option>
+                                @if(count($trailers) > 0)
+                                @foreach($trailers as $trailer)
+                                <option value="{{$trailer->id}}">{{$trailer->trailer_name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                            <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
+                            {{-- <span class="icon">
+                                <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
+                            </span>  --}}
+                        </div> -->
+                        {{-- @else  --}}
                         <div class="input mb-5 position-relative">
                             <!-- <input type="text" class="d-block w-100" placeholder="Type of trailer"> -->
                             <select name="trailer_id" id="trailer_id" class="form_control w-100" required>
@@ -45,7 +63,26 @@ Trailer | Home
                                 @endif
                             </select>
                             <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
+                            {{-- <span class="icon">
+                                <img src="{{asset('assets/img/drop_arrow.png') }}" alt="drop_arrow">
+                            </span> --}}
                         </div>
+                        {{-- @endguest  --}}
+                        {{-- @php
+                            // $hire_time = explode(' - ',trim($orders->date));
+                            $start_time = $orders->start_time;
+                            $end_time = $orders->end_time;
+                            $start = date('d-m-Y',$start_time);
+                            $start = strtotime($start->addDays(1));
+                            $end = date('d-m-Y',$end_time);           
+                            $end = strtotime($start->addDays(1));            
+                            for ($i1=$start_time; $i1<=$end_time; $i1+=86400) { 
+                                $dateslistselect1[]= '"'.date('d-m-Y',$i1).'"';   
+                            }
+                            $dateslistselect1=array_filter($dateslistselect1);
+                            dd($dateslistselect1);
+                            
+                        @endphp --}}
                         <div class="row">
                              <label class="label text-white" >Pick up (Date / Time)</label>
                             <div class="col-lg-6">
@@ -81,6 +118,34 @@ Trailer | Home
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="input mb-5 position-relative">
+                            <input type="text" name="date" class="d-block form_control w-100" id="datePut" placeholder="Hire Period">
+                            <span class="icon">
+                                <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+                            </span>
+                            <span class="text-danger name_valid">{{$errors->first('date')}}</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="input mb-5 position-relative">
+                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time">
+                                    <span class="icon">
+                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+                                    </span>
+                                    <span class="text-danger name_valid">{{$errors->first('start_time')}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="input mb-5 position-relative">
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time">
+                                    <span class="icon">
+                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
+                                    </span>
+                                    <span class="text-danger name_valid">{{$errors->first('end_time')}}</span>
+                                </div>
+                            </div>-->
                         </div>
                         @guest
                         <a href="#" class="me-3 btn btn_yellow" data-bs-toggle="modal" data-bs-target="#loginModal">Search</a>
@@ -571,6 +636,7 @@ Trailer | Home
     @endsection
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <script>
         jQuery(document).ready(function($) {
 
@@ -586,14 +652,7 @@ Trailer | Home
                     success: function(result) {
                         console.log(result);
                         if (result.status == "Success" && result.data.login == "loggedin") {
-                            if($("#trailer_id").val() !="")
-                            {
-                                $("#trailor_book").submit();
-                            }
-                            else{
-                                location.reload();
-                            }
-                            
+                            $("#trailor_book").submit();
                         } else if(result.status=="Error"){
                             toastr.error("Incorrect Credentials");
                         }else if(res.status==422){
@@ -631,8 +690,35 @@ Trailer | Home
                 ]
             });
             }
-               
+            
+
+            
         }
+
+        // const dropTimeDisabled = (time,pravioustime) => {
+        //     console.log(time);
+        //     const stringTime = time.map(String)
+        //      if(pravioustime)
+        //     {
+        //          $('#droptimeInput').timepicker({
+        //         'disableTimeRanges': [
+        //             ["12:00am", stringTime[0]],
+        //         ]
+        //        });
+        //     }
+        //     else{
+        //          $('#droptimeInput').timepicker({
+        //         'disableTimeRanges': [
+        //             [stringTime[0], stringTime[1]],
+        //             [stringTime[2], stringTime[3]],
+        //             [stringTime[4], stringTime[5]],
+        //             [stringTime[6], stringTime[7]],
+        //             [stringTime[8], stringTime[9]],
+        //             [stringTime[10], stringTime[11]],
+        //         ]
+        //     });
+        //     }
+        // }
 
         const dropTimeDisabled = (time) => {
             const stringTime = time.map(String)
@@ -659,6 +745,11 @@ Trailer | Home
             });
         }
 
+        // var disablethese = $("#datePut").data("disablethese"); //this will auto-decode JSON to Array
+        $('#datePut').change(function() {
+            // alert(this.value);
+        })
+
         //new work here
         $("#trailer_id").change(function(){
             if($(this).val()!="")
@@ -683,6 +774,8 @@ Trailer | Home
                 'disableTimeRanges': [
               ] });
             
+
+            // $('#droptimeInput').timepicker();
              $('#droptimeInput').val("");
             $('#droptimeInput').timepicker({ 
                  'step': 60,
@@ -776,6 +869,53 @@ Trailer | Home
             }, 100);
         })
 
+
+
+
+        // $('.applyBtn').click(function() {
+        //     var c_date;
+        //     setTimeout(() => {
+        //         c_date = $('#datePut').val();
+        //         trailer_id = $('#trailer_id').val();
+        //         // if(trailer_id == '')
+        //         // {
+        //         //     toastr.error("Kindly Select Trailer First"); 
+        //         //     $('#disableTimeRangesExample').attr('disabled', 'disabled');
+        //         // }
+        //         // else{
+        //         $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('check-date') }}",
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 'c_date': c_date,
+        //                 'trailer_id': trailer_id,
+        //             },
+        //             datatype: "json",
+        //             success: function(data) {
+        //                 if (data.success == true) {
+        //                     toastr.success(data.message);
+        //                     timeDisabled([...data.data])
+        //                 } else {
+        //                     toastr.error(data.message);
+        //                 }
+
+
+        //             },
+        //             error: function(data) {
+        //                 console.log('Error:', data.responseJSON);
+
+
+        //             }
+        //         });
+        //         // }
+        //     }, 100);
+
+        // });
+
         //new work obaid====================================
           $('#disableTimeRangesExample').change(function() {
             var s_date;
@@ -815,5 +955,44 @@ Trailer | Home
             }, 100);
 
         });
+
+        // $('#disableTimeRangesExample').change(function() {
+        //     var c_date;
+        //     var pick_time;
+        //     setTimeout(() => {
+        //         c_date = $('#datePut').val();
+        //         pick_time = $('#disableTimeRangesExample').val();
+        //         trailer_id = $('#trailer_id').val();
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "{{ route('check-drop-time') }}",
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             },
+        //             data: {
+        //                 'c_date': c_date,
+        //                 'pick_time': pick_time,
+        //                 'trailer_id': trailer_id,
+        //             },
+        //             datatype: "json",
+        //             success: function(data) {
+        //                 // console.log(data);
+        //                 if (data.success == true) {
+        //                     dropTimeDisabled([...data.data])
+        //                 } else {
+        //                     dropTimeDisabled([...data.data])
+        //                 }
+
+
+        //             },
+        //             error: function(data) {
+        //                 console.log('Error:', data.responseJSON);
+
+
+        //             }
+        //         });
+        //     }, 100);
+
+        // });
     </script>
     @endsection

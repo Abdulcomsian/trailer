@@ -173,31 +173,16 @@
         }
 
 </script>
-            
-    @if (count($errors) > 0)
-        
-        @if($errors->first('email')=='These credentials do not match our records.' || $errors->first('email')=='The email field is required.')
-        <script>
-            setTimeout(() => {
-                $('#loginModal').modal('show');
-            }, 300);
-                
-        </script>
-        @else
-        <script>
-         setTimeout(() => {
-             $('#ragisterModel').modal('show');
-            }, 300);
-        </script>
-        @endif
-    @endif
-
         @if (count($errors) > 0)
             @if($errors->first('email')=='These credentials do not match our records.')
             <script>
                 setTimeout(() => {
                     $('#loginModal').modal('show');
                 }, 300);
+            </script>
+            @elseif($errors->first('trailer_id')=='The trailer id field is required.')
+            <script>
+           
             </script>
             @else
             <script>

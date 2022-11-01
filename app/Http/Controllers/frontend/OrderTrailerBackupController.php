@@ -16,12 +16,19 @@ use Validator;
 
 class OrderTrailerController extends Controller
 {
-    //order trailer
     public function order_trailer(Request $request)
     {
         Validations::order_trailer($request);
         try {
             $user_id = Auth::id();
+            //old work here==========================================================================
+            // $hire_time = explode(' - ', trim($request->date));
+            // $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
+            // $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
+            // $start_date = strtotime($hire_time[0]);
+            // $end_date = strtotime($hire_time[1]);
+
+            //new work here ========================================================================
             $hire_time=[];
             $hire_time[]=$request->s_date;
             $hire_time[]=$request->e_date;
@@ -49,7 +56,68 @@ class OrderTrailerController extends Controller
         return User::find($id);
     }
 
-    //check Date time 
+    //check Date 
+    // public function check_date(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $hire_time = explode(' - ', trim($request->c_date));
+    //     $start_time = date('Y-m-d', strtotime("$hire_time[0]"));
+    //     $end_time = date('Y-m-d', strtotime("$hire_time[1]"));
+    //     if ($start_time == $end_time) {
+    //         $start_date = strtotime("$hire_time[0]");
+    //         //dd($hire_time[0]);
+    //         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
+    //         $start_time = array();
+    //         $end_time = array();
+    //         // dd($disable_time);
+    //         foreach ($disable_time as $disable_t) {
+    //             // dd(\Carbon\Carbon::parse($disable_t->start_time)->format('Y-m-d H:i:s'));
+    //             $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+    //             $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+    //         }
+    //         if (count($disable_time) > 0) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Select Time',
+    //                 'data' => $start_time
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Select Time',
+    //                 'data' => $disable_time
+    //             ]);
+    //         }
+    //     } else {
+    //         $start_date = strtotime("$hire_time[0]");
+    //         $end_date = strtotime("$hire_time[1]");
+    //         $disable_time = Order::where('trailer_id', $request->trailer_id)
+    //             ->where([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
+    //             ->orWhere([['start_date', '<=', $start_date], ['end_date', '>=', $end_date]])
+    //             ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
+    //             // ->orWhere([['start_date','>=' ,$end_date],['end_date','<=' , $end_date]])
+    //             ->first();
+    //         // dd($disable_time,$start_date,$end_date);
+    //         // $disable_time = Order::where('start_date', $start_date)->get();
+    //         // toastr()->error('Trailer already Booked in these Days.Kindly Select another date.');
+    //         // dd($disable_time);
+    //         if ($disable_time == null) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Select Time',
+    //                 'data' => null
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'error' => true,
+    //                 'message' => 'Trailer already Booked in these Days.Kindly Select another date.',
+    //                 'data' => null
+    //             ]);
+    //         }
+    //     }
+    // }
+
+    //check Date1 
     public function check_date1(Request $request)
     {
            
@@ -148,7 +216,7 @@ class OrderTrailerController extends Controller
                     
             
     }
-    //check end date 
+    //check end date
     public function check_end_date(Request $request)
     {
         if($request->s_date!=$request->e_date)
@@ -185,7 +253,38 @@ class OrderTrailerController extends Controller
         }
     }
 
-    //check drop time
+    // public function check_drop_time(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $hire_time = explode(' - ', trim($request->c_date));
+    //     $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
+    //     $end_time = \Carbon\Carbon::parse($hire_time[1])->format('h:i A');
+
+    //     $start_date = strtotime("$hire_time[0]");
+    //     $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $start_time"));
+    //     $start_time = strtotime("$start_time");
+    //     $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->where('start_time', '>', $start_time)->first();
+
+    //     if ($disable_time != null) {
+    //         $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+    //         $data = [$disable_time, $request->pick_time];
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Click On Search Button',
+    //             'data' => $data
+    //         ]);
+    //     } else {
+    //         $disable_time = null;
+    //         $data = [$disable_time, $request->pick_time];
+    //         return response()->json([
+    //             'error' => true,
+    //             'message' => 'No Time Disable on this date',
+    //             'data' => $data
+    //         ]);
+    //     }
+    // }
+
+
     public function check_drop_time1(Request $request)
     {
         $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
@@ -230,6 +329,8 @@ class OrderTrailerController extends Controller
             }
     }
 
+
+   
     //store driving licence
     public function store_licence(Request $request)
     {
@@ -323,7 +424,7 @@ class OrderTrailerController extends Controller
             ], 400);
         }
     }
-    //checkout 
+
     public function order_checkout(Request $request)
     {
         $trailer_id = $request->trailer_id;
@@ -365,7 +466,7 @@ class OrderTrailerController extends Controller
                 $order->amount = $request->amount;
                 $order->charges = 150;
                 $order->start_time = $request->start_time;
-                $order->end_time =date('h:i A',strtotime('+1 minutes',strtotime($request->end_time)));
+                $order->end_time =date('H:i A',strtotime('+1 minutes',strtotime($request->end_time)));
                 $order->start_time_strtotime = strtotime("$request->start_date $request->start_time");
                 $order->end_time_strtotime = strtotime("$request->end_date $request->end_time");
                 $order->start_date = $request->start_date;
@@ -418,7 +519,7 @@ class OrderTrailerController extends Controller
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
     }
-    //destroy order
+
     public function destroy(Request $request, $order)
     {
         try {

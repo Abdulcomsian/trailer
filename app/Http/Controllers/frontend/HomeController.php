@@ -31,7 +31,7 @@ class HomeController extends Controller
             $response = array(
                 'login' => "error"
             );
-            return $this->errorResponse($response, 401);
+            return $this->errorResponse($response, 200);
         }
     }
 }

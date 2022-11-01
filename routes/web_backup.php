@@ -18,11 +18,10 @@ Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'landi
 Route::post('/custom-login', [App\Http\Controllers\frontend\HomeController::class, 'login'])->name('custom-login');
 
 
-
+Route::post('/check_date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_date'])->name('check-date');
 Route::post('/check_date1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_date1'])->name('check-date1');
-
+Route::post('/check_drop_time', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time'])->name('check-drop-time');
 Route::post('/check_drop_time1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time1'])->name('check-drop-time1');
-
 Route::post('/check-end-date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_end_date'])->name('check-end-date');
 
 
