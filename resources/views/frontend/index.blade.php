@@ -640,24 +640,26 @@ Trailer | Home
     <script>
         jQuery(document).ready(function($) {
 
-            $('#model_login').on('submit', function(e) {
-                e.preventDefault();
-                var datastring = $("#model_login").serialize();
-                console.log(datastring);
-                $.ajax({
-                    url: "{{route('custom-login')}}",
-                    type: "POST",
-                    data: datastring,
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result.status == "Success" && result.data.login == "loggedin") {
-                            $("#trailor_book").submit();
-                        } else {
-                            toastr.error("Incorrect Credentials");
-                        }
-                    }
-                });
-            })
+            // $('#model_login').on('submit', function(e) {
+            //     e.preventDefault();
+            //     var datastring = $("#model_login").serialize();
+            //     console.log(datastring);
+            //     $.ajax({
+            //         url: "{{route('custom-login')}}",
+            //         type: "POST",
+            //         data: datastring,
+            //         dataType: 'json',
+            //         success: function(result) {
+            //             if (result.status == "Success" && result.data.login == "loggedin") {
+            //                 $("#trailor_book").submit();
+            //             } else if(result.status=="Error"){
+            //                 toastr.error("Incorrect Credentials");
+            //             }else{
+            //                 toastr.error("Please Enter Login Credentials");
+            //             }
+            //         }
+            //     });
+            // })
         })
     </script>
 
@@ -668,6 +670,7 @@ Trailer | Home
             if(pravioustime)
             {
                 $('#disableTimeRangesExample').timepicker({
+                'step': 60,
                 'disableTimeRanges': [
                     ["12:00am", stringTime[0]],
                 ]
@@ -675,6 +678,7 @@ Trailer | Home
             }
             else{
                 $('#disableTimeRangesExample').timepicker({
+                 'step': 60,
                 'disableTimeRanges': [
                     [stringTime[0], stringTime[1]],
                     [stringTime[2], stringTime[3]],
@@ -719,8 +723,8 @@ Trailer | Home
             const stringTime = time.map(String)
             console.log(stringTime);
             if (stringTime[0] != 'null') {
-                // console.log('valid');
                 $('#droptimeInput').timepicker({
+                     'step': 60,
                     'disableTimeRanges': [
                         [stringTime[0], '11:31pm'],
                         ['12am', stringTime[1]],
@@ -728,6 +732,7 @@ Trailer | Home
                 });
             } else {
                 $('#droptimeInput').timepicker({
+                     'step': 60,
                     'disableTimeRanges': [
                         ['12am', stringTime[1]],
                     ]
@@ -748,13 +753,13 @@ Trailer | Home
         $("#trailer_id").change(function(){
             if($(this).val()!="")
             {
-                $("input[name='s_date']").removeAttr('disabled');
-                $("input[name='e_date']").removeAttr('disabled');
-                $("input[name='start_time']").removeAttr('disabled');
-                $("input[name='end_time']").removeAttr('disabled');
+                $("input[name='s_date']").removeAttr('disabled').val("");
+                $("input[name='e_date']").removeAttr('disabled').val("");
+                $("input[name='start_time']").removeAttr('disabled').val("");
+                $("input[name='end_time']").removeAttr('disabled').val("");
             }
             else{
-                $("input[name='s_date']").attr('disabled','disabled').val("");
+                $("input[name='s_date']").attr('disabled','disabled').val();
                 $("input[name='e_date']").attr('disabled','disabled').val("");
                 $("input[name='start_time']").attr('disabled','disabled').val("");
                 $("input[name='end_time']").attr('disabled','disabled').val("");
@@ -762,20 +767,27 @@ Trailer | Home
         })
 
         $("input[name='s_date']").change(function(){
-            $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
-              ] });
              $('#disableTimeRangesExample').val("");
+            $('#disableTimeRangesExample').timepicker({ 
+                 'step': 60,
+                'disableTimeRanges': [
+              ] });
+            
 
             // $('#droptimeInput').timepicker();
-            $('#droptimeInput').timepicker({ 'disableTimeRanges': [
-            ] });
              $('#droptimeInput').val("");
-
+            $('#droptimeInput').timepicker({ 
+                 'step': 60,
+                'disableTimeRanges': [
+            ] });
+            
             $("input[name='e_date']").val("");
+
             var s_date;
+            var s_date = $(this).val();
+            var trailer_id = $('#trailer_id').val();
              setTimeout(() => {
-                s_date = $(this).val();
-                trailer_id = $('#trailer_id').val();
+                
                 $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
                 $.ajax({
                     type: "POST",
@@ -835,7 +847,9 @@ Trailer | Home
                             toastr.success(data.message);
                             if(data.droptime)
                             {
-                                $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+                                $('#droptimeInput').timepicker({ 
+                                     'step': 60,
+                                    'disableTimeRanges': [
                                 ]}); 
                             }else{
                                  dropTimeDisabled([...data.data])
@@ -924,6 +938,7 @@ Trailer | Home
                     datatype: "json",
                     success: function(data) {
                          console.log(data);
+                         $("input[name='e_date']").attr('max',data.disablednext);
                         if (data.success == true) {
                             dropTimeDisabled([...data.data])
                         } else {

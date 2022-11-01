@@ -174,7 +174,7 @@
 
 </script>
             
-    {{-- @if (count($errors) > 0)
+    @if (count($errors) > 0)
         
         @if($errors->first('email')=='These credentials do not match our records.' || $errors->first('email')=='The email field is required.')
         <script>
@@ -206,7 +206,7 @@
                 }, 300);
             </script>
             @endif
-        @endif --}}
+        @endif 
         <script>
 
         function forgotPass() {
@@ -230,20 +230,22 @@
 <script src="{{asset('assets/js/jquery.timepicker.js') }}"></script>
 <script>
     $(function() {
-        $('#disableTimeRangesExample').timepicker({ 'disableTimeRanges': [
-                // ['1am', '2am'],
-                // ['3am', '4:01am']
-        ] });
+        $('#disableTimeRangesExample').timepicker({ 
+            'step': 60,
+            'disableTimeRanges': [
+             ]
+         });
 
         // $('#droptimeInput').timepicker();
-        $('#droptimeInput').timepicker({ 'disableTimeRanges': [
+        $('#droptimeInput').timepicker({ 
+             'step': 60,
+            'disableTimeRanges': [
                 // ['1am', '2am'],
                 // ['3am', '4:01am']
         ] });
         
     });
-
-    
+ 
 </script>
 @yield('script')
 </body>

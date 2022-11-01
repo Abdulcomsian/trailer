@@ -27,6 +27,7 @@
                         <div class="input_group d-flex flex-column">
                             <label for="email">Phone Number</label>
                             <input type="number" name="phone" id="phone" placeholder="Enter your phone number">
+                            <span class="text-danger name_valid">{{$errors->first('phone')}}</span>
                         </div>
                         <div class="input_group  d-flex flex-column">
                             <label for="email">Password</label>
@@ -81,7 +82,7 @@
                                 <h3>Hi, Welcome Back! </h3>
                                 <p>Hello again, you’ve been missed!</p>
                             </div>
-                            <form class="model_form" id="model_login" method="POST" action="{{ route('custom-login') }}">
+                            <form class="model_form" id="model_login" method="POST" action="{{ route('login') }}">
                             @csrf
                                 <div class="input_group d-flex flex-column">
                                     <label for="email">Email</label>

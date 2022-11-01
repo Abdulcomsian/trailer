@@ -65,8 +65,8 @@ Trailer | My Booking
                                     <tr>
                                         <th scope="col">Trailer Type</th>
                                         <th scope="col">Start Date</th>
-                                        <th scope="col">End Date</th>
                                         <th scope="col">Pickup Time</th>
+                                        <th scope="col">End Date</th>
                                         <th scope="col">Dropoff Time</th>
                                         <th scope="col">Hire Period</th>
                                         <th scope="col">Amount</th>
@@ -88,8 +88,8 @@ Trailer | My Booking
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
+                                         <td>{{$order->start_time}} </td>
                                         <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
-                                        <td>{{$order->start_time}} </td>
                                         <td>{{$order->end_time}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
@@ -143,8 +143,8 @@ Trailer | My Booking
                                     <tr>
                                         <th scope="col">Trailer Type</th>
                                         <th scope="col">Start Date</th>
-                                        <th scope="col">End Date</th>
                                         <th scope="col">Pickup Time</th>
+                                        <th scope="col">End Date</th>
                                         <th scope="col">Dropoff Time</th>
                                         <th scope="col">Hire Period</th>
                                         <th scope="col">Amount</th>
@@ -166,8 +166,8 @@ Trailer | My Booking
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
-                                        <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
                                         <td>{{$order->start_time}} </td>
+                                        <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
                                         <td>{{$order->end_time}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
