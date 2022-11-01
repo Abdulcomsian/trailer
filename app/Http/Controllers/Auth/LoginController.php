@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Redirect;
 
 class LoginController extends Controller
 {
@@ -39,6 +40,12 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        return Redirect::to('/');
+        //return view('auth.login');
     }
 
     public function redirectTo()
