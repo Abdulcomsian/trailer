@@ -13,22 +13,22 @@ class Validations
     //Front End order trailer validation
     public static function order_trailer($request)
     {
-        // $request->validate([
-        //     'trailer_id' => 'required',
-        //     'date' => 'required',
-        //     'start_time' => 'required',
-        //     'end_time' => 'required',
-
-        // ]);
-
-         $request->validate([
+        $request->validate([
             'trailer_id' => 'required',
-            's_date' => 'required',
-            'e_date' => 'required',
+            'date' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
 
         ]);
+
+        //  $request->validate([
+        //     'trailer_id' => 'required',
+        //     's_date' => 'required',
+        //     'e_date' => 'required',
+        //     'start_time' => 'required',
+        //     'end_time' => 'required',
+
+        // ]);
     }
 
     //store coupon

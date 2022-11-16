@@ -73,9 +73,9 @@ Trailer | My Booking
                                         <th scope="col">Charges</th>
                                         <th scope="col">Discount</th>
                                         <th scope="col">Payment Method</th>
-                                        <th scope="col">Payment Status</th>
+                                        <!-- <th scope="col">Payment Status</th> -->
                                         <th scope="col">Order Status</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col" style="width:200px">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,7 +84,7 @@ Trailer | My Booking
                                     $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
 
                                     @endphp
-                                    @if($order->status=="New Order")
+                                    @if($order->status=="New Order" || $order->status=="Pick Up")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
                                         <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
@@ -104,26 +104,20 @@ Trailer | My Booking
                                         <td>${{$order->charges}}</td>
                                         <td>${{$order->discount_price ?? '0.00'}}</td>
                                         <td>{{$order->payment_method}}</td>
-                                        <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
+                                       <!--  <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td> -->
                                         <td><span class="text-success">{{$order->status}}</span></td>
                                         <td>
-                                            <a href="{{url('User/Order/return-trailer',$order->id)}}">
-                                                <i class="fa fa-undo" aria-hidden="true"></i>
+                                            @if($order->status=="Pick Up")
+                                            <a class="mr-2" href="{{url('User/Order/return-trailer',$order->id)}}">
+                                                <button class="btn btn-primary">Return</button>
                                             </a>
-                                            <!--  <form id="form_{{$order->id}}" action="{{url('User/delete-booking',$order)}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" id="{{$order->id}}" class="confirm"><span class="text-danger fa fa-trash"></span></button>
-
-                                            </form>
-                                            <form id="refundform_{{$order->id}}" action="{{url('User/refund-booking')}}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{$order->id}}">
-                                                <button type="submit" id="{{$order->id}}" data-type="refund" class="confirm" title="Refund">
-                                                    <i class="fa fa-undo"  aria-hidden="true" ></i>
-                                                </button>
-
-                                            </form> -->
+                                            @endif
+                                            @if($order->status=="New Order")
+                                            <a href="{{url('User/Order/pick-trailer',$order->id)}}">
+                                                <button class="btn btn-primary">Pick Up</button>
+                                            </a>
+                                            @endif
+                                           
 
 
                                         </td>
@@ -153,7 +147,7 @@ Trailer | My Booking
                                         <th scope="col">Payment Method</th>
                                         <th scope="col">Payment Status</th>
                                         <th scope="col">Order Status</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col" style="width:200px">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>

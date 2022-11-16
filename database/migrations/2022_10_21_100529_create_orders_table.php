@@ -28,7 +28,7 @@ class CreateOrdersTable extends Migration
             $table->double('amount');
             $table->integer('charges');
             $table->integer('discount_price')->nullable();
-            $table->enum('status', ['New Order', 'Refund Request', 'Completed'])->default('New Order');
+            $table->enum('status', ['New Order','Pick Up','Refund Request', 'Completed'])->default('New Order');
             $table->tinyInteger('payment_status')->default(0);
             $table->string('payment_method')->nullable();
             $table->unsignedBigInteger('coupon_id')->nullable();

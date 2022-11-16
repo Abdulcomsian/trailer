@@ -18,9 +18,10 @@ Route::get('/home', [App\Http\Controllers\frontend\HomeController::class, 'landi
 Route::post('/custom-login', [App\Http\Controllers\frontend\HomeController::class, 'login'])->name('custom-login');
 
 
-
+Route::post('/check_date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_date'])->name('check-date');
 Route::post('/check_date1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_date1'])->name('check-date1');
 
+Route::post('/check_drop_time', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time'])->name('check-drop-time');
 Route::post('/check_drop_time1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time1'])->name('check-drop-time1');
 
 Route::post('/check-end-date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_end_date'])->name('check-end-date');
@@ -69,10 +70,11 @@ Route::prefix('User')->middleware(['auth'])->group(function () {
 
     Route::post('/paypal-transaction-complete', [App\Http\Controllers\frontend\OrderTrailerController::class, 'paypal_transaction']);
 
-
-
+    //Order Pickup
+    Route::get('Order/pick-trailer/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'OrderPickTrailer']);
+    Route::post('/Order/pick-trailer-upload-photo', [App\Http\Controllers\frontend\OrderTrailerController::class, 'Order_Pick_Trailer_Upload_Photo']);
     //return trailer
-    Route::get('/photo-upload', [App\Http\Controllers\frontend\OrderTrailerController::class, 'refund_trailer']);
+    
     Route::get('/Order/return-trailer/{id}', [App\Http\Controllers\frontend\OrderTrailerController::class, 'OrderReturnTrailer']);
     Route::post('/Order/trailer-upload-photo', [App\Http\Controllers\frontend\OrderTrailerController::class, 'Order_Trailer_Upload_Photo']);
 });
