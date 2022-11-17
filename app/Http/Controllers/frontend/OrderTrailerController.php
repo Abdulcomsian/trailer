@@ -65,15 +65,28 @@ class OrderTrailerController extends Controller
         $end_time = date('Y-m-d', strtotime("$hire_time[1]"));
         if ($start_time == $end_time) {
             $start_date = strtotime("$hire_time[0]");
-            //dd($hire_time[0]);
             $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
             $start_time = array();
             $end_time = array();
-            // dd($disable_time);
             foreach ($disable_time as $disable_t) {
-                // dd(\Carbon\Carbon::parse($disable_t->start_time)->format('Y-m-d H:i:s'));
-                $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-                $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                 if($disable_t->start_date !=  $disable_t->end_date)
+                   {
+                     if($hire_time[0] == $disable_t->start_date)
+                     {
+                         $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+                         $start_time[] ="11:31pm";
+                     }
+                     elseif($hire_time[0]==$disable_t->end_date){
+                         $start_time[] ="12:00am";
+                         $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                     }
+                    
+                    
+                   }
+                   else{
+                      $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+                      $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                   }
             }
             if (count($disable_time) > 0) {
                 return response()->json([
@@ -84,37 +97,53 @@ class OrderTrailerController extends Controller
             } else {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Select Time',
+                    'message' => 'select Time',
                     'data' => $disable_time
                 ]);
             }
         } else {
-            $start_date = strtotime("$hire_time[0]");
-            $end_date = strtotime("$hire_time[1]");
-            $disable_time = Order::where('trailer_id', $request->trailer_id)
-                ->where([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
+            $start_date = $hire_time[0];
+            $end_date = $hire_time[1];
+            //if no order exist after end date
+            $checknextdate=Order::where('trailer_id', $request->trailer_id)->where('start_date', $end_date)->first();
+            if($checknextdate)
+            {
+                 $disable_time = Order::where('trailer_id', $request->trailer_id)
+                ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
                 ->orWhere([['start_date', '<=', $start_date], ['end_date', '>=', $end_date]])
                 ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
-                // ->orWhere([['start_date','>=' ,$end_date],['end_date','<=' , $end_date]])
+                ->orWhere('start_date','>=',$start_date)
                 ->first();
-            // dd($disable_time,$start_date,$end_date);
-            // $disable_time = Order::where('start_date', $start_date)->get();
-            // toastr()->error('Trailer already Booked in these Days.Kindly Select another date.');
-            // dd($disable_time);
-            if ($disable_time == null) {
+                if ($disable_time == null) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Select Time',
+                        'data' => null
+                    ]);
+                } else {
+                    return response()->json([
+                        'error' => true,
+                        'message' => 'Trailer already Booked in these Days.Kindly Select another date.',
+                        'data' => null
+                    ]);
+                }
+            }
+            else{
+                $start_time = array();
+                $disabletime=Order::where('trailer_id', $request->trailer_id)->where('end_date',$start_date)->latest()->first();
+                $start_time[]="12:00am";
+                $start_time[] = $disabletime->end_time;
                 return response()->json([
                     'success' => true,
                     'message' => 'Select Time',
-                    'data' => null
+                    'data' => $start_time
                 ]);
-            } else {
-                return response()->json([
-                    'error' => true,
-                    'message' => 'Trailer already Booked in these Days.Kindly Select another date.',
-                    'data' => null
-                ]);
+
             }
+           
         }
+
+
     }
 
     //check Date time 

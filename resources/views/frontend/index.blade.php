@@ -52,7 +52,7 @@ Trailer | Home
                              <label class="label text-white" >Pick up (Date / Time)</label>
                             <div class="col-lg-6">
 
-                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php echo date("Y-m-d"); ?>"  disabled required>
+                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php //echo date("Y-m-d"); ?>"  disabled required>
                                    <span class="text-danger name_valid">{{$errors->first('s_date')}}</span>
                                 
                             </div>
@@ -96,7 +96,7 @@ Trailer | Home
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time" required>
+                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time" required disabled>
                                     <span class="icon">
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
@@ -107,7 +107,7 @@ Trailer | Home
                         <div class="row">
                             <div class="col-lg-7">
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required>
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required >
                                     <span class="icon">
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
@@ -700,9 +700,11 @@ Trailer | Home
                 success: function (data) {
                     if(data.success == true){
                         toastr.success(data.message);
-                        timeDisabled([...data.data])
+                        timeDisabled([...data.data]);
+                        $("input[name='start_time']").removeAttr('disabled');
                     } else {
                         toastr.error(data.message);
+                        $("input[name='start_time']").attr('disabled','disabled');
                     }
                     
                     
@@ -719,39 +721,55 @@ Trailer | Home
 
 
     $('#disableTimeRangesExample').change(function () {
-        var c_date;
-        var pick_time;
-        setTimeout(() => {
-            c_date = $('#datePut').val();
-            pick_time = $('#disableTimeRangesExample').val();
-            trailer_id = $('#trailer_id').val();
-            $.ajax({
-                type: "POST",
-                url: "{{ route('check-drop-time') }}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    'c_date':c_date,
-                    'pick_time':pick_time,
-                    'trailer_id':trailer_id,
-                } ,
-                datatype: "json",
-                success: function (data) {
-                    // console.log(data);
-                    if(data.success == true){
-                        dropTimeDisabled([...data.data])
-                    } else {
-                        dropTimeDisabled([...data.data])
-                    }
+        var c_date= $('#datePut').val();
+        var pick_time=$('#disableTimeRangesExample').val();
+        let checkam_pm=pick_time.includes("pm") ? 'pm':'am';
+        pick_time=pick_time.replace(checkam_pm,"");
+        pick_time=pick_time.split(':');
+        var date=c_date.split('-');
+        console.log(date[0].trim());
+        if(date[0].trim()==date[1].trim())
+        {
+            console.log("here");
+            $('#droptimeInput').timepicker({
+                     'step': 60,
+                    'disableTimeRanges': [
+                        ['12am', pick_time[0]+'01'+checkam_pm],
+                    ]
+                });
+        }
+        console.log("oute");
+        // setTimeout(() => {
+        //     c_date = $('#datePut').val();
+        //     pick_time = $('#disableTimeRangesExample').val();
+        //     trailer_id = $('#trailer_id').val();
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "{{ route('check-drop-time') }}",
+        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        //         data: {
+        //             'c_date':c_date,
+        //             'pick_time':pick_time,
+        //             'trailer_id':trailer_id,
+        //         } ,
+        //         datatype: "json",
+        //         success: function (data) {
+        //             // console.log(data);
+        //             if(data.success == true){
+        //                 dropTimeDisabled([...data.data])
+        //             } else {
+        //                 dropTimeDisabled([...data.data])
+        //             }
                     
                     
-                },
-                error: function (data) {
-                    console.log('Error:', data.responseJSON);
+        //         },
+        //         error: function (data) {
+        //             console.log('Error:', data.responseJSON);
                     
                     
-                }
-            });
-        }, 100);
+        //         }
+        //     });
+        // }, 100);
     });
 
     </script>
