@@ -86,7 +86,7 @@
                             <div class="progress" style="width: 90px;height: 7px;">
                                 <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                            <span for="#">3/3</span>
+                            <span for="#">2/2</span>
                         </div>
 
                     </div>

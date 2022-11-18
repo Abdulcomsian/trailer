@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Utils\Validations;
 use App\Utils\HelperFunctions;
-use App\Models\{User, Trailer, Order, Coupon, OrderReturnTrailerImage,OrderPickupTrailerImage};
+use App\Models\{User, Trailer, Order, Coupon, OrderReturnTrailerImage, OrderPickupTrailerImage};
 use App\Mail\TrailerRefunMail;
 use Auth;
 use Session;
@@ -32,12 +32,11 @@ class OrderTrailerController extends Controller
             $hire_time = explode(' - ', trim($request->date));
             $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
             $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
-            $start_date = strtotime($hire_time[0]);
-            $end_date = strtotime($hire_time[1]);
-            
+            $start_date = $hire_time[0];
+            $end_date = $hire_time[1];
             $trailor = $this->getTrailerById($request->trailer_id);
             $user = $this->getUserById($user_id);
-            return view('frontend.book_trailer', compact('hire_time', 'start_time', 'end_time', 'trailor', 'user'));
+            return view('frontend.book_trailer', compact('hire_time', 'start_date', 'end_date', 'start_time', 'end_time', 'trailor', 'user'));
         } catch (\Exception $exception) {
             toastError('Something went wrong, try again');
             return Redirect::back();
@@ -59,7 +58,6 @@ class OrderTrailerController extends Controller
     //check Date 
     public function check_date(Request $request)
     {
-        // dd($request->all());
         $hire_time = explode(' - ', trim($request->c_date));
         $start_time = date('Y-m-d', strtotime("$hire_time[0]"));
         $end_time = date('Y-m-d', strtotime("$hire_time[1]"));
@@ -69,24 +67,18 @@ class OrderTrailerController extends Controller
             $start_time = array();
             $end_time = array();
             foreach ($disable_time as $disable_t) {
-                 if($disable_t->start_date !=  $disable_t->end_date)
-                   {
-                     if($hire_time[0] == $disable_t->start_date)
-                     {
-                         $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-                         $start_time[] ="11:31pm";
-                     }
-                     elseif($hire_time[0]==$disable_t->end_date){
-                         $start_time[] ="12:00am";
-                         $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-                     }
-                    
-                    
-                   }
-                   else{
-                      $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-                      $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-                   }
+                if ($disable_t->start_date !=  $disable_t->end_date) {
+                    if ($hire_time[0] == $disable_t->start_date) {
+                        $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+                        $start_time[] = "11:31pm";
+                    } elseif ($hire_time[0] == $disable_t->end_date) {
+                        $start_time[] = "12:00am";
+                        $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                    }
+                } else {
+                    $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
+                    $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                }
             }
             if (count($disable_time) > 0) {
                 return response()->json([
@@ -105,15 +97,14 @@ class OrderTrailerController extends Controller
             $start_date = $hire_time[0];
             $end_date = $hire_time[1];
             //if no order exist after end date
-            $checknextdate=Order::where('trailer_id', $request->trailer_id)->Where('end_date','>', $start_date)->first();
-            if($checknextdate)
-            {
-                 $disable_time = Order::where('trailer_id', $request->trailer_id)
-                ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
-                ->orWhere([['start_date', '<=', $start_date], ['end_date', '>=', $end_date]])
-                ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
-                ->orWhere('start_date','>=',$start_date)
-                ->first();
+            $checknextdate = Order::where('trailer_id', $request->trailer_id)->Where('end_date', '>', $start_date)->first();
+            if ($checknextdate) {
+                $disable_time = Order::where('trailer_id', $request->trailer_id)
+                    ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
+                    ->orWhere([['start_date', '<=', $start_date], ['end_date', '>=', $end_date]])
+                    ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
+                    ->orWhere('start_date', '>=', $start_date)
+                    ->first();
                 if ($disable_time == null) {
                     return response()->json([
                         'success' => true,
@@ -127,33 +118,27 @@ class OrderTrailerController extends Controller
                         'data' => null
                     ]);
                 }
-            }
-            else{
+            } else {
                 $start_time = array();
-                $disabletime=Order::where('trailer_id', $request->trailer_id)->where('end_date',$start_date)->latest()->first();
-                if($disabletime)
-                {
-                    $start_time[]="12:00am";
+                $disabletime = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->latest()->first();
+                if ($disabletime) {
+                    $start_time[] = "12:00am";
                     $start_time[] = $disabletime->end_time;
                 }
-                
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Select Time',
                     'data' => $start_time
                 ]);
-
             }
-           
         }
-
-
     }
 
     //check Date time 
     // public function check_date1(Request $request)
     // {
-           
+
     //         $start_date = date('Y-m-d', strtotime($request->s_date));
     //         $disable_time = Order::where('start_date', $start_date)->where('trailer_id', $request->trailer_id)->orderBy('end_date','asc')->get();    
     //         if(count($disable_time)>0)
@@ -167,7 +152,7 @@ class OrderTrailerController extends Controller
     //                        {
     //                          $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
     //                          $start_time[] ="11:31pm";
-                            
+
     //                        }
     //                        else{
     //                           $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
@@ -178,10 +163,10 @@ class OrderTrailerController extends Controller
     //                     {
     //                        if( $disable_t->start_date !=  $disable_t->end_date)
     //                        {
-                             
+
     //                          $start_time[] ="12:00am";
     //                          $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-                            
+
     //                        }
     //                        else{
     //                           $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
@@ -189,8 +174,8 @@ class OrderTrailerController extends Controller
     //                        }
 
     //                     }
-                       
-                        
+
+
     //                 }
     //                 if (count($disable_time) > 0) {
     //                     return response()->json([
@@ -202,15 +187,15 @@ class OrderTrailerController extends Controller
     //                          'disabledpravious'=>$start_date,
     //                     ]);
     //                 }
-                
+
     //         }
-           
+
     //         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->get();
     //         if(count($disable_time)>0)
     //         {
     //             $start_time = array();
     //              foreach ($disable_time as $disable_t) {
-                     
+
     //                   if($disable_t->start_date == $disable_t->end_date)
     //                    {
     //                     $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
@@ -228,7 +213,7 @@ class OrderTrailerController extends Controller
     //                     'pravioustime'=>true,
     //                     'disabledpravious'=> $start_date,
     //                     'disablednext'=>'',
-                    
+
     //               ]);
     //         }
     //         else{
@@ -242,12 +227,12 @@ class OrderTrailerController extends Controller
     //                     'pravioustime'=>true,
     //                     'disabledpravious'=> $start_date,
     //                     'disablednext'=>'',
-                    
+
     //               ]);
     //          }
-                 
-                    
-            
+
+
+
     // }
     //check end date 
     // public function check_end_date(Request $request)
@@ -261,7 +246,7 @@ class OrderTrailerController extends Controller
     //                     ]);
     //     }
     //     else{
-            
+
     //             $start_time = \Carbon\Carbon::parse($request->start_time)->format('h:i A');
     //             $start_date = $request->s_date;
     //             $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
@@ -287,35 +272,35 @@ class OrderTrailerController extends Controller
     // }
 
 
-   // public function check_drop_time(Request $request)
-   //  {
-   //      $hire_time = explode(' - ', trim($request->c_date));
-   //      $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
-   //      $end_time = \Carbon\Carbon::parse($hire_time[1])->format('h:i A');
+    // public function check_drop_time(Request $request)
+    //  {
+    //      $hire_time = explode(' - ', trim($request->c_date));
+    //      $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
+    //      $end_time = \Carbon\Carbon::parse($hire_time[1])->format('h:i A');
 
-   //      $start_date = strtotime("$hire_time[0]");
-   //      $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $start_time"));
-   //      $start_time = strtotime("$start_time");
-   //      $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->where('start_time', '>', $start_time)->first();
+    //      $start_date = strtotime("$hire_time[0]");
+    //      $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $start_time"));
+    //      $start_time = strtotime("$start_time");
+    //      $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->where('start_time', '>', $start_time)->first();
 
-   //      if ($disable_time != null) {
-   //          $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-   //          $data = [$disable_time, $request->pick_time];
-   //          return response()->json([
-   //              'success' => true,
-   //              'message' => 'Click On Search Button',
-   //              'data' => $data
-   //          ]);
-   //      } else {
-   //          $disable_time = null;
-   //          $data = [$disable_time, $request->pick_time];
-   //          return response()->json([
-   //              'error' => true,
-   //              'message' => 'No Time Disable on this date',
-   //              'data' => $data
-   //          ]);
-   //      }
-   //  }
+    //      if ($disable_time != null) {
+    //          $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+    //          $data = [$disable_time, $request->pick_time];
+    //          return response()->json([
+    //              'success' => true,
+    //              'message' => 'Click On Search Button',
+    //              'data' => $data
+    //          ]);
+    //      } else {
+    //          $disable_time = null;
+    //          $data = [$disable_time, $request->pick_time];
+    //          return response()->json([
+    //              'error' => true,
+    //              'message' => 'No Time Disable on this date',
+    //              'data' => $data
+    //          ]);
+    //      }
+    //  }
 
     public function check_drop_time(Request $request)
     {
@@ -324,42 +309,39 @@ class OrderTrailerController extends Controller
         $start_date = $hire_time[0];
         $start_time = date('Y-m-d H:i:s', strtotime("$start_date $start_time"));
         $start_time = strtotime($start_time);
-        $disable_date=Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->max('end_time_strtotime');
+        $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->max('end_time_strtotime');
         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
-            if ($disable_time != null ) {
-                if( $start_time < (int)$disable_date)
-                {
-                    $disable_time=Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime','>',$disable_time->end_time_strtotime)->first();
-                    $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-                    $data = [$disable_time, $request->pick_time];
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Click On Search Button',
-                        'data' => $data,
-                        'disablednext'=>$start_time>$disable_date ? '':$request->s_date,
-                    ]);
-                }
-                else{
-                     $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-                     $data = [null, $request->pick_time];
-                     return response()->json([
-                        'success' => true,
-                        'message' => 'Click On Search Button',
-                        'data' => $data,
-                        'disablednext'=>$start_time>$disable_date ? '':$request->s_date,
-                    ]);
-                }
-                
-            } else {
-                $disable_time = null;
+        if ($disable_time != null) {
+            if ($start_time < (int)$disable_date) {
+                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
+                $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
                 $data = [$disable_time, $request->pick_time];
                 return response()->json([
-                    'error' => true,
-                    'message' => 'No Time Disable on this date',
+                    'success' => true,
+                    'message' => 'Click On Search Button',
                     'data' => $data,
-                    'disablednext'=>$start_time > $disable_date ? '':$request->s_date,
+                    'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
+                ]);
+            } else {
+                $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+                $data = [null, $request->pick_time];
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Click On Search Button',
+                    'data' => $data,
+                    'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
                 ]);
             }
+        } else {
+            $disable_time = null;
+            $data = [$disable_time, $request->pick_time];
+            return response()->json([
+                'error' => true,
+                'message' => 'No Time Disable on this date',
+                'data' => $data,
+                'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
+            ]);
+        }
     }
 
     //check drop time
@@ -394,7 +376,7 @@ class OrderTrailerController extends Controller
     //                     'disablednext'=>$start_time>$disable_date ? '':$request->s_date,
     //                 ]);
     //             }
-                
+
     //         } else {
     //             $disable_time = null;
     //             $data = [$disable_time, $request->pick_time];
@@ -523,6 +505,20 @@ class OrderTrailerController extends Controller
     //submit order
     public function orderSubmit(Request $request)
     {
+        if ($request->driving_licence) {
+            $request->validate([
+                'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+        }
+        $user_id = Auth::id();
+        $user = $this->getUserById($user_id);
+        if ($request->hasfile('driving_licence')) {
+
+            $filePath = 'uploads/driving_licence/';
+            $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
+            $user->driving_licence = $image_name;
+            $user->save();
+        }
         $amount = $request->amount;
         $amount = $amount + 150;
         try {
@@ -542,7 +538,7 @@ class OrderTrailerController extends Controller
                 $order->amount = $request->amount;
                 $order->charges = 150;
                 $order->start_time = $request->start_time;
-                $order->end_time =date('h:i A',strtotime('+1 minutes',strtotime($request->end_time)));
+                $order->end_time = date('h:i A', strtotime('+1 minutes', strtotime($request->end_time)));
                 $order->start_time_strtotime = strtotime("$request->start_date $request->start_time");
                 $order->end_time_strtotime = strtotime("$request->end_date $request->end_time");
                 $order->start_date = $request->start_date;
@@ -550,8 +546,8 @@ class OrderTrailerController extends Controller
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
                 $order->status = "New Order";
-                if ($request->code) {
-                    $coupon = Coupon::where(['code' => $request->code])->first();
+                if ($request->coupon_code) {
+                    $coupon = Coupon::where(['code' => $request->coupon_code])->first();
                     $order->coupon_id = $coupon->id;
                     $order->discount_price = $coupon->value;
                 }
@@ -613,7 +609,7 @@ class OrderTrailerController extends Controller
     //pick and upload photo 
     public function OrderPickTrailer($id)
     {
-        return view('frontend.pick-trailer',compact('id'));
+        return view('frontend.pick-trailer', compact('id'));
     }
 
     //upload photo

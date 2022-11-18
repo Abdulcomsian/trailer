@@ -741,11 +741,10 @@ Trailer | Home
             $('#droptimeInput').timepicker({
                      'step': 60,
                     'disableTimeRanges': [
-                        ['12am', pick_time[0]+'01'+checkam_pm],
+                        ['12:00am', pick_time[0]+'01'+checkam_pm],
                     ]
                 });
         }
-        console.log("oute");
         // setTimeout(() => {
         //     c_date = $('#datePut').val();
         //     pick_time = $('#disableTimeRangesExample').val();
