@@ -7,6 +7,9 @@ Orders Detail
     th{
         width:10%;
     }
+    .image{
+        width: 20%;
+    }
 </style>
 @endsection
 @section('content')
@@ -19,15 +22,15 @@ Orders Detail
             <!--begin::Card-->
             <div class="card">
                 <div class="card-body pt-0">
-                    <div class="">
-                        <table class="table table-hover">
+                    
+                        <table class="table table-hover table-responsive">
                             <thead>
                                 <tr>
                                     <th>#NO</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">End Date</th>
-                                    <th scope="col">Status</th>
-                                    <th>Image</th>
+                                    <th >Start Date</th>
+                                    <th >End Date</th>
+                                    <th >Status</th>
+                                    <th class="image">Image</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,13 +41,13 @@ Orders Detail
                                    <td>{{$orderImages->order->start_date ?? '-'}}</td>
                                    <td>{{$orderImages->order->end_date ?? '-'}}</td>
                                    <td>{{$orderImages->order->status ?? '-'}}</td>
-                                   <td><img src="{{asset($img)}}" class="img img-thumnail w-25" ></td>
+                                   <td><img src="{{asset($img)}}" class="img img-thumnail w-50" ></td>
                                </tr>
                                @endforeach
                              
                             </tbody>
                         </table>
-                    </div>
+                    
                    
                 </div>
                 <!--end::Card body-->
