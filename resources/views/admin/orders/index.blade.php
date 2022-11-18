@@ -96,6 +96,12 @@ Admin Orders
                                                 </button>
 
                                             </form> -->
+                                        @if($order->status=="Refund Request")
+                                        <a href="{{url('admin/order-return-view',$order->id)}}"><i class="fa fa-eye"></i></a>
+                                        @endif
+                                        @if($order->status=="Pick Up")
+                                        <a href="{{url('admin/order-pick-view',$order->id)}}"><i class="fa fa-eye"></i></a>
+                                        @endif
                                         @if(isset($_GET['status']) && $_GET['status']=='Refund Request')
                                         <form id="completeform_{{$order->id}}" action="{{url('admin/order-completed')}}" method="POST">
                                             @csrf

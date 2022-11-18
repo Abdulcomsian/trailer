@@ -53,7 +53,7 @@
                             <input type="hidden" name="order_id" value="{{$id}}">
                             <div class="mt-3">
                                 <input class="form-control w-100 form_control" type="file" id="images" name="images[]" multiple required>
-                                <span class="text-end mt-2 d-block">(max. 0/8)</span>
+                                <!-- <span class="text-end mt-2 d-block">(max. 0/8)</span> -->
                             </div>
                             <span class="text-danger images_valid">
                                  {{$errors->first('images')}}

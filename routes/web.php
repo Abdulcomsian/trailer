@@ -41,6 +41,8 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     //Refund work
     Route::get('/orders', [App\Http\Controllers\admin\OrderController::class, 'index'])->name('admin.orders');
     Route::post('/order-completed', [App\Http\Controllers\admin\OrderController::class, 'OrderCompleted']);
+    Route::get('/order-pick-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderView']);
+    Route::get('/order-return-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderReturn']);
 });
 /*****************END ADMIN ROUTES*******************/
 

@@ -105,7 +105,7 @@ class OrderTrailerController extends Controller
             $start_date = $hire_time[0];
             $end_date = $hire_time[1];
             //if no order exist after end date
-            $checknextdate=Order::where('trailer_id', $request->trailer_id)->where('start_date', $end_date)->first();
+            $checknextdate=Order::where('trailer_id', $request->trailer_id)->Where('end_date','>', $start_date)->first();
             if($checknextdate)
             {
                  $disable_time = Order::where('trailer_id', $request->trailer_id)
@@ -131,8 +131,12 @@ class OrderTrailerController extends Controller
             else{
                 $start_time = array();
                 $disabletime=Order::where('trailer_id', $request->trailer_id)->where('end_date',$start_date)->latest()->first();
-                $start_time[]="12:00am";
-                $start_time[] = $disabletime->end_time;
+                if($disabletime)
+                {
+                    $start_time[]="12:00am";
+                    $start_time[] = $disabletime->end_time;
+                }
+                
                 return response()->json([
                     'success' => true,
                     'message' => 'Select Time',

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\{Order,OrderPickupTrailerImage,OrderReturnTrailerImage};
 
 class OrderController extends Controller
 {
@@ -14,7 +14,7 @@ class OrderController extends Controller
             if (isset($_GET['status'])) {
                 $orderData = Order::with('user', 'trailer')->where(['status' => $_GET['status']])->paginate(20);
             } else {
-                $orderData = Order::with('user', 'trailer')->where(['status' => 'New Order'])->paginate(20);
+                $orderData = Order::with('user', 'trailer')->whereIn('status' , ['New Order','Pick Up'])->paginate(20);
             }
 
             return view('admin.orders.index', compact('orderData'));
@@ -32,4 +32,28 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
     }
+
+    public function OrderView($id)
+    {
+        try {
+            $orderImages=OrderPickupTrailerImage::with('order')->where('order_id',$id)->first();
+            return view('admin.orders.view',compact('orderImages'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+
+    }
+
+    public function OrderReturn($id)
+    {
+        try {
+            $orderImages=OrderReturnTrailerImage::with('order')->where('order_id',$id)->first();
+            return view('admin.orders.view',compact('orderImages'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+
+    }
+
+    
 }

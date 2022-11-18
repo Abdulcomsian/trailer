@@ -94,7 +94,8 @@ Trailer | Home
                             <span class="text-danger name_valid">{{$errors->first('date')}}</span>
                         </div>
                         <div class="row">
-                            <div class="col-lg-7">
+                            <div class="col-lg-12">
+                                <label class="label text-white " >Pickup Date: <span class="picktimelabel"></span></label>
                                 <div class="input mb-5 position-relative">
                                     <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time" required disabled>
                                     <span class="icon">
@@ -105,7 +106,8 @@ Trailer | Home
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-7">
+                            <div class="col-lg-12">
+                                  <label class="label text-white " >Dropoff Date: <span class="droptimelabel"></span></label>
                                 <div class="input mb-5 position-relative">
                                     <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required >
                                     <span class="icon">
@@ -605,6 +607,8 @@ Trailer | Home
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
+        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
+        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
         jQuery(document).ready(function($) {
 
             $('#model_login').on('submit', function(e) {
@@ -680,6 +684,7 @@ Trailer | Home
         var c_date;
         setTimeout(() => {
             c_date = $('#datePut').val();
+            start_end_date=c_date.split('-');
             trailer_id = $('#trailer_id').val();
             if(trailer_id == '')
             {
@@ -701,6 +706,8 @@ Trailer | Home
                     if(data.success == true){
                         toastr.success(data.message);
                         timeDisabled([...data.data]);
+                        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[0])));
+                        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[1])));
                         $("input[name='start_time']").removeAttr('disabled');
                     } else {
                         toastr.error(data.message);
