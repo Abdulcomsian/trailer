@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Utils\Validations;
 use App\Models\{Order, Trailer};
 use Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {

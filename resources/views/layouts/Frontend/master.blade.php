@@ -56,6 +56,7 @@
 
     <script>
         $('input[name="date"]').daterangepicker();
+        $('input[name="date"]').val('');
 
     </script>
 

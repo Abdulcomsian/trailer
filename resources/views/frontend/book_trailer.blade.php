@@ -95,11 +95,18 @@
                                 </p>
                             </div>
                             <div class="col-lg-6">
+                                <p>Pick Date: <span>{{$start_date}}</span></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p>Dropoff Date: <span>{{$end_date}}</span></p>
+                            </div>
+                            <div class="col-lg-6">
                                 <p>Pickup Time: <span>{{ $pickup_time }} </span></p>
                             </div>
                             <div class="col-lg-6">
                                 <p>Dropoff Time: <span>{{ $dropoff_time }}</span></p>
                             </div>
+                            
 
                         </div>
                         <div class="payment_form">

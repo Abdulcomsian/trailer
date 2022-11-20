@@ -610,7 +610,6 @@ Trailer | Home
         $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
         $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
         jQuery(document).ready(function($) {
-
             $('#model_login').on('submit', function(e) {
                 e.preventDefault();
                 var datastring = $("#model_login").serialize();
@@ -643,12 +642,8 @@ Trailer | Home
     </script>
     <script type="text/javascript">
         const timeDisabled = (time) => {
-        // alert(time) // 12:00 AM
         const stringTime = time.map(String)
-        console.log([...stringTime])
         $('#disableTimeRangesExample').timepicker({ 'step': 60, 'disableTimeRanges': [
-                   // ['1am', '2am'],
-                
                 [stringTime[0], stringTime[1]],
                 [stringTime[2], stringTime[3]],
                 [stringTime[4], stringTime[5]],
@@ -679,6 +674,8 @@ Trailer | Home
     //     }
     //     $('#search').css({'opacity':'1', 'cursor':'default'});
     // }
+
+
     
     $('.applyBtn').click(function () {
         var c_date;
