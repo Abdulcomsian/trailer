@@ -55,7 +55,10 @@ Admin Orders
                             <tbody>
                                 @foreach($orderData as $order)
                                 @php
-                                $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($order->start_time,$order->end_time);
+                                $start_time = date('Y-m-d h:i A', strtotime("$order->start_date $order->start_time"));
+                                $end_time = date('Y-m-d h:i A', strtotime("$order->end_date $order->end_time"));
+                                $periodTimes=App\Utils\HelperFunctions::getHirePeriodTimes($start_time, $end_time);
+                               
                                 @endphp
                                 <tr>
                                     <td>{{$order->trailer->trailer_name ?? '-'}}</td>
