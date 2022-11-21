@@ -505,7 +505,7 @@ class OrderTrailerController extends Controller
     //submit order
     public function orderSubmit(Request $request)
     {
-        if ($request->driving_licence) {
+        if (isset($request->licence_uploaded)) {
             $request->validate([
                 'driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);

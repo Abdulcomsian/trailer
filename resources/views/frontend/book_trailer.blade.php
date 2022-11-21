@@ -137,11 +137,12 @@
                         <div class="mb-3">
 
                             @if($user->driving_licence == null)
+                             <input class="d-none" type="text" name="licence_uploaded" value="1">
                             <label for="exampleFormControlInput1" class="form-label">
                                 <img src="{{asset('assets/img/label_icon1.png') }}" alt="label">
                                 Driver’s Licence
                             </label>
-                            <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*">
+                            <input type="file" class="form_control py-1" id="exampleFormControlInput1" name="driving_licence" placeholder="Upload Photo" accept="image/*" required>
                             <span class="text-danger driving_licence_valid">
                                 {{$errors->first('driving_licence')}}
                             </span>
