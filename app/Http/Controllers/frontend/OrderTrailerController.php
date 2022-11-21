@@ -22,13 +22,6 @@ class OrderTrailerController extends Controller
         Validations::order_trailer($request);
         try {
             $user_id = Auth::id();
-            //obaid enw work commented
-            // $hire_time=[];
-            // $hire_time[]=$request->s_date;
-            // $hire_time[]=$request->e_date;
-            // $start_time = date('Y-m-d h:i A', strtotime("$request->s_date $request->start_time"));
-            // $end_time = date('Y-m-d h:i A', strtotime("$request->e_date $request->end_time"));
-
             $hire_time = explode(' - ', trim($request->date));
             $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
             $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
@@ -55,12 +48,14 @@ class OrderTrailerController extends Controller
         return User::find($id);
     }
 
-    //check Date 
+    //check Available Date 
     public function check_date(Request $request)
     {
         $hire_time = explode(' - ', trim($request->c_date));
         $start_time = date('Y-m-d', strtotime("$hire_time[0]"));
         $end_time = date('Y-m-d', strtotime("$hire_time[1]"));
+        $checkfullstartdaytime = false;
+        $checkfullenddaytime = false;
         if ($start_time == $end_time) {
             $start_date = strtotime("$hire_time[0]");
             $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
@@ -71,9 +66,11 @@ class OrderTrailerController extends Controller
                     if ($hire_time[0] == $disable_t->start_date) {
                         $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
                         $start_time[] = "11:31pm";
+                        $checkfullstartdaytime = true;
                     } elseif ($hire_time[0] == $disable_t->end_date) {
                         $start_time[] = "12:00am";
                         $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
+                        $checkfullenddaytime = true;
                     }
                 } else {
                     $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
@@ -83,8 +80,9 @@ class OrderTrailerController extends Controller
             if (count($disable_time) > 0) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Select Time',
-                    'data' => $start_time
+                    'message' => $checkfullstartdaytime && $checkfullenddaytime ? 'Trailer already Booked in these Days.Kindly Select another date.' : 'Select Time',
+                    'data' => $start_time,
+                    'fulldaycheck' => $checkfullstartdaytime && $checkfullenddaytime ? 'full' : 'half'
                 ]);
             } else {
                 return response()->json([
@@ -132,201 +130,34 @@ class OrderTrailerController extends Controller
         }
     }
 
-    //check Date time 
-    // public function check_date1(Request $request)
-    // {
-
-    //         $start_date = date('Y-m-d', strtotime($request->s_date));
-    //         $disable_time = Order::where('start_date', $start_date)->where('trailer_id', $request->trailer_id)->orderBy('end_date','asc')->get();    
-    //         if(count($disable_time)>0)
-    //         {
-    //                 $disable_date=Order::where('trailer_id', $request->trailer_id)->max('end_date');
-    //                 $start_time = array();
-    //                 foreach ($disable_time as $disable_t) {
-    //                     if($start_date==$disable_t->start_date)
-    //                     {
-    //                        if( $disable_t->start_date !=  $disable_t->end_date)
-    //                        {
-    //                          $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-    //                          $start_time[] ="11:31pm";
-
-    //                        }
-    //                        else{
-    //                           $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-    //                           $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-    //                        }
-    //                     }
-    //                     elseif($start_date==$disable_t->end_date)
-    //                     {
-    //                        if( $disable_t->start_date !=  $disable_t->end_date)
-    //                        {
-
-    //                          $start_time[] ="12:00am";
-    //                          $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-
-    //                        }
-    //                        else{
-    //                           $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-    //                           $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-    //                        }
-
-    //                     }
-
-
-    //                 }
-    //                 if (count($disable_time) > 0) {
-    //                     return response()->json([
-    //                         'success' => true,
-    //                         'message' => 'Select Time',
-    //                         'data' => $start_time,
-    //                         'pravioustime'=>false,
-    //                          'disablednext'=>$disable_date!=$start_date ? $start_date:'',
-    //                          'disabledpravious'=>$start_date,
-    //                     ]);
-    //                 }
-
-    //         }
-
-    //         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->get();
-    //         if(count($disable_time)>0)
-    //         {
-    //             $start_time = array();
-    //              foreach ($disable_time as $disable_t) {
-
-    //                   if($disable_t->start_date == $disable_t->end_date)
-    //                    {
-    //                     $start_time[] = \Carbon\Carbon::parse($disable_t->start_time)->format('h:i A');
-    //                     $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-    //                    }
-    //                    else{
-    //                     $start_time[] = \Carbon\Carbon::parse($disable_t->end_time)->format('h:i A');
-    //                    }
-    //                }
-    //             //$start_time[] = \Carbon\Carbon::parse($disable_time->end_time)->format('h:i A');
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Select Time',
-    //                     'data' => $start_time,
-    //                     'pravioustime'=>true,
-    //                     'disabledpravious'=> $start_date,
-    //                     'disablednext'=>'',
-
-    //               ]);
-    //         }
-    //         else{
-    //             $disable_time = Order::where('trailer_id', $request->trailer_id)->orderBy('end_date','asc')->first();
-    //             $start_time[] = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-    //             $start_time = array();
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Select Time',
-    //                     'data' => $start_time,
-    //                     'pravioustime'=>true,
-    //                     'disabledpravious'=> $start_date,
-    //                     'disablednext'=>'',
-
-    //               ]);
-    //          }
-
-
-
-    // }
-    //check end date 
-    // public function check_end_date(Request $request)
-    // {
-    //     if($request->s_date!=$request->e_date)
-    //     {
-    //           return response()->json([
-    //                         'success' => true,
-    //                         'message' => 'Select Time',
-    //                         'droptime'=> true,
-    //                     ]);
-    //     }
-    //     else{
-
-    //             $start_time = \Carbon\Carbon::parse($request->start_time)->format('h:i A');
-    //             $start_date = $request->s_date;
-    //             $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
-
-    //             if ($disable_time != null  && $start_time<$last_time) {
-    //                 $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-    //                 $data = [$disable_time, $request->pick_time];
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Select Time',
-    //                     'data' => $data
-    //                 ]);
-    //             } else {
-    //                 $disable_time = null;
-    //                 $data = [$disable_time,$request->pick_time];
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'No Time Disable on this date',
-    //                     'data' => $data
-    //                 ]);
-    //             }
-    //     }
-    // }
-
-
-    // public function check_drop_time(Request $request)
-    //  {
-    //      $hire_time = explode(' - ', trim($request->c_date));
-    //      $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
-    //      $end_time = \Carbon\Carbon::parse($hire_time[1])->format('h:i A');
-
-    //      $start_date = strtotime("$hire_time[0]");
-    //      $start_time = date('Y-m-d H:i:s', strtotime("$hire_time[0] $start_time"));
-    //      $start_time = strtotime("$start_time");
-    //      $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->where('start_time', '>', $start_time)->first();
-
-    //      if ($disable_time != null) {
-    //          $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-    //          $data = [$disable_time, $request->pick_time];
-    //          return response()->json([
-    //              'success' => true,
-    //              'message' => 'Click On Search Button',
-    //              'data' => $data
-    //          ]);
-    //      } else {
-    //          $disable_time = null;
-    //          $data = [$disable_time, $request->pick_time];
-    //          return response()->json([
-    //              'error' => true,
-    //              'message' => 'No Time Disable on this date',
-    //              'data' => $data
-    //          ]);
-    //      }
-    //  }
-
+    //check drop time avilablity
     public function check_drop_time(Request $request)
     {
         $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
         $hire_time = explode(' - ', trim($request->c_date));
         $start_date = $hire_time[0];
-        $start_time = date('Y-m-d H:i:s', strtotime("$start_date $start_time"));
-        $start_time = strtotime($start_time);
-        $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->max('end_time_strtotime');
+        $start_time = strtotime("$start_date $start_time");
+        $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->min('end_time_strtotime');
         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
         if ($disable_time != null) {
             if ($start_time < (int)$disable_date) {
-                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
+                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>=', $disable_time->end_time_strtotime)->first();
                 $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
                 $data = [$disable_time, $request->pick_time];
                 return response()->json([
                     'success' => true,
                     'message' => 'Click On Search Button',
                     'data' => $data,
-                    'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
                 ]);
             } else {
+                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
                 $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-                $data = [null, $request->pick_time];
+
+                $data = [null, $request->pick_time, $disable_time, "11:31 PM"];
                 return response()->json([
                     'success' => true,
                     'message' => 'Click On Search Button',
                     'data' => $data,
-                    'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
                 ]);
             }
         } else {
@@ -336,108 +167,62 @@ class OrderTrailerController extends Controller
                 'error' => true,
                 'message' => 'No Time Disable on this date',
                 'data' => $data,
-                'disablednext' => $start_time > $disable_date ? '' : $request->s_date,
             ]);
         }
     }
 
-    //check drop time
-    // public function check_drop_time1(Request $request)
-    // {
-    //     $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
-    //     $start_date = $request->s_date;
-    //     $start_time = date('Y-m-d H:i:s', strtotime("$request->s_date $start_time"));
-    //     $start_time = strtotime($start_time);
-    //     $disable_date=Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->max('end_time_strtotime');
-    //     $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
-    //         if ($disable_time != null ) {
-    //             if( $start_time < (int)$disable_date)
-    //             {
-    //                 $disable_time=Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime','>',$disable_time->end_time_strtotime)->first();
-    //                 $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-    //                 $data = [$disable_time, $request->pick_time];
-    //                 return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Click On Search Button',
-    //                     'data' => $data,
-    //                     'disablednext'=>$start_time>$disable_date ? '':$request->s_date,
-    //                 ]);
-    //             }
-    //             else{
-    //                  $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-    //                  $data = [null, $request->pick_time];
-    //                  return response()->json([
-    //                     'success' => true,
-    //                     'message' => 'Click On Search Button',
-    //                     'data' => $data,
-    //                     'disablednext'=>$start_time>$disable_date ? '':$request->s_date,
-    //                 ]);
-    //             }
-
-    //         } else {
-    //             $disable_time = null;
-    //             $data = [$disable_time, $request->pick_time];
-    //             return response()->json([
-    //                 'error' => true,
-    //                 'message' => 'No Time Disable on this date',
-    //                 'data' => $data,
-    //                 'disablednext'=>$start_time > $disable_date ? '':$request->s_date,
-    //             ]);
-    //         }
-    // }
-
     //store driving licence
-    public function store_licence(Request $request)
-    {
-        $rules = array('driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Input filed required',
-                'data' => null,
-                'redirectURL' => '',
-            ], 400);
-        }
-        $code = $request->code;
-        try {
-            $user_id = Auth::id();
-            $user = $this->getUserById($user_id);
-            if ($request->hasfile('driving_licence')) {
-                $filePath = 'uploads/driving_licence/';
-                $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
-                $user->driving_licence = $image_name;
-                $user->save();
-            }
+    // public function store_licence(Request $request)
+    // {
+    //     $rules = array('driving_licence' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048');
+    //     $validator = Validator::make($request->all(), $rules);
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 'Error',
+    //             'message' => 'Input filed required',
+    //             'data' => null,
+    //             'redirectURL' => '',
+    //         ], 400);
+    //     }
+    //     $code = $request->code;
+    //     try {
+    //         $user_id = Auth::id();
+    //         $user = $this->getUserById($user_id);
+    //         if ($request->hasfile('driving_licence')) {
+    //             $filePath = 'uploads/driving_licence/';
+    //             $image_name = HelperFunctions::saveFile(null, $request->file('driving_licence'), $filePath);
+    //             $user->driving_licence = $image_name;
+    //             $user->save();
+    //         }
 
-            if ($request->code) {
-                $couponsData = Coupon::where(['code' => $request->code])->first();
-                if ($couponsData) {
-                    if ($couponsData->toal_count > $couponsData->use_count) {
-                        $value = $couponsData->value;
-                    } else {
-                        return response()->json([
-                            'status' => 'Error',
-                            'message' => 'Coupon EXpired or Max count reached',
-                            'data' => null,
-                            'redirectURL' => '',
-                        ], 400);
-                    }
-                } else {
-                    return response()->json([
-                        'status' => 'Error',
-                        'message' => 'Coupon Code not found',
-                        'data' => null,
-                        'redirectURL' => '',
-                    ], 400);
-                }
-            }
+    //         if ($request->code) {
+    //             $couponsData = Coupon::where(['code' => $request->code])->first();
+    //             if ($couponsData) {
+    //                 if ($couponsData->toal_count > $couponsData->use_count) {
+    //                     $value = $couponsData->value;
+    //                 } else {
+    //                     return response()->json([
+    //                         'status' => 'Error',
+    //                         'message' => 'Coupon EXpired or Max count reached',
+    //                         'data' => null,
+    //                         'redirectURL' => '',
+    //                     ], 400);
+    //                 }
+    //             } else {
+    //                 return response()->json([
+    //                     'status' => 'Error',
+    //                     'message' => 'Coupon Code not found',
+    //                     'data' => null,
+    //                     'redirectURL' => '',
+    //                 ], 400);
+    //             }
+    //         }
 
-            $this->successResponse($user, 'Driving Licence Uploaded', 200);
-        } catch (\Exception $exception) {
-            $this->errorResponse('Something Went Wrong', 400);
-        }
-    }
+    //         $this->successResponse($user, 'Driving Licence Uploaded', 200);
+    //     } catch (\Exception $exception) {
+    //         $this->errorResponse('Something Went Wrong', 400);
+    //     }
+    // }
 
     //check coupon
     public function checkcoupon(Request $request)

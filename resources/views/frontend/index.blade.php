@@ -3,7 +3,6 @@
 Trailer | Home
 @endsection
 @section('css')
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 @section('content')
@@ -11,8 +10,6 @@ Trailer | Home
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <!-- <img src="{{asset('assets/img/hero_Car.png') }}" class="w-100" alt="hero_Car"> -->
-                <!-- Swiper -->
                 <div class="swiper mySwiper swiper1">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
@@ -46,45 +43,6 @@ Trailer | Home
                             </select>
                             <span class="text-danger name_valid">{{$errors->first('trailer_id')}}</span>
                         </div>
-
-                        <!-- obaid new work commented================================================ -->
-                        <!-- <div class="row">
-                             <label class="label text-white" >Pick up (Date / Time)</label>
-                            <div class="col-lg-6">
-
-                                 <input type="date" name="s_date" class="d-block form_control w-100" min="<?php //echo date("Y-m-d"); ?>"  disabled required>
-                                   <span class="text-danger name_valid">{{$errors->first('s_date')}}</span>
-                                
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="input mb-5 position-relative">
-                                    <input type="text" name="start_time" class="d-block timepicker form_control w-100 time " id="disableTimeRangesExample" placeholder="Pickup time" disabled required>
-                                    <span class="icon">
-                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
-                                    </span>
-                                    <span class="text-danger name_valid">{{$errors->first('start_time')}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="label text-white" >Dropoff (Date / Time)</label>
-                            <div class="col-lg-6">
-                                <input type="date" name="e_date" class="d-block form_control w-100" min="<?php //echo date("Y-m-d"); ?>" disabled required>
-                                  <span class="text-danger name_valid">{{$errors->first('e_date')}}</span>
-                                
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="input mb-5 position-relative">
-                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" disabled required>
-                                    <span class="icon">
-                                        <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
-                                    </span>
-                                    <span class="text-danger name_valid">{{$errors->first('end_time')}}</span>
-                                </div>
-                            </div>
-                        </div> -->
-
-
                         <!-- Atif old work uncommented====================== -->
                          <div class="input mb-5 position-relative">
                             <input type="text" name="date" class="d-block form_control w-100" id="datePut" placeholder="Hire Period" required>
@@ -586,12 +544,6 @@ Trailer | Home
 
                                     </div>
                                 </div>
-                                <!-- <div class="swiper-slide">
-                                <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{asset('assets/img/client_feedback.png') }}" class="w-100" alt="client_feedback">
-                            </div> -->
                             </div>
                             <div class="pagination_custom">
                                 <div class="swiper-pagination"></div>
@@ -607,7 +559,6 @@ Trailer | Home
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
-
         jQuery(document).ready(function($) {
             $('#model_login').on('submit', function(e) {
                 e.preventDefault();
@@ -650,7 +601,34 @@ Trailer | Home
                 [stringTime[8], stringTime[9]],
                 [stringTime[10], stringTime[11]],
            ] });
-    }
+        }
+
+
+        const dropTimeDisabled = (time) => {
+            const stringTime = time.map(String)
+            console.log(stringTime);
+            if (stringTime[0] != 'null') {
+                $('#droptimeInput').timepicker({
+                     'step': 60,
+                    'disableTimeRanges': [
+                        [stringTime[0], '11:31pm'],
+                        ['12am', stringTime[1]],
+                    ]
+                });
+            } else {
+                  $('#droptimeInput').timepicker({
+                     'step': 60,
+                    'disableTimeRanges': [
+                        ['12am', stringTime[1]],
+                        [stringTime[2],stringTime[3]]
+                    ]
+                });
+            }
+            $('#search').css({
+                'opacity': '1',
+                'cursor': 'default'
+            });
+        }
     // const dropTimeDisabled = (time) => {
     //     const stringTime = time.map(String)
     //     if(stringTime[0] != 'null')
@@ -700,7 +678,14 @@ Trailer | Home
                 datatype: "json",
                 success: function (data) {
                     if(data.success == true){
-                        toastr.success(data.message);
+                        if(data.fulldaycheck=="full")
+                        {
+                           toastr.error(data.message); 
+                        }
+                        else{
+                            toastr.success(data.message);
+                        }
+                        
                         timeDisabled([...data.data]);
                         $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[0])));
                         $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[1])));
@@ -731,260 +716,46 @@ Trailer | Home
         pick_time=pick_time.split(':');
         var date=c_date.split('-');
         console.log(date[0].trim());
-        if(date[0].trim()==date[1].trim())
+        if(date[0].trim()!=date[1].trim())
         {
-            console.log("here");
-            $('#droptimeInput').timepicker({
-                     'step': 60,
-                    'disableTimeRanges': [
-                        ['12:00am', pick_time[0]+'01'+checkam_pm],
-                    ]
-                });
+            
         }
-        // setTimeout(() => {
-        //     c_date = $('#datePut').val();
-        //     pick_time = $('#disableTimeRangesExample').val();
-        //     trailer_id = $('#trailer_id').val();
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "{{ route('check-drop-time') }}",
-        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //         data: {
-        //             'c_date':c_date,
-        //             'pick_time':pick_time,
-        //             'trailer_id':trailer_id,
-        //         } ,
-        //         datatype: "json",
-        //         success: function (data) {
-        //             // console.log(data);
-        //             if(data.success == true){
-        //                 dropTimeDisabled([...data.data])
-        //             } else {
-        //                 dropTimeDisabled([...data.data])
-        //             }
-                    
-                    
-        //         },
-        //         error: function (data) {
-        //             console.log('Error:', data.responseJSON);
-                    
-                    
-        //         }
-        //     });
-        // }, 100);
+        else
+        {
+                setTimeout(() => {
+                c_date = $('#datePut').val();
+                pick_time = $('#disableTimeRangesExample').val();
+                trailer_id = $('#trailer_id').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('check-drop-time') }}",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data: {
+                        'c_date':c_date,
+                        'pick_time':pick_time,
+                        'trailer_id':trailer_id,
+                    } ,
+                    datatype: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if(data.success == true){
+                            dropTimeDisabled([...data.data])
+                        } else {
+                            dropTimeDisabled([...data.data])
+                        }
+                        
+                        
+                    },
+                    error: function (data) {
+                        console.log('Error:', data.responseJSON);
+                        
+                        
+                    }
+                });
+            }, 100);
+        }
+        
     });
 
-    </script>
-
-    <script>
-        //     const timeDisabled = (time,pravioustime) => {
-        //     const stringTime = time.map(String)
-        //     console.log([...stringTime]);
-        //     if(pravioustime)
-        //     {
-        //         $('#disableTimeRangesExample').timepicker({
-        //         'step': 60,
-        //         'disableTimeRanges': [
-        //             ["12:00am", stringTime[0]],
-        //         ]
-        //        });
-        //     }
-        //     else{
-        //         $('#disableTimeRangesExample').timepicker({
-        //          'step': 60,
-        //         'disableTimeRanges': [
-        //             [stringTime[0], stringTime[1]],
-        //             [stringTime[2], stringTime[3]],
-        //             [stringTime[4], stringTime[5]],
-        //             [stringTime[6], stringTime[7]],
-        //             [stringTime[8], stringTime[9]],
-        //             [stringTime[10], stringTime[11]],
-        //         ]
-        //     });
-        //     }
-               
-        // }
-
-        const dropTimeDisabled = (time) => {
-            const stringTime = time.map(String)
-            console.log(stringTime);
-            if (stringTime[0] != 'null') {
-                $('#droptimeInput').timepicker({
-                     'step': 60,
-                    'disableTimeRanges': [
-                        [stringTime[0], '11:31pm'],
-                        ['12am', stringTime[1]],
-                    ]
-                });
-            } else {
-                $('#droptimeInput').timepicker({
-                     'step': 60,
-                    'disableTimeRanges': [
-                        ['12am', stringTime[1]],
-                    ]
-                });
-            }
-            $('#search').css({
-                'opacity': '1',
-                'cursor': 'default'
-            });
-        }
-
-        //new work here
-        // $("#trailer_id").change(function(){
-        //     if($(this).val()!="")
-        //     {
-        //         $("input[name='s_date']").removeAttr('disabled').val("");
-        //         $("input[name='e_date']").removeAttr('disabled').val("");
-        //         $("input[name='start_time']").removeAttr('disabled').val("");
-        //         $("input[name='end_time']").removeAttr('disabled').val("");
-        //     }
-        //     else{
-        //         $("input[name='s_date']").attr('disabled','disabled').val();
-        //         $("input[name='e_date']").attr('disabled','disabled').val("");
-        //         $("input[name='start_time']").attr('disabled','disabled').val("");
-        //         $("input[name='end_time']").attr('disabled','disabled').val("");
-        //     }
-        // })
-
-        // $("input[name='s_date']").change(function(){
-        //      $('#disableTimeRangesExample').val("");
-        //     $('#disableTimeRangesExample').timepicker({ 
-        //          'step': 60,
-        //         'disableTimeRanges': [
-        //       ] });
-            
-        //      $('#droptimeInput').val("");
-        //     $('#droptimeInput').timepicker({ 
-        //          'step': 60,
-        //         'disableTimeRanges': [
-        //     ] });
-            
-        //     $("input[name='e_date']").val("");
-
-        //     var s_date;
-        //     var s_date = $(this).val();
-        //     var trailer_id = $('#trailer_id').val();
-        //      setTimeout(() => {
-                
-        //         $('#disableTimeRangesExample').removeAttr('disabled', 'disabled');
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "{{ route('check-date1') }}",
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             data: {
-        //                 's_date': s_date,
-        //                 'trailer_id': trailer_id,
-        //             },
-        //             datatype: "json",
-        //             success: function(data) {
-        //                 if (data.success == true) {
-        //                     toastr.success(data.message);
-        //                      $("input[name='e_date']").attr('max',data.disablednext);
-        //                      $("input[name='e_date']").attr('min',data.disabledpravious);
-        //                     timeDisabled([...data.data],data.pravioustime);
-        //                 } else {
-        //                     toastr.error(data.message);
-        //                 }
-
-        //             },
-        //             error: function(data) {
-        //                 console.log('Error:', data.responseJSON);
-
-
-        //             }
-        //         });
-        //     }, 100);
-        // })
-
-
-        // $("input[name='e_date']").change(function(){
-        //     var e_date;
-        //     var trailer_id;
-        //     var s_date=$("input[name='s_date']").val();
-        //     var pick_time=$("input[name='start_time']").val();
-        //      setTimeout(() => {
-        //         e_date = $(this).val();
-        //         trailer_id = $('#trailer_id').val();
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "{{ route('check-end-date')}}",
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             data: {
-        //                 's_date': s_date,
-        //                 'e_date':e_date,
-        //                 'trailer_id': trailer_id,
-        //                 'pick_time':pick_time,
-        //             },
-        //             datatype: "json",
-        //             success: function(data) {
-        //                 if (data.success == true) {
-        //                     toastr.success(data.message);
-        //                     if(data.droptime)
-        //                     {
-        //                         $('#droptimeInput').timepicker({ 
-        //                              'step': 60,
-        //                             'disableTimeRanges': [
-        //                         ]}); 
-        //                     }else{
-        //                          dropTimeDisabled([...data.data])
-        //                     }
-        //                 } else {
-        //                     toastr.error(data.message);
-        //                 }
-
-        //             },
-        //             error: function(data) {
-        //                 console.log('Error:', data.responseJSON);
-
-
-        //             }
-        //         });
-        //     }, 100);
-        // })
-
-        //new work obaid====================================
-        //   $('#disableTimeRangesExample').change(function() {
-        //     var s_date;
-        //     var pick_time;
-        //     var trailer_id;
-        //     setTimeout(() => {
-        //         s_date =  $("input[name='s_date']").val();
-        //         pick_time = $(this).val();
-        //         trailer_id = $('#trailer_id').val();
-        //         $.ajax({
-        //             type: "POST",
-        //             url: "{{ route('check-drop-time1') }}",
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             data: {
-        //                 's_date': s_date,
-        //                 'pick_time': pick_time,
-        //                 'trailer_id': trailer_id,
-        //             },
-        //             datatype: "json",
-        //             success: function(data) {
-        //                  console.log(data);
-        //                  $("input[name='e_date']").attr('max',data.disablednext);
-        //                 if (data.success == true) {
-        //                     dropTimeDisabled([...data.data])
-        //                 } else {
-        //                     dropTimeDisabled([...data.data])
-        //                 }
-        //             },
-        //             error: function(data) {
-        //                 console.log('Error:', data.responseJSON);
-
-
-        //             }
-        //         });
-        //     }, 100);
-
-        // });
     </script>
     @endsection
