@@ -607,8 +607,7 @@ Trailer | Home
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
-        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
-        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date()));
+
         jQuery(document).ready(function($) {
             $('#model_login').on('submit', function(e) {
                 e.preventDefault();
