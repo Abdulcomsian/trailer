@@ -52,7 +52,7 @@
                             <p>Upload at least 4 photos of trailer from different angles</p>
                             <input type="hidden" name="order_id" value="{{$id}}">
                             <div class="mt-3">
-                                <input class="form-control w-100 form_control" type="file" id="images" name="images[]" multiple required>
+                                <input class="form-control w-100 form_control" type="file" id="images" name="images[]" multiple required capture="camera">
                                 <!-- <span class="text-end mt-2 d-block">(max. 0/8)</span> -->
                             </div>
                             <span class="text-danger images_valid">
