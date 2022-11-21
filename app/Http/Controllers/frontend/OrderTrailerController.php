@@ -100,10 +100,7 @@ class OrderTrailerController extends Controller
             $checknextdate = Order::where('trailer_id', $request->trailer_id)->Where('end_date', '>', $start_date)->first();
             if ($checknextdate) {
                 $disable_time = Order::where('trailer_id', $request->trailer_id)
-                    ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
-                    ->orWhere([['start_date', '<=', $start_date], ['end_date', '>=', $end_date]])
-                    ->orwhere([['start_date', '>=', $start_date], ['end_date', '<=', $end_date]])
-                    ->orWhere('start_date', '>=', $start_date)
+                    ->whereBetween('start_date', [$start_date, $end_date])
                     ->first();
                 if ($disable_time == null) {
                     return response()->json([
