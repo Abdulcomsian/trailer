@@ -94,9 +94,10 @@ Trailer | My Booking
                                         <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
                                         <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
-                                            @if($periodTimes['hire_period'] > 0)
+                                            {{-- @if($periodTimes['hire_period'] > 0)
                                             {{ $periodTimes['hire_period'] }} days
-                                            @elseif($periodTimes['hire_hours'] > 0)
+                                            @else--}}
+                                            if($periodTimes['hire_hours'] > 0)
                                             {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                             @else
                                             {{$periodTimes['hire_mins']}} mins
