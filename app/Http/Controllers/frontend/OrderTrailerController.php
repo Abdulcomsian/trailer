@@ -57,8 +57,13 @@ class OrderTrailerController extends Controller
         $checkfullstartdaytime = false;
         $checkfullenddaytime = false;
         if ($start_time == $end_time) {
+          
             $start_date = strtotime("$hire_time[0]");
-            $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
+            // $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
+            $disable_time = Order::where('trailer_id', $request->trailer_id)->where( function($query) use ($hire_time){
+                $query->orWhere('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1]);
+            })->get();
+
             $start_time = array();
             $end_time = array();
             foreach ($disable_time as $disable_t) {
@@ -139,6 +144,7 @@ class OrderTrailerController extends Controller
         $start_time = strtotime("$start_date $start_time");
         $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->min('end_time_strtotime');
         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
+        // dd($disable_date , $disable_time);
         if ($disable_time != null) {
             if ($start_time < (int)$disable_date) {
                 $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>=', $disable_time->end_time_strtotime)->first();
@@ -151,9 +157,13 @@ class OrderTrailerController extends Controller
                 ]);
             } else {
                 $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
+                // dd($disable_time);
+                if($disable_time != null){
                 $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-
                 $data = [null, $request->pick_time, $disable_time, "11:31 PM"];
+                }else{
+                    $data = [null, $request->pick_time];
+                }
                 return response()->json([
                     'success' => true,
                     'message' => 'Click On Search Button',

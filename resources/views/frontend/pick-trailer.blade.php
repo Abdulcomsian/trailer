@@ -17,6 +17,12 @@
     <!-- custom css -->
     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <style>
+        #toast-container{
+            z-index: 999999;
+        }
+    </style>
 </head>
 
 <body class="form_page">
@@ -70,14 +76,14 @@
         <div class="row mx-0">
             <div class="col-lg-5">
                 <div class="side_content content1">
-                     <form method="post" action="{{url('User/Order/pick-trailer-upload-photo')}}" enctype="multipart/form-data">
+                     <form method="post" id="pickup-trailer-form" action="{{url('User/Order/pick-trailer-upload-photo')}}" enctype="multipart/form-data">
                             @csrf
                         <div class="upload_photo">
                             <h2 class="mb-0">Upload Photos </h2>
                             <p>Upload at least 4 photos of trailer from different angles</p>
                             <input type="hidden" name="order_id" value="{{$id}}">
                             <div class="mt-3">
-                                <input class="form-control w-100 form_control" type="file" id="images" name="images[]" multiple required capture="camera">
+                                <input class="form-control w-100 form_control" id="trailer-images" type="file" id="images" name="images[]" multiple required capture="camera">
                                 <!-- <span class="text-end mt-2 d-block">(max. 0/8)</span> -->
                             </div>
                             <span class="text-danger images_valid">
@@ -116,6 +122,23 @@
         crossorigin="anonymous"></script>
     <!-- load jquery 3 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        window.onload = function(){
+            let pickupForm = document.getElementById("pickup-trailer-form");
+            pickupForm.addEventListener("submit" , function(e){
+                e.preventDefault();
+                let totalImages = document.getElementById("trailer-images").files.length
+                if(totalImages < 4)
+                {
+                    toastr.error("At Least four images required")
+                }else{
+                    this.submit();
+                }
+            });
+        }
+    </script>
     
 </body>
 

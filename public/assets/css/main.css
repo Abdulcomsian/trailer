@@ -1006,3 +1006,7 @@ footer .social a {
 
     color: #2d3142;
 }
+
+#toast-container{
+    z-index: 999999;
+}

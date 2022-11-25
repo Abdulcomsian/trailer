@@ -97,7 +97,7 @@ Trailer | My Booking
                                             {{-- @if($periodTimes['hire_period'] > 0)
                                             {{ $periodTimes['hire_period'] }} days
                                             @else--}}
-                                            if($periodTimes['hire_hours'] > 0)
+                                            @if($periodTimes['hire_hours'] > 0)
                                             {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                             @else
                                             {{$periodTimes['hire_mins']}} mins

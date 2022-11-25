@@ -22,6 +22,7 @@ Admin Orders
                         <form method="get" action="{{url('admin/orders')}}" id="order_status_form" style="width:250px">
                             <select name="status" id="status" class="form-select form-control">
                                 <option value="New Order" {{isset($_GET['status']) && $_GET['status']=='New Order' ? 'selected':''}}>New Order</option>
+                                <option value="Pick Up" {{ isset($_GET['status']) && $_GET['status']=='Pick Up' ? 'selected':''}}>Picked up</option>
                                 <option value="Refund Request" {{isset($_GET['status']) && $_GET['status']=='Refund Request' ? 'selected':''}}>Refund Request</option>
                                 <option value="Completed" {{ isset($_GET['status']) && $_GET['status']=='Completed' ? 'selected':''}}>Completed</option>
                             </select>
@@ -70,7 +71,7 @@ Admin Orders
                                        {{-- @if($periodTimes['hire_period'] > 0)
                                         {{ $periodTimes['hire_period'] }} days
                                         @else--}}
-                                        if($periodTimes['hire_hours'] > 0)
+                                        @if($periodTimes['hire_hours'] > 0)
                                         {{$periodTimes['hire_hours']}} hrs {{-- @if($periodTimes['hire_mins'] % 60 > 0) {{$periodTimes['hire_mins']%60}} mins @endif --}}
                                         @else
                                         {{$periodTimes['hire_mins']}} mins
