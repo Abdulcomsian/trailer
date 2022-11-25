@@ -8,6 +8,9 @@ font-family: 'Volkhov', serif; */
 * {
     /* transition: 0.2s; */
 }
+#toast-container *{
+    z-index: 99999;
+}
 
 .btn,
 a {
@@ -435,7 +438,7 @@ footer .copyright {
 }
 .inquiry_nav {
     position: fixed;
-    z-index: 99999999;
+    z-index: 9999;
     width: 100%;
     background-color: transparent;
     padding: 0 60px;
