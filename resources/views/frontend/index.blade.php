@@ -608,11 +608,12 @@ Trailer | Home
             const stringTime = time.map(String)
             // console.log(stringTime);
             if (stringTime[0] == 'null') {
+                console.log("if");
                 $('#droptimeInput').timepicker({
                      'step': 60,
                     'disableTimeRanges': [
-                        [stringTime[0], '11:31pm'],
-                        ['12am', stringTime[1]],
+                        ["12:00am", stringTime[1]],
+                        [stringTime[2], '11:31pm' ],
                     ]
                 });
             } else {
