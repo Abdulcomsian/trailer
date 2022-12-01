@@ -67,7 +67,7 @@ Trailer | Home
                             <div class="col-lg-12">
                                   <label class="label text-white " >Dropoff Date: <span class="droptimelabel"></span></label>
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required >
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required disabled >
                                     <span class="icon">
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>
@@ -735,7 +735,7 @@ Trailer | Home
                     } ,
                     datatype: "json",
                     success: function (data) {
-                        console.log(data);
+                        $("input[name='end_time']").removeAttr('disabled');
                         if(data.success == true){
                             dropTimeDisabled([...data.data])
                         } else {
@@ -745,9 +745,8 @@ Trailer | Home
                         
                     },
                     error: function (data) {
+                        $("input[name='end_time']").attr('disabled','disabled');
                         console.log('Error:', data.responseJSON);
-                        
-                        
                     }
                 });
             }, 100);

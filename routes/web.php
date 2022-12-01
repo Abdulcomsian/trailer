@@ -23,7 +23,6 @@ Route::post('/check_date1', [App\Http\Controllers\frontend\OrderTrailerControlle
 
 Route::post('/check_drop_time', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time'])->name('check-drop-time');
 Route::post('/check_drop_time1', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_drop_time1'])->name('check-drop-time1');
-Route::post('/get_drop_time', [App\Http\Controllers\frontend\OrderTrailerController::class, 'get_drop_time'])->name('get-drop-time');
 
 Route::post('/check-end-date', [App\Http\Controllers\frontend\OrderTrailerController::class, 'check_end_date'])->name('check-end-date');
 

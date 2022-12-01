@@ -55,7 +55,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script>
-        $('input[name="date"]').daterangepicker();
+        $('input[name="date"]').daterangepicker({
+            minDate:new Date()
+        });
         $('input[name="date"]').val('');
 
     </script>
