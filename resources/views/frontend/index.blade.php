@@ -716,11 +716,7 @@ Trailer | Home
         pick_time=pick_time.split(':');
         var date=c_date.split('-');
         console.log(date[0].trim());
-        if(date[0].trim()!=date[1].trim())
-        {
-            
-        }
-        else
+        if(date[0].trim() == date[1].trim())
         {
                 setTimeout(() => {
                 c_date = $('#datePut').val();

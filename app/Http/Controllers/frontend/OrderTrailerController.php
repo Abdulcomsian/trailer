@@ -138,49 +138,78 @@ class OrderTrailerController extends Controller
     //check drop time avilablity
     public function check_drop_time(Request $request)
     {
-        $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
-        $hire_time = explode(' - ', trim($request->c_date));
-        $start_date = $hire_time[0];
-        $start_time = strtotime("$start_date $start_time");
-        $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->min('end_time_strtotime');
-        $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
-        // dd($disable_date , $disable_time);
-        if ($disable_time != null) {
-            if ($start_time < (int)$disable_date) {
-                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>=', $disable_time->end_time_strtotime)->first();
-                $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-                $data = [$disable_time, $request->pick_time];
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Click On Search Button',
-                    'data' => $data,
-                ]);
-            } else {
+        $dates = explode(' - ', trim($request->c_date)); 
+        $start_date = $dates[0];
+        $end_date = $dates[1];
+        $pickTime = $request->pick_time;
+        $trailerId = $request->trailer_id;
+        $endPickupDateTime = strtotime("$end_date $pickTime");
 
-
-                $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
-                dd($disable_time);
-                if($disable_time != null){
-                    $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
-                $data = [null, $request->pick_time, $disable_time, "11:31 PM"];
-                }else{
-                    $data = [null, $request->pick_time];
-                }
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Click On Search Button',
-                    'data' => $data,
-                ]);
-            }
-        } else {
-            $disable_time = null;
-            $data = [$disable_time, $request->pick_time];
-            return response()->json([
-                'error' => true,
-                'message' => 'No Time Disable on this date',
-                'data' => $data,
-            ]);
+        $afterPickupOrder = Order::where('trailer_id' ,  $trailerId)->where('start_time_strtotime' ,">" , $endPickupDateTime)->orderBy('start_time_strtotime' ,'asc')->first();
+        
+        
+        if($afterPickupOrder)
+        {
+            $disableTime =  [ null , $pickTime , $afterPickupOrder->start_time , '11:31pm'];
         }
+        else
+        {
+            $disableTime =  [ null , $pickTime];
+        }
+
+        return response()->json([
+                    'success' => true,
+                    'message' => 'please select drop time',
+                    'data' => $disableTime,
+                ]);
+
+        // $afterPickDateTime
+
+
+        // $start_time = \Carbon\Carbon::parse($request->pick_time)->format('h:i A');
+        // $hire_time = explode(' - ', trim($request->c_date));
+        // $start_date = $hire_time[0];
+        // $end_date = $hire_time[1];
+        // $start_time = strtotime("$start_date $start_time");
+        // $disable_date = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->min('end_time_strtotime');
+        // $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $start_date)->first();
+        // // dd($disable_date , $disable_time);
+        // if ($disable_time != null) {
+        //     if ($start_time < (int)$disable_date) {
+        //         $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>=', $disable_time->end_time_strtotime)->first();
+        //         $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+        //         $data = [$disable_time, $request->pick_time];
+        //         return response()->json([
+        //             'success' => true,
+        //             'message' => 'Click On Search Button',
+        //             'data' => $data,
+        //         ]);
+        //     } else {
+
+
+        //         // $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->where(['start_date'=> $start_date , 'end_date'=> $end_date])->first();
+        //         // dd($disable_time);
+        //         if($disable_time != null){
+        //             $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+        //         $data = [null, $request->pick_time, $disable_time, "11:31 PM"];
+        //         }else{
+        //             $data = [null, $request->pick_time];
+        //         }
+        //         return response()->json([
+        //             'success' => true,
+        //             'message' => 'Click On Search Button',
+        //             'data' => $data,
+        //         ]);
+        //     }
+        // } else {
+        //     $disable_time = null;
+        //     $data = [$disable_time, $request->pick_time];
+        //     return response()->json([
+        //         'error' => true,
+        //         'message' => 'No Time Disable on this date',
+        //         'data' => $data,
+        //     ]);
+        // }
     }
 
 
