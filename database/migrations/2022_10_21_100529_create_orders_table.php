@@ -16,8 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('start_time');
-            $table->int('start_time_strtotime')->nullable();
-            $table->int('end_time_strtotime')->nullable();
+            $table->integer('start_time_strtotime')->nullable();
+            $table->integer('end_time_strtotime')->nullable();
             $table->string('end_time');
             $table->text('start_date');
             $table->text('end_date');
