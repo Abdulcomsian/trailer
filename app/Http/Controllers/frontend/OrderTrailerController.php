@@ -156,10 +156,12 @@ class OrderTrailerController extends Controller
                     'data' => $data,
                 ]);
             } else {
+
+
                 $disable_time = Order::where('trailer_id', $request->trailer_id)->where('end_time_strtotime', '>', $disable_time->end_time_strtotime)->first();
-                // dd($disable_time);
+                dd($disable_time);
                 if($disable_time != null){
-                $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
+                    $disable_time = \Carbon\Carbon::parse($disable_time->start_time)->format('h:i A');
                 $data = [null, $request->pick_time, $disable_time, "11:31 PM"];
                 }else{
                     $data = [null, $request->pick_time];
