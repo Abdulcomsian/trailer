@@ -181,6 +181,120 @@ class OrderTrailerController extends Controller
         }
     }
 
+
+    public function get_drop_time(Request $request)
+    {
+        $trailerId = $request->trailer_id;
+        $dateRanges = explode("-" ,$request->c_date);
+        $startDate = $dateRanges[0];
+        $endDate = $dateRanges[1];
+        $amOrPm = $request->day_or_night;
+
+        $dateRanges = array_map(function($item){
+            return strtotime(trim($item));
+        },$dateRanges);
+        
+        $trailerOrders = Order::where('trailer_id' , $trailerId)
+                                ->where(function($query) use ($dateRanges){
+                                    $query->orWhere('start_time_strtotime',">=" ,$dateRanges[1])
+                                          ->orWhere('end_time_strtotime', '<=' , $dateRanges[1]);
+                                })
+                                ->get();
+
+        //Order history starts here
+        $orderHistory = [];
+        foreach($trailerOrders as $order)
+        {
+            for($i=$order->start_time_strtotime ; $i<=$order->end_time_strtotime ; $i+=3600)
+            {
+                $orderHistory[] = $i;
+            }
+
+        }
+
+        // dd($orderHistory);
+
+        $pickupTime = $request->pick_time[0];
+        $pickDateTime = strtotime(date('Y-m-d h:i:s A' , strtotime($startDate." ".$pickupTime." ".$amOrPm)));
+        $orderFlag = false;
+        $dropDateArray = [];
+        if(sizeof($orderHistory) > 0)
+        {
+            for($i=0; $i<=23 ; $i++)
+            {
+                if($orderFlag == true)
+                {
+                    dd("flag");
+                    $dropDateArray[] = ["status" => 'disabled' , "value" => $dateRanges[1] + ($i * 3600 ) , "label" => date("g:ia" , $dateRanges[1] + ($i * 3600 )) ];
+                    continue;
+                }
+
+                if(in_array( $dateRanges[1] + ($i * 3600 ) , $orderHistory))
+                {
+                    $dropDateArray[] = ["status" => 'disabled' , "value" => $dateRanges[1] + ($i * 3600 ) , "label" => date("g:ia",  $dateRanges[1] + ($i * 3600 )) ];
+                    if($pickDateTime < strtotime($dateRanges[1] + ($i * 3600 )))
+                    {
+                        $orderFlag = true;
+                    }
+                    continue;
+                }
+
+                $dropDateArray[] = ["status" => 'enabled' , "value" => $dateRanges[1] + ($i * 3600 ) , "label" => date("g:ia" , $dateRanges[1] + ($i * 3600 )) ];
+                
+            }
+        }
+    
+        return response()->json(['dropDay' => $dropDateArray]);
+        // dd($dropDateArray);
+        // //order history ends here
+        // //current pickup time starts here
+        
+        
+        // $onwardPickupOrder = Order::where('trailer_id' , $trailerId)
+        //                           ->where('start_time_strtotime' , '>=' , $pickDateTime)
+        //                           ->min('start_time_strtotime');
+    
+    
+        // $findPickedOrder = [];
+        // if($onwardPickupOrder)
+        // {
+        //     $startOrder = $onwardPickupOrder->start_time_strtotime;
+        //     $endOrder   = $onwardPickupOrder->end_time_strtotime;
+
+        //     for($i=$startOrder; $i<=$endOrder; $i+=3600)
+        //     {
+        //         // $findPickedOrder[] = 
+        //     }
+
+
+        // }
+        // // Order::where('trailer_id' , $trailerId)
+        // //        ->where('start_time_strtotime', '>=' ,  )
+
+        // //current pickup time end here
+
+        // $currentDayHours=[];
+        
+        // for($i=0; $i<=23 ; $i++)
+        // {
+            
+        //     $currentDayHours[] =  date("Y-m-d h:i" , $dateRanges[1] + ($i * 3600) );
+        // }
+
+        
+        
+
+        
+
+        // dd($trailerOrders , $dateRanges[0] , $dateRanges[1]);
+        // // dd(  
+        // //     $trailerOrders
+        // //     date("Y-m-d" , 1669680000)
+        // // );
+
+
+    }
+
     //store driving licence
     // public function store_licence(Request $request)
     // {
