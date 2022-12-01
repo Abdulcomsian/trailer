@@ -606,8 +606,8 @@ Trailer | Home
 
         const dropTimeDisabled = (time) => {
             const stringTime = time.map(String)
-            console.log(stringTime);
-            if (stringTime[0] != 'null') {
+            // console.log(stringTime);
+            if (stringTime[0] == 'null') {
                 $('#droptimeInput').timepicker({
                      'step': 60,
                     'disableTimeRanges': [
@@ -616,18 +616,19 @@ Trailer | Home
                     ]
                 });
             } else {
+                console.log(stringTime[0])
+                console.log(stringTime[1])
                   $('#droptimeInput').timepicker({
                      'step': 60,
                     'disableTimeRanges': [
-                        ['12am', stringTime[1]],
-                        [stringTime[2],stringTime[3]]
+                        [stringTime[0], stringTime[1]],
                     ]
                 });
             }
-            $('#search').css({
-                'opacity': '1',
-                'cursor': 'default'
-            });
+            // $('#search').css({
+            //     'opacity': '1',
+            //     'cursor': 'default'
+            // });
         }
     // const dropTimeDisabled = (time) => {
     //     const stringTime = time.map(String)
