@@ -67,7 +67,7 @@ Trailer | Home
                             <div class="col-lg-12">
                                   <label class="label text-white " >Dropoff Date: <span class="droptimelabel"></span></label>
                                 <div class="input mb-5 position-relative">
-                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required disabled >
+                                    <input type="text" name="end_time" class="d-block timepicker form_control w-100 time" id="droptimeInput" placeholder="Dropoff time" required>
                                     <span class="icon">
                                         <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                                     </span>

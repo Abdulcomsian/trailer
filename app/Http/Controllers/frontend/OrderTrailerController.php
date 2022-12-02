@@ -145,8 +145,10 @@ class OrderTrailerController extends Controller
         $trailerId = $request->trailer_id;
         $endPickupDateTime = strtotime("$end_date $pickTime");
 
-        $afterPickupOrder = Order::where('trailer_id' ,  $trailerId)->where('start_time_strtotime' ,">" , $endPickupDateTime)->orderBy('start_time_strtotime' ,'asc')->first();
-        
+
+        $afterPickupOrder = Order::where('trailer_id' ,  $trailerId)->where('start_time_strtotime' ,">" , $endPickupDateTime)->where('start_date' , $start_date)->orderBy('start_time_strtotime' ,'asc')->first();
+
+        // dd($afterPickupOrder , $endPickupDateTime);
         
         if($afterPickupOrder)
         {
@@ -324,8 +326,22 @@ class OrderTrailerController extends Controller
                 $order->status = "New Order";
                 if ($request->coupon_code) {
                     $coupon = Coupon::where(['code' => $request->coupon_code])->first();
+                    // dd("inside coupon" , $coupon , $coupon->use_count ,$coupon->toal_count );
+                    $today = date("Y-m-d");
+                    // dd($coupon->expired_at < $today);
+                    if($today >= $coupon->expired_at)
+                    {
+                        return redirect()->back()->with('error', 'COUPON EXPIRED!');
+                    }
+
+                    if($coupon->use_count  == $coupon->toal_count)
+                    {
+                        return redirect()->back()->with('error', 'MAX COUPON USED!');
+                    }
                     $order->coupon_id = $coupon->id;
                     $order->discount_price = $coupon->value;
+                    $coupon->use_count = ++$coupon->use_count;
+                    $coupon->save(); 
                 }
 
                 if ($order->save()) {
