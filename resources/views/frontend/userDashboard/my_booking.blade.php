@@ -89,9 +89,9 @@ Trailer | My Booking
                                     @if($order->status=="New Order" || $order->status=="Pick Up")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
-                                        <td>{{date('m/d/Y',strtotime($order->start_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->start_date))}}</td>
                                          <td>{{$order->start_time}} </td>
-                                        <td>{{date('m/d/Y',strtotime($order->end_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->end_date))}}</td>
                                         <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             {{-- @if($periodTimes['hire_period'] > 0)
@@ -164,9 +164,9 @@ Trailer | My Booking
                                     @if($order->status=="Refund Request")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
-                                        <td>{{date('m/d/Y',strtotime($order->start_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->start_date))}}</td>
                                         <td>{{$order->start_time}} </td>
-                                        <td>{{date('m/d/Y',strtotime($order->end_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->end_date))}}</td>
                                         <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)
@@ -225,9 +225,9 @@ Trailer | My Booking
                                     @if($order->status=="Completed")
                                     <tr>
                                         <td>{{$order->trailer->trailer_name ?? '-'}}</td>
-                                        <td>{{date('m/d/Y',strtotime($order->start_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->start_date))}}</td>
                                         <td>{{$order->start_time}} </td>
-                                        <td>{{date('m/d/Y',strtotime($order->end_date))}}</td>
+                                        <td>{{date('d/m/Y',strtotime($order->end_date))}}</td>
                                         <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                         <td>
                                             @if($periodTimes['hire_period'] > 0)

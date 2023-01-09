@@ -66,9 +66,9 @@ Admin Orders
                                 @endphp
                                 <tr>
                                     <td>{{$order->trailer->trailer_name ?? '-'}}</td>
-                                    <td>{{date('m/d/Y',strtotime($order->start_date))}}</td>
+                                    <td>{{date('d/m/Y',strtotime($order->start_date))}}</td>
                                     <td>{{$order->start_time}} </td>
-                                    <td>{{date('m/d/Y',strtotime($order->end_date))}}</td>
+                                    <td>{{date('d/m/Y',strtotime($order->end_date))}}</td>
                                     <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                     <td>
                                        {{-- @if($periodTimes['hire_period'] > 0)

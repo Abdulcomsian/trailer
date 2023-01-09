@@ -9,6 +9,8 @@ use App\Utils\Validations;
 use App\Utils\HelperFunctions;
 use App\Models\{User, Trailer, Order, Coupon, OrderReturnTrailerImage, OrderPickupTrailerImage};
 use App\Mail\TrailerRefunMail;
+use App\Notifications\OrderPlaced;
+use Notification;
 use Auth;
 use Session;
 use Stripe;
@@ -297,7 +299,33 @@ class OrderTrailerController extends Controller
             $user->driving_licence = $image_name;
             $user->save();
         }
+        $order = new Order();
         $amount = $request->amount;
+        if ($request->coupon_code) {
+            $coupon = Coupon::where(['code' => $request->coupon_code])->first();
+            // dd("inside coupon" , $coupon , $coupon->use_count ,$coupon->toal_count );
+            $today = date("Y-m-d");
+            // dd($coupon->expired_at < $today);
+            if($today >= $coupon->expired_at)
+            {
+                return redirect()->back()->with('error', 'COUPON EXPIRED!');
+            }
+
+            if($coupon->use_count  == $coupon->toal_count)
+            {
+                return redirect()->back()->with('error', 'MAX COUPON USED!');
+            }
+            $order->coupon_id = $coupon->id;
+            $order->discount_price = $coupon->value;
+            $coupon->use_count = ++$coupon->use_count;
+            if($coupon->value>$amount)
+            {
+                $amount=0;
+            }
+            else{
+                $amount=$amount-$coupon->value;
+            }
+        }
         $amount = $amount + 150;
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -310,7 +338,7 @@ class OrderTrailerController extends Controller
             if ($stripedata->status == "succeeded") {
                 $user_id = Auth::id();
                 $user = $this->getUserById($user_id);
-                $order = new Order();
+                $trailor = $this->getTrailerById($request->trailer_id);
                 $order->user_id = $user_id;
                 $order->trailer_id = $request->trailer_id;
                 $order->amount = $request->amount;
@@ -324,27 +352,12 @@ class OrderTrailerController extends Controller
                 $order->payment_status = 1;
                 $order->payment_method = "Stripe";
                 $order->status = "New Order";
-                if ($request->coupon_code) {
-                    $coupon = Coupon::where(['code' => $request->coupon_code])->first();
-                    // dd("inside coupon" , $coupon , $coupon->use_count ,$coupon->toal_count );
-                    $today = date("Y-m-d");
-                    // dd($coupon->expired_at < $today);
-                    if($today >= $coupon->expired_at)
-                    {
-                        return redirect()->back()->with('error', 'COUPON EXPIRED!');
-                    }
-
-                    if($coupon->use_count  == $coupon->toal_count)
-                    {
-                        return redirect()->back()->with('error', 'MAX COUPON USED!');
-                    }
-                    $order->coupon_id = $coupon->id;
-                    $order->discount_price = $coupon->value;
-                    $coupon->use_count = ++$coupon->use_count;
-                    $coupon->save(); 
-                }
-
                 if ($order->save()) {
+                    if ($request->coupon_code) {
+                        $coupon->save();
+                    }
+                    Notification::route('mail', $user->email)->notify(new OrderPlaced($trailor->pass_key,'user'));
+                    Notification::route('mail', 'admin@gmail.com')->notify(new OrderPlaced($trailor->pass_key,'admin'));
                     $orderData = Order::with('user', 'trailer')->find($order->id);
                     $start_time = date('Y-m-d h:i A', strtotime("$order->start_date $request->start_time"));
                     $end_time = date('Y-m-d h:i A', strtotime("$order->end_date $request->end_time"));
