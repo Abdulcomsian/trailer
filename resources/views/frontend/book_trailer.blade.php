@@ -340,14 +340,16 @@
                          {
                            $("input[name='amount']").val(0);
                            $("#trailer-payment").text("$"+(0));  
+                            $("#total").text("$"+(150));
                          }
                          else
                          {
                             $("input[name='amount']").val(payment-data.data);
                             $("#trailer-payment").text("$"+(payment-data.data));
+                            $("#total").text("$"+(payment-data.data+150));
                          }
                          
-                         $("#total").text("$"+(payment-data.data+150));
+                        
                          $("#continue").text("Pay $"+(payment-data.data+150));
                          $("input[name='coupon_code']").css('pointer-events','none');
                          $(".apply-coupon-btn").remove();
