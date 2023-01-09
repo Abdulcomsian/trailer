@@ -73,6 +73,7 @@ Admin Orders
 @endsection
 @section('script')
 <script type="text/javascript">
+        toastr.options.positionClass = 'toast-top-center';
         const timeDisabled = (time) => {
         const stringTime = time.map(String)
         $('#disableTimeRangesExample').timepicker({ 'step': 60, 'disableTimeRanges': [
