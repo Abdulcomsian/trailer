@@ -24,5 +24,6 @@ return array(
     */
 
     'options' => array(
+          'positionClass'     => 'toast-top-center',
     ),
 );

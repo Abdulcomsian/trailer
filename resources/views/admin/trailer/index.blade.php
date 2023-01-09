@@ -132,12 +132,21 @@ Trailers
                                                     <!--end::Input-->
                                                 </div>
 
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-bold fs-6 mb-2">Pass Key</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="pass_key" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Enter Pass Key"  required />
+                                                    <!--end::Input-->
+                                                </div>
+
                                                 <!--end::Input group-->
                                             </div>
                                             <!--end::Scroll-->
                                             <!--begin::Actions-->
                                             <div class="text-center pt-15">
-                                                <button type="reset" class="btn btn-white me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                                <button type="reset" class="btn btn-white me-3" data-kt-users-modal-action="cancel">Reset</button>
                                                 <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                                                     <span class="indicator-label">Submit</span>
                                                     <span class="indicator-progress">Please wait...

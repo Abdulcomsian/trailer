@@ -32,6 +32,13 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{asset('backend/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css">
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+     <link rel="stylesheet" href="{{asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/css/jquery.timepicker.css') }}">
     <!--end::Global Stylesheets Bundle-->
     {{-- @toastr_css --}}
     {{-- Page Specific Styles        --}}
@@ -95,6 +102,57 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{asset('backend/assets/js/custom/modals/create-app.js')}}"></script>
     <script src="{{asset('backend/assets/js/custom/modals/upgrade-plan.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script>
+        $('input[name="date"]').daterangepicker({
+            minDate:new Date()
+        });
+        $('input[name="date"]').val('');
+
+         $('#datePicker').on('change', function () {
+            $('#datePut').val(this.value);
+        });
+
+        $('#droptime').on('change', function () {
+            $('#droptimeInput').val(this.value);
+        });
+
+        // $('#droptimeInput').click(function(){
+        //     alert(1)
+        //     // focus input
+        //     $('#droptime').focus()
+        // })
+
+        $('#picktime').on('change', function () {
+            $('#picktimeinput').val(this.value);
+        });
+
+    </script>
+   <script src="{{asset('assets/js/jquery.timepicker.js') }}"></script>
+<script>
+    $(function() {
+        $('#disableTimeRangesExample').timepicker({ 
+            'step': 60,
+            'disableTimeRanges': [
+             ]
+         });
+
+        // $('#droptimeInput').timepicker();
+        $('#droptimeInput').timepicker({ 
+             'step': 60,
+            'disableTimeRanges': [
+                // ['1am', '2am'],
+                // ['3am', '4:01am']
+        ] });
+        
+    });
+
+
+
+
+ 
+</script>
     <!--end::Page Custom Javascript-->
     {{-- @toastr_js --}}
     {{-- @toastr_render --}}

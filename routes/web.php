@@ -40,6 +40,9 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::resource('coupons', App\Http\Controllers\admin\CouponController::class);
     //Refund work
     Route::get('/orders', [App\Http\Controllers\admin\OrderController::class, 'index'])->name('admin.orders');
+    Route::get('/orders/create',[App\Http\Controllers\admin\OrderController::class, 'create'])->name('admin.orders.create');
+    Route::get('/order-trailer', [App\Http\Controllers\admin\OrderController::class, 'order_trailer'])->name('admin.order-trailer');
+    Route::post('/order-submit', [App\Http\Controllers\admin\OrderController::class, 'order_submit'])->name('admin.order.submit');
     Route::post('/order-completed', [App\Http\Controllers\admin\OrderController::class, 'OrderCompleted']);
     Route::get('/order-pick-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderView']);
     Route::get('/order-return-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderReturn']);

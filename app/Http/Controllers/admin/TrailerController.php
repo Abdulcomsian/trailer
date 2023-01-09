@@ -40,6 +40,7 @@ class TrailerController extends Controller
             $trailer->trailer_name = $request->trailer_name;
             $trailer->per_hour_price=$request->per_hour_price;
             $trailer->user_id = $user_id;
+            $trailer->pass_key=$request->pass_key;
             $trailer->save();
 
             foreach($request->addmore as $address)
@@ -78,6 +79,7 @@ class TrailerController extends Controller
             $trailer->trailer_name = $request->trailer_name;
             $trailer->per_hour_price=$request->per_hour_price;
             $trailer->user_id = $user_id;
+            $trailer->pass_key=$request->pass_key;
             $trailer->save();
 
             TrailerTimming::where('trailer_id',$trailer->id)->delete();

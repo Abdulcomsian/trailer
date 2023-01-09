@@ -23,6 +23,14 @@
     <link rel="stylesheet" href="{{asset('assets/css/media.css') }}">
     <link rel="stylesheet" href="{{asset('assets/css/jquery.timepicker.css') }}">
 
+    <style>
+        .toast-top-right {
+    top: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+        transform: translate(40%, 0%);
+    </style>
+
     @yield('css')
 </head>
 
@@ -235,6 +243,10 @@
         ] });
         
     });
+
+
+
+
  
 </script>
 @yield('script')

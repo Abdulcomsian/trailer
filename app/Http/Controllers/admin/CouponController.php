@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Utils\Validations;
-use App\Models\Coupon;
+use App\Models\{Coupon,Order};
 
 class CouponController extends Controller
 {
@@ -38,7 +38,8 @@ class CouponController extends Controller
 
     public function show($id)
     {
-        //
+        $couponsUsed=Order::with('user')->where('coupon_id',$id)->get();
+        return view('admin.coupon.show',compact('couponsUsed'));
     }
 
 

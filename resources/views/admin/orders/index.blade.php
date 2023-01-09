@@ -18,17 +18,20 @@ Admin Orders
                 <div class="card-header border-0 pt-6">
                     <!--begin::Card title-->
                     <div class="card-title">
-
-                        <form method="get" action="{{url('admin/orders')}}" id="order_status_form" style="width:250px">
-                            <select name="status" id="status" class="form-select form-control">
-                                <option value="New Order" {{isset($_GET['status']) && $_GET['status']=='New Order' ? 'selected':''}}>New Order</option>
-                                <option value="Pick Up" {{ isset($_GET['status']) && $_GET['status']=='Pick Up' ? 'selected':''}}>Picked up</option>
-                                <option value="Refund Request" {{isset($_GET['status']) && $_GET['status']=='Refund Request' ? 'selected':''}}>Refund Request</option>
-                                <option value="Completed" {{ isset($_GET['status']) && $_GET['status']=='Completed' ? 'selected':''}}>Completed</option>
-                            </select>
-                        </form>
-
+                            <form method="get" action="{{url('admin/orders')}}" id="order_status_form" style="width:250px">
+                                <select name="status" id="status" class="form-select form-control">
+                                    <option value="New Order" {{isset($_GET['status']) && $_GET['status']=='New Order' ? 'selected':''}}>New Order</option>
+                                    <option value="Pick Up" {{ isset($_GET['status']) && $_GET['status']=='Pick Up' ? 'selected':''}}>Picked up</option>
+                                    <option value="Refund Request" {{isset($_GET['status']) && $_GET['status']=='Refund Request' ? 'selected':''}}>Refund Request</option>
+                                    <option value="Completed" {{ isset($_GET['status']) && $_GET['status']=='Completed' ? 'selected':''}}>Completed</option>
+                                </select>
+                            </form>
+                          
+                           
                     </div>
+                    <div class="col-md-2">
+                            <a href="{{url('admin/orders/create')}}" class="btn btn-primary">Create Order</a>
+                           </div>
                 </div>
                 <!--end::Card header-->
                 <!--begin::Card body-->
@@ -63,9 +66,9 @@ Admin Orders
                                 @endphp
                                 <tr>
                                     <td>{{$order->trailer->trailer_name ?? '-'}}</td>
-                                    <td>{{date('Y-m-d',strtotime($order->start_date))}}</td>
+                                    <td>{{date('m/d/Y',strtotime($order->start_date))}}</td>
                                     <td>{{$order->start_time}} </td>
-                                    <td>{{date('Y-m-d',strtotime($order->end_date))}}</td>
+                                    <td>{{date('m/d/Y',strtotime($order->end_date))}}</td>
                                     <td>{{date('h:i A',strtotime('-1 minutes',strtotime($order->end_time)))}}</td>
                                     <td>
                                        {{-- @if($periodTimes['hire_period'] > 0)

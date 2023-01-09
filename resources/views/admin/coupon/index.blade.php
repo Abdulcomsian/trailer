@@ -191,7 +191,7 @@ Coupon
                                 <td class="min-w-100px">{{$cp->value}}</td>
                                 <td class="min-w-100px">{{$cp->toal_count}}</td>
                                 <td class="min-w-100px">{{$cp->use_count}}</td>
-                                <td class="min-w-100px">{{$cp->expired_at}}</td>
+                                <td class="min-w-100px">{{date("d/m/Y", strtotime($cp->expired_at))}}</td>
                                 <td class="">
                                     <a href="{{route('coupons.edit',$cp->id)}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Write.svg-->
@@ -203,6 +203,8 @@ Coupon
                                         </span>
                                         <!--end::Svg Icon-->
                                     </a>
+                                    <a href="{{route('coupons.show',$cp->id)}}"><i class="fa fa-eye"></i></a>
+                                    <br>
                                     <form style="width:20%;float:left" id="form_{{$cp->id}}" action="{{route('coupons.destroy',$cp)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
