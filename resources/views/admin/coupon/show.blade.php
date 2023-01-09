@@ -35,7 +35,7 @@ Coupon
                                 <td class="min-w-100px">{{$loop->index+1}}</td>
                                 <td class="min-w-100px">{{$cp->user->name}}</td>
                                 <td class="min-w-100px">{{$cp->user->email}}</td>
-                                <td class="main-w-100px">{{date('m/d/Y',strtotime($cp->create_at))}}</td>
+                                <td class="main-w-100px">{{date('m/d/Y',strtotime($cp->created_at))}}</td>
                             </tr>
                             @endforeach
                         </tbody>

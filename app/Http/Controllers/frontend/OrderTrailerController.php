@@ -328,7 +328,7 @@ class OrderTrailerController extends Controller
         }
         $amount = $amount + 150;
         try {
-            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe\Stripe::setApiKey('sk_test_xfxl874azsZucvkjAQP6sExu');
             $stripedata = Stripe\Charge::create([
                 "amount" => $amount * 100,
                 "currency" => "usd",
