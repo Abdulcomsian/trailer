@@ -25,7 +25,11 @@
                                                                     <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:left">Hello!</h1>
                                                                     <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">
                                                                         Welcome to the online Trailer Web-Portal. <br><br>
+                                                                        @if($type=="user")
                                                                         Your order has been placed and your pass code is {{$code}}.
+                                                                        @else
+                                                                        {{$user->name}} has been placed order having pass code is {{$code}}.
+                                                                        @endif
                                                                         @if($type=='admin')
                                                                         <a href="{{url('admin/orders')}}">Click here to view order</a> and complete it<br>
                                                                         @else

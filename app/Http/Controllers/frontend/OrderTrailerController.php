@@ -357,7 +357,7 @@ class OrderTrailerController extends Controller
                         $coupon->save();
                     }
                     Notification::route('mail', $user->email)->notify(new OrderPlaced($trailor->pass_key,'user'));
-                    Notification::route('mail', 'admin@gmail.com')->notify(new OrderPlaced($trailor->pass_key,'admin'));
+                    Notification::route('mail', 'admin@gmail.com')->notify(new OrderPlaced($trailor->pass_key,'admin',$user));
                     $orderData = Order::with('user', 'trailer')->find($order->id);
                     $start_time = date('Y-m-d h:i A', strtotime("$order->start_date $request->start_time"));
                     $end_time = date('Y-m-d h:i A', strtotime("$order->end_date $request->end_time"));
