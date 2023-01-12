@@ -46,6 +46,9 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::post('/order-completed', [App\Http\Controllers\admin\OrderController::class, 'OrderCompleted']);
     Route::get('/order-pick-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderView']);
     Route::get('/order-return-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderReturn']);
+
+
+    Route::resource('users',App\Http\Controllers\admin\UserController::class);
 });
 /*****************END ADMIN ROUTES*******************/
 

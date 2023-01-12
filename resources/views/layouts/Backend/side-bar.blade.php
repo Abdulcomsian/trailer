@@ -100,6 +100,23 @@
                             <span class="menu-title">Orders</span>
                         </a>
                 </div>
+                <div class="menu-item">
+                    @if(Route::is('admin.users'))
+                    <a class="menu-link active" href="{{url('admin/users')}}">
+                        @else
+                        <a class="menu-link" href="{{url('admin/users')}}">
+                            @endif
+                            <span class="menu-icon">
+                                <span class="svg-icon svg-icon-2">
+                                    <svg xmlns="https://www.flaticon.com/free-icon/doctor_3952988" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <polygon fill="#000000" opacity="0.3" points="5 3 19 3 23 8 1 8" />
+                                        <polygon fill="#000000" points="23 8 12 20 1 8" />
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="menu-title">Users</span>
+                        </a>
+                </div>
 
 
             </div>

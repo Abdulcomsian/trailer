@@ -64,6 +64,9 @@
 
     <script>
         $('input[name="date"]').daterangepicker({
+            locale: {
+              format: 'D/M/Y'
+            },
             minDate:new Date()
         });
         $('input[name="date"]').val('');
