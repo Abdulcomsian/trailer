@@ -111,7 +111,7 @@ class OrderTrailerController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => 'Select Time',
-                        'data' => []
+                        'data' => null
                     ]);
                 } else {
                     return response()->json([
