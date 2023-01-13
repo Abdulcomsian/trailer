@@ -121,7 +121,6 @@ class OrderTrailerController extends Controller
                     ]);
                 }
             } else {
-                dd("here");
                 $start_time = array();
                 $disabletime = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->latest()->first();
                 if ($disabletime) {
