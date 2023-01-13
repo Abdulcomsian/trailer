@@ -46,6 +46,7 @@ Trailer | Home
                         <!-- Atif old work uncommented====================== -->
                          <div class="input mb-5 position-relative">
                             <input type="text" name="date" class="d-block form_control w-100" id="datePut" placeholder="Hire Period" required>
+                             <input type="hidden" name="date1" class="d-block form_control w-100" id="datePut1" placeholder="Hire Period" required>
                             <span class="icon">
                                 <img src="{{asset('assets/img/timer-outline.png') }}" class="w-100" alt="picker">
                             </span>
@@ -558,7 +559,9 @@ Trailer | Home
     @endsection
     @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
+
         jQuery(document).ready(function($) {
             $('#model_login').on('submit', function(e) {
                 e.preventDefault();
@@ -660,7 +663,15 @@ Trailer | Home
         var c_date;
         setTimeout(() => {
             c_date = $('#datePut').val();
-            start_end_date=c_date.split('-');
+            let datearray=c_date.split('-');
+            let start_date=String(datearray[0]);
+            let end_date=String(datearray[1]);
+             start_date = moment(start_date, 'DD/MM/YYYY').format('MM/DD/YYYY');
+             end_date = moment(end_date, 'DD/MM/YYYY').format('MM/DD/YYYY');
+          
+            //start_end_date=c_date.split('-');
+            c_date=start_date+" - "+end_date;
+             $('#datePut1').val(c_date);
             trailer_id = $('#trailer_id').val();
             if(trailer_id == '')
             {
@@ -689,8 +700,8 @@ Trailer | Home
                         }
                         
                         timeDisabled([...data.data]);
-                        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[0])));
-                        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_end_date[1])));
+                        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_date)));
+                        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(end_date)));
                         $("input[name='start_time']").removeAttr('disabled');
                     } else {
                         toastr.error(data.message);

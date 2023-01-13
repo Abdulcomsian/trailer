@@ -24,7 +24,7 @@ class OrderTrailerController extends Controller
         Validations::order_trailer($request);
         try {
             $user_id = Auth::id();
-            $hire_time = explode(' - ', trim($request->date));
+            $hire_time = explode(' - ', trim($request->date1));
             $start_time = date('Y-m-d h:i A', strtotime("$hire_time[0] $request->start_time"));
             $end_time = date('Y-m-d h:i A', strtotime("$hire_time[1] $request->end_time"));
             $start_date = $hire_time[0];
