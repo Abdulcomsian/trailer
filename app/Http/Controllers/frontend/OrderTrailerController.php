@@ -111,14 +111,17 @@ class OrderTrailerController extends Controller
                     $start_time = array();
                     $disable_t = Order::where('trailer_id', $request->trailer_id)
                     ->where('end_date',$start_date)->first();
-                    if ($disable_t->start_date !=  $disable_t->end_date) {
-                        $start_time[]= "12:00am";
-                        $start_time[]=$disable_t->end_time;
-                    } 
-                    else
+                    if($disable_t)
                     {
-                       $start_time[]=$disable_t->start_time;
-                       $start_time[]=$disable_t->end_time; 
+                        if ($disable_t->start_date !=  $disable_t->end_date) {
+                            $start_time[]= "12:00am";
+                            $start_time[]=$disable_t->end_time;
+                        } 
+                        else
+                        {
+                           $start_time[]=$disable_t->start_time;
+                           $start_time[]=$disable_t->end_time; 
+                        }
                     }
                     return response()->json([
                         'success' => true,
