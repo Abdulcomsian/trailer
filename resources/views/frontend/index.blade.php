@@ -691,6 +691,7 @@ Trailer | Home
                 datatype: "json",
                 success: function (data) {
                     if(data.success == true){
+                        console.log(data);
                         if(data.fulldaycheck=="full")
                         {
                            toastr.error(data.message); 

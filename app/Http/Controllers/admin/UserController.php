@@ -136,7 +136,7 @@ class UserController extends Controller
     {
         try {
             User::FindorFail($id)->delete();
-            toastr()->error('User successfully deleted!');
+            toastr()->success('User successfully deleted!');
             return Redirect::back();        
         } catch (\Exception $exception) {
             return Redirect::back();
