@@ -61,7 +61,6 @@ class OrderTrailerController extends Controller
         if ($start_time == $end_time) {
           
             $start_date = strtotime("$hire_time[0]");
-            // $disable_time = Order::where('trailer_id', $request->trailer_id)->where('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1])->get();
             $disable_time = Order::where('trailer_id', $request->trailer_id)->where( function($query) use ($hire_time){
                 $query->orWhere('start_date', $hire_time[0])->orWhere('end_date', $hire_time[1]);
             })->get();
@@ -103,16 +102,28 @@ class OrderTrailerController extends Controller
             $end_date = $hire_time[1];
             //if no order exist after end date
             $checknextdate = Order::where('trailer_id', $request->trailer_id)->Where('end_date', '>', $start_date)->first();
-            dd($checknextdate);
+
             if ($checknextdate) {
                 $disable_time = Order::where('trailer_id', $request->trailer_id)
                     ->whereBetween('start_date', [$start_date, $end_date])
                     ->first();
                 if ($disable_time == null) {
+                    $start_time = array();
+                    $disable_t = Order::where('trailer_id', $request->trailer_id)
+                    ->where('end_date',$start_date)->first();
+                    if ($disable_t->start_date !=  $disable_t->end_date) {
+                        $start_time[]= "12:00am";
+                        $start_time[]=$disable_t->end_time;
+                    } 
+                    else
+                    {
+                       $start_time[]=$disable_t->start_time;
+                       $start_time[]=$disable_t->end_time; 
+                    }
                     return response()->json([
                         'success' => true,
                         'message' => 'Select Time',
-                        'data' => null
+                        'data' =>  $start_time
                     ]);
                 } else {
                     return response()->json([
