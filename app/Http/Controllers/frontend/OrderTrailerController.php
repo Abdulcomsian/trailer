@@ -111,7 +111,7 @@ class OrderTrailerController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => 'Select Time',
-                        'data' => null
+                        'data' => []
                     ]);
                 } else {
                     return response()->json([
@@ -121,6 +121,7 @@ class OrderTrailerController extends Controller
                     ]);
                 }
             } else {
+                dd("here");
                 $start_time = array();
                 $disabletime = Order::where('trailer_id', $request->trailer_id)->where('end_date', $start_date)->latest()->first();
                 if ($disabletime) {
