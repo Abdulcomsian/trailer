@@ -696,13 +696,13 @@ Trailer | Home
                            toastr.error(data.message); 
                         }
                         else{
-                            console.log(data.data);
                             toastr.success(data.message);
                              timeDisabled([...data.data]);
-                            $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_date)));
-                            $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(end_date)));
+                            
                            $("input[name='start_time']").removeAttr('disabled');
                         }
+                        $(".picktimelabel").html($.datepicker.formatDate('DD d MM', new Date(start_date)));
+                        $(".droptimelabel").html($.datepicker.formatDate('DD d MM', new Date(end_date)));
                         
                        
                     } else {
