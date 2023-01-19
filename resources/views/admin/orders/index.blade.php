@@ -53,6 +53,7 @@ Admin Orders
                                     <th scope="col">Payment Method</th>
                                     <th scope="col">Payment Status</th>
                                     <th scope="col">Order Status</th>
+                                    <th scope="col">Approve Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -87,6 +88,13 @@ Admin Orders
                                     <td>{{$order->payment_status == 1 ? 'Paid':'Unpaid'}}</td>
                                     <td><span class="text-success">{{$order->status}}</span></td>
                                     <td>
+                                         @if(!$order->approved_status)
+                                        <a href="{{url('admin/order-confirm',$order->id)}}" title="Approve Order"><i class="fa fa-ban"></i></a>
+                                        @else
+                                        <i class="fa fa-check" title="Approved"></i>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <!-- <a href="{{url('User/Order/return-trailer',$order->id)}}">
                                             <i class="fa fa-undo" aria-hidden="true"></i>
                                         </a> -->
@@ -110,6 +118,7 @@ Admin Orders
                                         @if($order->status=="Pick Up")
                                         <a href="{{url('admin/order-pick-view',$order->id)}}"><i class="fa fa-eye"></i></a>
                                         @endif
+                                       
                                         @if(isset($_GET['status']) && $_GET['status']=='Refund Request')
                                         <form id="completeform_{{$order->id}}" action="{{url('admin/order-completed')}}" method="POST">
                                             @csrf

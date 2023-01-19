@@ -162,6 +162,7 @@ Admin Orders
             };
             // Create an instance of the card Element.
             var card = elements.create('card', {
+                hidePostalCode: true,
                 style: style
             });
             // Add an instance of the card Element into the `card-element` <div>.

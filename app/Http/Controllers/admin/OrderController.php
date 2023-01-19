@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\{Order,OrderPickupTrailerImage,OrderReturnTrailerImage,Trailer,User};
 use App\Utils\Validations;
 use App\Utils\HelperFunctions;
+use App\Notifications\OrderPlaced;
+use Notification;
 use Auth;
 
 class OrderController extends Controller
@@ -125,6 +127,18 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
 
+    }
+
+    public function OrderConfirm($id)
+    {
+        try {
+            Order::find($id)->update(['approved_status' => 1]);
+            $order=Order::with('user','trailer')->find($id);
+            Notification::route('mail', $order->user->email)->notify(new OrderPlaced($order->trailer->pass_key,'user',NULL,NULL,'Confirm'));
+            return redirect()->back()->with('success', 'Success .. ! Order Confirm');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
     }
 
     

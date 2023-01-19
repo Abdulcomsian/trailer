@@ -371,8 +371,15 @@ class OrderTrailerController extends Controller
                     if ($request->coupon_code) {
                         $coupon->save();
                     }
-                    Notification::route('mail', $user->email)->notify(new OrderPlaced($trailor->pass_key,'user'));
-                    Notification::route('mail', 'admin@gmail.com')->notify(new OrderPlaced($trailor->pass_key,'admin',$user));
+                    //check if user is already have order and approved licence
+                    $user_check_approved_licence=Order::where(['user_id'=>$user->id,'status'=>'Completed'])->first();
+                    $userFistorder=true;
+                    if($user_check_approved_licence)
+                    {
+                        $userFistorder=false;
+                    }
+                    Notification::route('mail', $user->email)->notify(new OrderPlaced($trailor->pass_key,'user',NULL,$userFistorder));
+                    Notification::route('mail', 'admin@gmail.com')->notify(new OrderPlaced($trailor->pass_key,'admin',$user,$userFistorder));
                     $orderData = Order::with('user', 'trailer')->find($order->id);
                     $start_time = date('Y-m-d h:i A', strtotime("$order->start_date $request->start_time"));
                     $end_time = date('Y-m-d h:i A', strtotime("$order->end_date $request->end_time"));
