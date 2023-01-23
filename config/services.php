@@ -31,8 +31,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => '40192878461-rin5n1teusq5ami9g33a5rcmqpl14buk.apps.googleusercontent.com',
-        'client_secret' => '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',
+        'client_id' => '788898051204-sk65mjrae4tejmjtk5mkv7dgn8vg62j6.apps.googleusercontent.com',
+        'client_secret' => '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',
         'redirect' => 'https://www.oldmatestrailer.com.au/auth/google/callback',
     ],
 
