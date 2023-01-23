@@ -114,13 +114,14 @@
                                 <!-- img -->
                                 <div class="img">
                                     <img src="{{asset('assets/img/with.png') }}" class="my-4" alt="img">
-                                    <div class="social_btn d-flex justify-content-between">
+                                    <div class="social_btn  justify-content-between" style="text-align:Center;">
+                                    <!-- d-flex -->
                                         <a href="{{ url('auth/google') }}">
                                             <img src="{{asset('assets/img/google.png') }}" alt="img">
                                         </a>
-                                        <a href="{{ url('auth/facebook') }}">
+                                        <!-- <a href="{{ url('auth/facebook') }}">
                                             <img src="{{asset('assets/img/facebook.png') }}" alt="img">
-                                        </a>
+                                        </a> -->
                                     </div>
                                     <div class="mt-5 text-center">
                                         <p class="mb-0 dontaccount">Don’t have an account? <a href="#" onclick="toggleModel()" class="signlink">Sign Up</a></p>
