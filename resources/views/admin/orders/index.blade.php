@@ -54,6 +54,7 @@ Admin Orders
                                     <th scope="col">Payment Status</th>
                                     <th scope="col">Order Status</th>
                                     <th scope="col">Approve Status</th>
+                                    <th scope="col">Send Code</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -93,6 +94,13 @@ Admin Orders
                                         @else
                                         <i class="fa fa-check" title="Approved"></i>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <form id="form_{{$order->id}}" action="{{url('admin/order-send-code',$order)}}" method="POST">
+                                                @csrf
+                                                <button type="submit" id="{{$order->id}}" class="confirm btn btn-sm btn-primary">Send</button>
+
+                                            </form>
                                     </td>
                                     <td>
                                         <!-- <a href="{{url('User/Order/return-trailer',$order->id)}}">

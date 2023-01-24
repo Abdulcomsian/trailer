@@ -14,15 +14,13 @@ class OrderPlaced extends Notification
     public $code;
     public $type;
     public $user;
-    public $userFistOrder;
-    public $orderconfirm;
-    public function __construct($code,$type,$user=null,$userFistOrder,$orderconfirm=null)
+    public $status;
+    public function __construct($code,$type,$user=null,$status=null)
     {
         $this->code=$code;
         $this->type=$type;
         $this->user=$user;
-        $this->userFistOrder=$userFistOrder;
-        $this->orderconfirm=$orderconfirm;
+        $this->status=$status;
     }
 
     /**
@@ -47,7 +45,7 @@ class OrderPlaced extends Notification
          return (new MailMessage)
             ->greeting('Order Confirmed')
             ->subject('Order Confirmed')
-            ->view('mail.orderPlacement',['code'=>$this->code,'type'=>$this->type,'user'=>$this->user,'userFistOrder'=>$this->userFistOrder,'orderconfirm'=>$this->orderconfirm]);
+            ->view('mail.orderPlacement',['code'=>$this->code,'type'=>$this->type,'user'=>$this->user,'status'=>$this->status]);
     }
 
     /**

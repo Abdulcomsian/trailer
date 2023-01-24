@@ -134,9 +134,20 @@ class OrderController extends Controller
         try {
             Order::find($id)->update(['approved_status' => 1]);
             $order=Order::with('user','trailer')->find($id);
-            Notification::route('mail', $order->user->email)->notify(new OrderPlaced($order->trailer->pass_key,'user',NULL,NULL,'Confirm'));
+            Notification::route('mail', $order->user->email)->notify(new OrderPlaced($order->trailer->pass_key,'user',NULL,'Confirm'));
             return redirect()->back()->with('success', 'Success .. ! Order Confirm');
         } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
+        }
+    }
+
+    public function OrderPasscode(Request $request,$order)
+    {
+        try {
+         $order=Order::with('user','trailer')->find($order);
+         Notification::route('mail', $order->user->email)->notify(new OrderPlaced($order->trailer->pass_key,'user',NULL,'send'));
+         return redirect()->back()->with('success', 'Success .. ! Pass code sent');
+         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'ERROR .. !  ' . $exception->getMessage() . '.');
         }
     }

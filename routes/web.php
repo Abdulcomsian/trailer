@@ -47,6 +47,9 @@ Route::prefix('admin')->middleware('can:admin')->group(function () {
     Route::get('/order-pick-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderView']);
     Route::get('/order-return-view/{id}', [App\Http\Controllers\admin\OrderController::class, 'OrderReturn']);
     Route::get('/order-confirm/{id}',[App\Http\Controllers\admin\OrderController::class, 'OrderConfirm']);
+    Route::get('/order-confirm/{id}',[App\Http\Controllers\admin\OrderController::class, 'OrderConfirm']);
+    Route::post('/order-send-code/{order}',[App\Http\Controllers\admin\OrderController::class, 'OrderPasscode']);
+
 
     Route::resource('users',App\Http\Controllers\admin\UserController::class);
 });
